@@ -1,0 +1,177 @@
+@charset "utf-8";
+/* CSS Document */
+html, body, div, span, header, section, nav, article, aside, footer, p, h1, h2, h3, h4{
+	border:0; margin:0;padding:0;
+}
+
+/* or download a CSS reset e.g. normalize */
+html{
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:18px; /* equal to 100% or 1em */
+}
+
+.flex-container{
+	display:flex;
+	flex-wrap:wrap;
+	width:80%;
+	min-height:100%;
+	margin:0 auto;
+
+	background-image:url(../images/refinery.jpg);
+	background-size: cover;
+	background-position: center;    
+
+
+}
+header {
+	display:flex;
+	width:100%;
+	height:5em;
+	order: 1;
+	justify-content:center;
+  align-items:center;
+	background-color:rgba(186,232,235,1.00);
+}
+
+nav {
+	width:100%;
+	height:3em;
+  order: 2;
+	background-color:rgba(229,176,241,1.00);
+}
+.menuItem{
+	display:flex;
+	align-items:center;
+	justify-content:space-around;
+	width:20%;
+	height:3em;
+	float:left;
+	background-color:gray;
+	color:#FFF;
+}
+.menuItem:hover{
+	background-color:rgba(255,0,0,1.00);
+}
+article{
+  display:flex;
+  flex-wrap:wrap;
+  order: 4;
+	flex: 1 60%;
+	min-height: 600px;
+  background-color:rgba(245, 248, 235, 0.75); 
+}
+
+.contentLeft {
+  order: 3;
+  flex: 1 20%;
+  background-color:rgba(228,233,206,1.00);
+}
+.contentRight{
+  order: 5;
+	flex: 1 20%;
+	background-color:rgba(207,174,102,1.00);
+}
+footer {
+  display:flex;
+  width:100%;
+  height:4em;
+  order:6;
+  justify-content:center;
+  align-items:center;
+  background-color: antiquewhite;
+}
+aside {
+	width:100%;
+	height:1em;
+}
+
+
+ul {
+	width:100%;
+	height:auto;
+}
+
+fieldset {
+	box-sizing: border-box;
+    width: 96%;
+    border: 2px solid orange;
+    border-radius: 10px;
+    background-color: rgb(255, 241, 227);
+	padding: 20px;
+	margin: 2%;
+}
+
+
+.holder{
+	width:25%;	
+	height:auto;
+	float:left;
+}
+
+.bigholder {
+	width:100%;	
+	height:auto;
+	float:left;
+}
+
+.holder img {
+	width:100%;
+	height:100%;
+}
+
+input[type=button], input[type=submit] {
+    width: 100px;
+    float: left;
+    background-color: orange;
+    color: white;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+	cursor: pointer;
+	margin-right:50px;
+}
+
+input[type=button]:hover, input[type=submit]:hover {
+    background-color: rgb(250, 187, 71);
+}
+
+
+a:link, a:active, a:visited{
+  color:blue;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 900px) {
+	.flex-container {
+		width:100%;
+	}
+	.nav{
+		order:1;
+	}
+	.header{
+		order:2;
+	}
+	.contentRight{
+		display:none;
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	.flex-container {
+		width:100%;
+	}
+	.holder{
+		width:100%;
+	}
+	.contentLeft, .contentRight{
+		display:none;
+	}
+	.nav{
+		height:auto;
+	}
+	.menuItem{
+		width:100%;
+	}
+}
