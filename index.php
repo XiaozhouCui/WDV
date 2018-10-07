@@ -1,4 +1,10 @@
-<?php session_start(); ?>
+<?php 
+session_start(); 
+require("model/db.php");
+require("model/dbFunctions.php");
+
+
+?>
 <!doctype html>
 <html>
 <head>
@@ -6,6 +12,7 @@
   <title>Home</title>
   <link href="view/css/style.css" rel="stylesheet">
   <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="view/js/script.js"></script>
 </head>
 <body>
 <div class="flex-container">
@@ -58,7 +65,7 @@
   </article>
   <div class="contentRight">right </div>
   <footer>
-    <p>Debug info: <?php print_r($_SESSION); ?></p>
+    <?php showMessage(); ?>
   </footer>
 </div>
 </body>
