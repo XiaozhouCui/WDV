@@ -17,7 +17,7 @@
 		<label>Surname:</label>
 		<input type="text" name=surname required><br><br>	
 		<label>Email:</label>
-		<input type="text" name=email required><br><br>	
+		<input type="text" name=email onkeyup="doEmailCheck(this.value)" required><br><br>	
 		<input type="hidden" name="action type" value="add"/>
 		<input type="submit">
 		<input type="button" onclick="location.href='?pageid=home';" value="Cancel" />

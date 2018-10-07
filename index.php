@@ -2,9 +2,10 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Home</title>
-<link href="view/css/style.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>Home</title>
+  <link href="view/css/style.css" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <div class="flex-container">

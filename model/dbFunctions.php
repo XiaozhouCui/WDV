@@ -163,4 +163,11 @@ function sanitise($data) {
     return $data;
 }
 
+function showMessage() {
+    echo '<div id="errmsg"></div>';// ajax output
+    if(isset($_SESSION['message'])) { 
+        echo $_SESSION['message'];
+        unset($_SESSION['message']);
+    }
+}
 ?>

@@ -15,9 +15,10 @@ if (isset($_SESSION['login']) == true && $_SESSION['level'] == 'Admin') {
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
 <title>Admin Control Panel</title>
 <link href="../css/style.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="../js/script.js"></script>
 </head>
 <body>
 <div class="flex-container">
@@ -71,22 +72,22 @@ if (isset($_SESSION['login']) == true && $_SESSION['level'] == 'Admin') {
           include("editTrainer.php");
         }
         if ( $action == 'addcourse' ) {
-          include ("addCourse.php");
+          include("addCourse.php");
         }
         if ( $action == 'showcourse' ) {
-          include ("../../controller/showcourses.php");
+          include("../../controller/showcourses.php");
         }
         if ( $action == 'addclass' ) {
-          include ("addClass.php");
+          include("addClass.php");
         }
         if ( $action == 'showclass' ) {
-          include ("../../controller/showclasses.php");
+          include("../../controller/showclasses.php");
         }
         if ( $action == 'showstudent' ) {
-          include ("../../controller/showStudents.php");
+          include("../../controller/showStudents.php");
         }
         if ( $action == 'enrol' ) {
-          include ("enrol.php");
+          include("enrol.php");
         }
       } else {
         echo "Admin control panel.";
@@ -96,7 +97,7 @@ if (isset($_SESSION['login']) == true && $_SESSION['level'] == 'Admin') {
   </article>
   <div class="contentRight">right </div>
   <footer>
-    <p><?php print_r($_SESSION); ?></p>
+  <?php showMessage(); ?>
   </footer>
 </div>
 </body>
