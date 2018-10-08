@@ -1,72 +1,65 @@
 <?php 
 session_start(); 
-require("model/db.php");
-require("model/dbFunctions.php");
+include("model/db.php");
+include("model/dbFunctions.php");
+include("view/pages/elements.php");
 
-
+showHeader();
+showMenu();
 ?>
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Home</title>
-  <link href="view/css/style.css" rel="stylesheet">
-  <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="view/js/script.js"></script>
-</head>
-<body>
-<div class="flex-container">
-  <header class="nav"><h1>SafeTec Pacific</h1></header>
-  <nav class="nav">
-    <div class="menuItem"><a href="index.php">HOME</a></div>
-    <div class="menuItem">ABOUT US</div>
-    <div class="menuItem">COURSES</div>
-    <div class="menuItem">SERVICES</div>
-    <div class="menuItem">CONTACT</div>
-  </nav>
-  <div class="contentLeft">
-    <?php
-    if (isset( $_SESSION['level'] ) ) {
-      if ($_SESSION['level'] == "Admin") {
-        echo '<p><a href="view/pages/adminPage.php">Back to Control Panel</a></p>';
-      }
-      if ($_SESSION['level'] == "Trainer") {
-        echo '<p><a href="view/pages/trainerPage.php">Back to Control Panel</a></p>';
-      }
-      if ($_SESSION['level'] == "Student") {
-        echo '<p><a href="view/pages/studentPage.php">Back to Control Panel</a></p>';
-      }
-    } else {
-      echo " ";
-    }
-    ?>
-  </div>
   <article>
     <div class="bigholder">
       <?php
-      if (isset( $_GET['pageid'] ) ) {
+      if (isset($_GET['pageid']) && isset($_SESSION['login'])) {
         $action = $_GET['pageid'];
         if ( $action == 'home' ) {
-          include("view/pages/login.php");
+          echo "This is the control panel.";
         }
-        if ( $action == 'reg' ) {
+        if ( $action == 'adduser' ) {
           include("view/pages/registration.php");
+        }
+        if ( $action == 'showuser' ) {
+          include("controller/showUsers.php");
+        }
+        if ( $action == 'edituser' ) {
+          include("view/pages/editUser.php");
+        }
+        if ( $action == 'deleteuser' ) {
+          include("controller/delUser.php");
+        }
+        if ( $action == 'showtrainer' ) {
+          include("controller/showTrainers.php");
+        }
+        if ( $action == 'edittrainer' ) {
+          include("view/pages/editTrainer.php");
+        }
+        if ( $action == 'addcourse' ) {
+          include("view/pages/addCourse.php");
+        }
+        if ( $action == 'showcourse' ) {
+          include("controller/showcourses.php");
+        }
+        if ( $action == 'addclass' ) {
+          include("view/pages/addClass.php");
+        }
+        if ( $action == 'showclass' ) {
+          include("controller/showclasses.php");
+        }
+        if ( $action == 'showmates' ) {
+          include ("controller/mymates.php");
+        }
+        if ( $action == 'showstudent' ) {
+          include("controller/showStudents.php");
+        }
+        if ( $action == 'enrol' ) {
+          include("view/pages/enrol.php");
         }
       } else {
         include("view/pages/login.php");
       }
       ?>
-    </div>
-
-    <div class="bigholder">
-        <?php //include("view/pages/adminBookCentral.php"); ?>
-    </div>
-
+    </div> 
   </article>
-  <div class="contentRight">right </div>
-  <footer>
-    <?php showMessage(); ?>
-  </footer>
-</div>
-</body>
-</html>
+<?php
+showFooter();
+?>

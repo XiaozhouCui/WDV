@@ -17,15 +17,7 @@ if (!empty([$_POST])) {
             $_SESSION['login'] = $username;  
             $_SESSION['level'] = $rows['access_level'];
             $_SESSION['time_start_login'] = time();
-            if ($_SESSION['level'] == "Admin") {
-                header('location:../view/pages/adminPage.php');
-            }
-            if ($_SESSION['level'] == "Student") {
-                header('location:../view/pages/studentPage.php');
-            }
-            if ($_SESSION['level'] == "Trainer") {
-                header('location:../view/pages/trainerPage.php');
-            }
+            header('location:../index.php?pageid=home');
         }
         else {
             echo "Login incorrect, please try again.";            
