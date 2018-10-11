@@ -22,13 +22,18 @@ if (!empty([$_POST])) {
             try {
                 if ($role == "Admin") {
                     addUser($username, $password, $role, $name, $surname, $email);
-                    $_SESSION['message'] = "User added successfully.";
-                    header('location:../view/pages/adminPage.php');
+                    $_SESSION['message'] = "Admin added successfully.";
+                    header('Location: ../index.php');
                 }
                 if ($role == "Trainer") {
                     addTrainer($username, $password, $role, $name, $surname, $email);
-                    $_SESSION['message'] = "User added successfully.";
-                    header('location:../view/pages/adminPage.php');
+                    $_SESSION['message'] = "Trainer added successfully.";
+                    header('Location: ../index.php');
+                }
+                if ($role == "Student") {
+                    addStudent($username, $password, $role, $name, $surname, $email);
+                    $_SESSION['message'] = "Student added successfully.";
+                    header('Location: ../index.php');
                 }
             }
             catch(PDOException $e) { 
@@ -38,7 +43,7 @@ if (!empty([$_POST])) {
         }
         else {
             $_SESSION['message'] = "Username already exists, try another.";
-            header('location:../view/pages/adminPage.php');            
+            header('Location: ../index.php');      
         }
         exit;
     }

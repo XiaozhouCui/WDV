@@ -12,17 +12,7 @@ function showHeader() {
   </head>
   <body>
     <div class="flex-container">
-      <header class="nav"><h1>SafeTec Pacific</h1><p><?php 
-        echo "<div>"; 
-        if(isset($_SESSION['error'])) {
-        echo "<div>{$_SESSION['error']}</div>";
-        unset($_SESSION['error']);
-        }
-        if(isset($_SESSION['message'])) {
-        echo "<div>{$_SESSION['message']}</div>";
-        unset($_SESSION['message']);
-        }
-        echo "</div>"; ?>
+      <header class="nav"><h1>SafeTec Pacific</h1><p>
       </p></header>
       <nav class="nav">
         <div class="menuItem"><a href="index.php">HOME</a></div>
@@ -41,27 +31,35 @@ function showMenu() {  ?>
         <ul>      
           <li><a href="?pageid=adduser">Create User</a></li>
           <li><a href="?pageid=showuser">Manage Admin</a></li>
-          <li><a href="?pageid=showtrainer">Manage Instructor</a></li>
+          <li><a href="?pageid=showtrainer">Manage Trainer</a></li>
           <li><a href="?pageid=addcourse">Create Course</a></li>
           <li><a href="?pageid=showcourse">Manage Course</a></li>
           <li><a href="?pageid=addclass">Create Class</a></li>
           <li><a href="?pageid=showclass">Manage Class</a></li>
           <li><a href="?pageid=enrol">Enrol Student</a></li>
-          <li><a href="controller/pdoLogout.php">Logout</a></li>
+          <li><a href="?pageid=logout">Logout</a></li>
         </ul><?php
       }
       if ($_SESSION['level'] == "Trainer") { ?>
         <ul>      
           <li><a href="?pageid=addclass">Create Class</a></li>
           <li><a href="?pageid=showclass">Manage Class</a></li>
-          <li><a href="controller/pdoLogout.php">Logout</a></li>
+          <li><a href="?pageid=logout">Logout</a></li>
         </ul><?php
       }
       if ($_SESSION['level'] == "Student") { ?>
         <ul>      
           <li><a href="?pageid=showclass">Class Information</a></li>
           <li><a href="?pageid=showmates">Classmates</a></li>
-          <li><a href="controller/pdoLogout.php">Logout</a></li>
+          <li><a href="?pageid=logout">Logout</a></li>
+        </ul><?php
+      }
+      if ($_SESSION['level'] == "Customer") { ?>
+        <ul>      
+          <li><a href="?pageid=showcourse">Show Courses</a></li>
+          <li><a href="?pageid=showclass">Class Timetable</a></li> 
+          <li><a href="?pageid=enrolForm">Course Application</a></li>
+          <li><a href="?pageid=logout">Logout</a></li>
         </ul><?php
       }
     } else {

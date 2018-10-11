@@ -17,7 +17,7 @@ if ($_SESSION['level'] == 'Admin') {
         try {
             editTrainer($rowid, $username, $password, $role, $name, $surname, $email);
             $_SESSION['message'] = 'Trainer account updated successfully.';            
-            header('location:../view/pages/adminPage.php');
+            header('location:../index.php');
         }
         catch(PDOException $e) { 
             echo "Account update problems".$e -> getMessage();
@@ -25,7 +25,7 @@ if ($_SESSION['level'] == 'Admin') {
         } 
     } else {
         $_SESSION['message'] = 'Failed to update trainer account.';
-        header('location:../view/pages/adminPage.php');
+        header('location:../index.php');
     }
 } else {
     $_SESSION['message'] = 'Only administrator can edit trainer accounts.';

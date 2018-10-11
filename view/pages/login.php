@@ -1,7 +1,7 @@
 <h2>Login Form</h2>
-<form action="controller/pdoLogin.php" method="post">
+<form action="?pageid=loggingin" method="post">
 	<fieldset>
-		<legend> Admin Login</legend>
+		<legend>Login</legend>
 			<label>Username:</label>
 			<input type="text" name="username" required><br><br>
 			<label>Password:</label>

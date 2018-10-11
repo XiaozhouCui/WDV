@@ -9,17 +9,18 @@ if ($_SESSION['level'] == 'Admin') {
 
 	<div class="bigholder">
 		<h1>Edit User</h1>
-		<form action="../../controller/updateUser.php"  method="post">
+		<form action="controller/updateUser.php"  method="post">
 			<fieldset>
 				<legend>Login details</legend>
 				<input type="hidden" name="rowid" value="<?php echo $_GET['rowid'] ?>"><br>
 				<label>Username:</label>
 				<input type="text" name=username value="<?php echo $result['username'] ?>"><br><br>
 				<label>Password:</label>
-				<input type="password" name=password value="1234"><br><br>
+				<input type="password" name=password value="<?php echo $result['password'] ?>"><br><br>
 				<label>Role:</label>
 				<input type="radio" name=role value="Admin" <?php echo ($result['access_level'] == "Admin" ? 'checked="checked"': ''); ?>>Admin  
-				<input type="radio" name=role value="Trainer" <?php echo ($result['access_level'] == "Trainer" ? 'checked="checked"': ''); ?>>Trainer <br><br>
+				<input type="radio" name=role value="Trainer" <?php echo ($result['access_level'] == "Trainer" ? 'checked="checked"': ''); ?>>Trainer  
+				<input type="radio" name=role value="Student" <?php echo ($result['access_level'] == "Student" ? 'checked="checked"': ''); ?>>Admin  
 			</fieldset>
 			<fieldset>
 				<legend>Personal details</legend>

@@ -2,60 +2,93 @@
 session_start(); 
 include("model/db.php");
 include("model/dbFunctions.php");
+include("controller/actions.php");
 include("view/pages/elements.php");
 
 showHeader();
 showMenu();
 ?>
   <article>
+    <div><?php  
+    if(isset($_SESSION['error'])) {
+    echo "<div>{$_SESSION['error']}</div>";
+    unset($_SESSION['error']);
+    }
+    if(isset($_SESSION['message'])) {
+    echo "<div>{$_SESSION['message']}</div>";
+    unset($_SESSION['message']);
+    }?>
+    </div>
+
     <div class="bigholder">
       <?php
-      if (isset($_GET['pageid']) && isset($_SESSION['login'])) {
-        $action = $_GET['pageid'];
-        if ( $action == 'home' ) {
-          echo "This is the control panel.";
+      if (isset($_GET['pageid'])) {
+        if ($_GET['pageid'] == 'login') {
+          include("view/pages/login.php");
         }
-        if ( $action == 'adduser' ) {
+        if ($_GET['pageid'] == 'loggingin') {
+          loginAction();
+        }
+        if ($_GET['pageid'] == 'reg') {
           include("view/pages/registration.php");
         }
-        if ( $action == 'showuser' ) {
-          include("controller/showUsers.php");
+      } 
+      if (isset($_SESSION['login'])) {
+        if (isset($_GET['pageid'])) {
+          $action = $_GET['pageid'];
+          if ( $action == 'loggedin' ) {
+            echo "Welcome to the control panel.";
+          }
+          if ( $action == 'adduser' ) {
+            include("view/pages/registration.php");
+          }
+          if ( $action == 'showuser' ) {
+            showUsersAction();
+          }
+          if ( $action == 'edituser' ) {
+            include("view/pages/editUserForm.php");
+          }
+          if ( $action == 'deleteuser' ) {
+            include("view/pages/delUserForm.php");
+          }
+          if ( $action == 'deletinguser' ) {
+            delUserAction();  
+          }
+          if ( $action == 'showtrainer' ) {
+            showTrainersAction();
+          }
+          if ( $action == 'edittrainer' ) {
+            include("view/pages/editTrainerForm.php");
+          }
+          if ( $action == 'addcourse' ) {
+            include("view/pages/addCourse.php");
+          }
+          if ( $action == 'showcourse' ) {
+            showCoursesAction();
+          }
+          if ( $action == 'addclass' ) {
+            include("view/pages/addClass.php");
+          }
+          if ( $action == 'showclass' ) {
+            showClassesAction();
+          }
+          if ( $action == 'showmates' ) {
+            include ("controller/mymates.php");
+          }
+          if ( $action == 'showstudent' ) {
+            include("controller/showStudents.php");
+          }
+          if ( $action == 'enrol' ) {
+            include("view/pages/enrol.php");
+          }
+          if ( $action == 'logout' ) {
+            logoutAction();
+          }
         }
-        if ( $action == 'edituser' ) {
-          include("view/pages/editUser.php");
-        }
-        if ( $action == 'deleteuser' ) {
-          include("controller/delUser.php");
-        }
-        if ( $action == 'showtrainer' ) {
-          include("controller/showTrainers.php");
-        }
-        if ( $action == 'edittrainer' ) {
-          include("view/pages/editTrainer.php");
-        }
-        if ( $action == 'addcourse' ) {
-          include("view/pages/addCourse.php");
-        }
-        if ( $action == 'showcourse' ) {
-          include("controller/showcourses.php");
-        }
-        if ( $action == 'addclass' ) {
-          include("view/pages/addClass.php");
-        }
-        if ( $action == 'showclass' ) {
-          include("controller/showclasses.php");
-        }
-        if ( $action == 'showmates' ) {
-          include ("controller/mymates.php");
-        }
-        if ( $action == 'showstudent' ) {
-          include("controller/showStudents.php");
-        }
-        if ( $action == 'enrol' ) {
-          include("view/pages/enrol.php");
-        }
-      } else {
-        include("view/pages/login.php");
+      }
+      else {
+        echo "<p>Please login to see the content</p>";
+        echo "<a href='?pageid=login'>Login</a>";
       }
       ?>
     </div> 

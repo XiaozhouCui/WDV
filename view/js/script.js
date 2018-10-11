@@ -1,6 +1,6 @@
 
 function doEmailCheck(emailAddr) {     
-    var ajaxUrl = '../../controller/checkemail.php?email=' + emailAddr;
+    var ajaxUrl = 'controller/checkemail.php?email=' + emailAddr;
     $.ajax({
         type: 'get',
         url: ajaxUrl,

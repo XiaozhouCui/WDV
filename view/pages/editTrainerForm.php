@@ -1,7 +1,7 @@
 <?php
 
 if ($_SESSION['level'] == 'Admin') { 
-	$sql = "SELECT * FROM login INNER JOIN instructor ON login.login_id = instructor.login_id WHERE login.login_id = '{$_GET['rowid']}'";    
+	$sql = "SELECT * FROM login INNER JOIN trainer ON login.login_id = trainer.login_id WHERE login.login_id = '{$_GET['rowid']}'";    
 	$stmt = $conn->prepare($sql);
 	$stmt->execute();
 	$result = $stmt->fetch(PDO::FETCH_ASSOC);	 
@@ -9,17 +9,18 @@ if ($_SESSION['level'] == 'Admin') {
 
 	<div class="bigholder">
 		<h1>Edit Trainer</h1>
-		<form action="../../controller/updateTrainer.php"  method="post">
+		<form action="controller/updateTrainer.php"  method="post">
 			<fieldset>
 				<legend>Login details</legend>
 				<input type="hidden" name="rowid" value="<?php echo $_GET['rowid'] ?>"><br>
 				<label>Username:</label>
 				<input type="text" name=username value="<?php echo $result['username'] ?>"><br><br>
 				<label>Password:</label>
-				<input type="password" name=password value="1234"><br><br>
+				<input type="password" name=password value="<?php echo $result['password'] ?>"><br><br>
 				<label>Role:</label>
 				<input type="radio" name=role value="Admin" <?php echo ($result['access_level'] == "Admin" ? 'checked="checked"': ''); ?>>Admin  
-				<input type="radio" name=role value="Trainer" <?php echo ($result['access_level'] == "Trainer" ? 'checked="checked"': ''); ?>>Trainer <br><br>
+				<input type="radio" name=role value="Trainer" <?php echo ($result['access_level'] == "Trainer" ? 'checked="checked"': ''); ?>>Trainer  
+				<input type="radio" name=role value="Student" <?php echo ($result['access_level'] == "Student" ? 'checked="checked"': ''); ?>>Admin  
 			</fieldset>
 			<fieldset>
 				<legend>Personal details</legend>
