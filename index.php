@@ -8,91 +8,104 @@ include("view/pages/elements.php");
 showHeader();
 showMenu();
 ?>
-  <article>
-    <div><?php  
-    if(isset($_SESSION['error'])) {
-    echo "<div>{$_SESSION['error']}</div>";
-    unset($_SESSION['error']);
-    }
-    if(isset($_SESSION['message'])) {
-    echo "<div>{$_SESSION['message']}</div>";
-    unset($_SESSION['message']);
-    }?>
-    </div>
+<article>
+  <div><?php  
+  if(isset($_SESSION['error'])) {
+  echo "<div>{$_SESSION['error']}</div>";
+  unset($_SESSION['error']);
+  }
+  if(isset($_SESSION['message'])) {
+  echo "<div>{$_SESSION['message']}</div>";
+  unset($_SESSION['message']);
+  }?>
+  </div>
 
-    <div class="bigholder">
-      <?php
+  <div class="bigholder">
+    <?php
+    if (isset($_GET['pageid'])) {
+      if ($_GET['pageid'] == 'login') {
+        include("view/pages/login.php");
+      }
+      if ($_GET['pageid'] == 'loggingin') {
+        loginAction();
+      }
+      if ($_GET['pageid'] == 'reg') {
+        include("view/pages/registration.php");
+      }
+    } 
+    if (isset($_SESSION['login'])) {
       if (isset($_GET['pageid'])) {
-        if ($_GET['pageid'] == 'login') {
-          include("view/pages/login.php");
+        $action = $_GET['pageid'];
+        if ( $action == 'loggedin' ) {
+          echo "<p><h3>Welcome to the control panel.<h3></p>";
         }
-        if ($_GET['pageid'] == 'loggingin') {
-          loginAction();
-        }
-        if ($_GET['pageid'] == 'reg') {
+        if ( $action == 'adduser' ) {
           include("view/pages/registration.php");
         }
-      } 
-      if (isset($_SESSION['login'])) {
-        if (isset($_GET['pageid'])) {
-          $action = $_GET['pageid'];
-          if ( $action == 'loggedin' ) {
-            echo "Welcome to the control panel.";
-          }
-          if ( $action == 'adduser' ) {
-            include("view/pages/registration.php");
-          }
-          if ( $action == 'showuser' ) {
-            showUsersAction();
-          }
-          if ( $action == 'edituser' ) {
-            include("view/pages/editUserForm.php");
-          }
-          if ( $action == 'deleteuser' ) {
-            include("view/pages/delUserForm.php");
-          }
-          if ( $action == 'deletinguser' ) {
-            delUserAction();  
-          }
-          if ( $action == 'showtrainer' ) {
-            showTrainersAction();
-          }
-          if ( $action == 'edittrainer' ) {
-            include("view/pages/editTrainerForm.php");
-          }
-          if ( $action == 'addcourse' ) {
-            include("view/pages/addCourse.php");
-          }
-          if ( $action == 'showcourse' ) {
-            showCoursesAction();
-          }
-          if ( $action == 'addclass' ) {
-            include("view/pages/addClass.php");
-          }
-          if ( $action == 'showclass' ) {
-            showClassesAction();
-          }
-          if ( $action == 'showmates' ) {
-            include ("controller/mymates.php");
-          }
-          if ( $action == 'showstudent' ) {
-            include("controller/showStudents.php");
-          }
-          if ( $action == 'enrol' ) {
-            include("view/pages/enrol.php");
-          }
-          if ( $action == 'logout' ) {
-            logoutAction();
-          }
+        if ( $action == 'showuser' ) {
+          showUsersAction();
+        }
+        if ( $action == 'edituser' ) {
+          include("view/pages/editUserForm.php");
+        }
+        if ( $action == 'deleteuser' ) {
+          include("view/pages/delUserForm.php");
+        }
+        if ( $action == 'deletinguser' ) {
+          delUserAction();  
+        }
+        if ( $action == 'showtrainer' ) {
+          showTrainersAction();
+        }
+        if ( $action == 'edittrainer' ) {
+          include("view/pages/editTrainerForm.php");
+        }
+        if ( $action == 'showstudent' ) {
+          showCurrentStudents();
+        }
+        if ( $action == 'addcourse' ) {
+          include("view/pages/addCourse.php");
+        }
+        if ( $action == 'showcourse' ) {
+          showCoursesAction();
+        }
+        if ( $action == 'editcourse' ) {
+          include("view/pages/editCourseForm.php");
+        }
+        if ( $action == 'addclass' ) {
+          include("view/pages/addClass.php");
+        }
+        if ( $action == 'showclass' ) {
+          showClassesAction();
+        }
+        if ( $action == 'showmates' ) {
+          include ("controller/mymates.php");
+        }
+        if ( $action == 'showclassstudent' ) {
+          showClassStudents();
+        }
+        if ( $action == 'showcustomer' ) {
+          showCustomers();
+        }
+        if ( $action == 'enrol' ) {
+          include("view/pages/enrolForm.php");
+        }
+        if ( $action == 'enrolling' ) {
+          enrolStudent();
+        }
+        if ( $action == 'logout' ) {
+          logoutAction();
         }
       }
-      else {
-        echo "<p>Please login to see the content</p>";
-        echo "<a href='?pageid=login'>Login</a>";
-      }
-      ?>
-    </div> 
-  </article>
+    }
+    else {
+      echo "<p>Please login to see the content</p>";
+      echo "<a href='?pageid=login'>Login</a> or ";
+      echo "<a href='?pageid=reg'>Register</a>";
+    }
+    ?>
+  </div> 
+</article>
 <?php
 showFooter();
 ?>

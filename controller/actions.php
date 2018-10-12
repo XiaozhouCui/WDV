@@ -119,12 +119,66 @@ function showClassesAction() {
         <?php echo '<p>Status: '. $row['status'].'</p>'; ?>
         <?php echo '<p>Trainer: '. $row['name'].'</p>'; ?>
         <?php echo '<p>Topic: '. $row['course_name'].'</p>'; ?><br>
-        <a href="?pageid=showstudent&rowid=<?php echo $row['class_id']; ?>">Show Students</a><br>
+        <a href="?pageid=showclassstudent&rowid=<?php echo $row['class_id']; ?>">Manage Students</a><br>
         <a href="?pageid=editclass&rowid=<?php echo $row['class_id']; ?>">Edit</a><br>
         <a href="?pageid=deleteclass&rowid=<?php echo $row['class_id']; ?>">Delete</a><br><br>
       </div>  
       <?php
     }
+  }
+}
+
+function showCurrentStudents() {
+  global $conn;
+  if ($_SESSION['level'] == 'Admin' OR $_SESSION['level'] == 'Trainer') { 
+    $sql = "SELECT * FROM current_student";    
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);	 
+  
+    if($stmt->rowCount()< 1 ) {
+      echo "There is no currently enroled student";
+    } else {
+      foreach($result as $row) {?>
+        <div class="holder">      
+        <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?><br>
+        <?php echo '<p>Student ID: '. $row['student_id'].'</p>'; ?><br>
+        <a href="?pageid=edituser&rowid=<?php echo $row['login_id']; ?>">Edit</a><br>
+        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>">Delete</a><br><br>
+        </div>  
+        <?php
+      }
+    }  
+  } else {
+    echo '<aside>Only administrator can edit student accounts.</aside>';
+    echo "<aside><a href='index.php'>Go back</a></aside>";
+  }
+}
+
+function showClassStudents() {
+  global $conn;
+  if ($_SESSION['level'] == 'Admin' OR $_SESSION['level'] == 'Trainer') { 
+    $sql = "SELECT * FROM current_student WHERE class_id = '{$_GET['rowid']}'";    
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);	 
+  
+    if($stmt->rowCount()< 1 ) {
+      echo "This class has no student.";
+    } else {
+      foreach($result as $row) {?>
+        <div class="holder">      
+        <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?><br>
+        <?php echo '<p>Student ID: '. $row['student_id'].'</p>'; ?><br>
+        <a href="?pageid=edituser&rowid=<?php echo $row['login_id']; ?>">Edit</a><br>
+        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>">Delete</a><br><br>
+        </div>  
+        <?php
+      }
+    }  
+  } else {
+    echo '<aside>Only administrator can edit student accounts.</aside>';
+    echo "<aside><a href='index.php'>Go back</a></aside>";
   }
 }
 
@@ -140,4 +194,68 @@ function delUserAction() {
     echo "Only administrator can delete a user.";
   }
 }
+
+function showCustomers() {
+  global $conn;
+  if ($_SESSION['level'] == 'Admin') { 
+    $sql = "SELECT * FROM prospective_student";    
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);	 
+  
+    if($stmt->rowCount()< 1 ) {
+      echo "There is no student to be enrolled";
+    } else {
+      foreach($result as $row) {?>
+        <div class="holder">      
+        <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?><br>
+        <?php echo '<p>Student ID: '. $row['email'].'</p>'; ?><br>
+        <a href="?pageid=enrol&rowid=<?php echo $row['login_id']; ?>">Enrol</a><br>
+        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>">Delete</a><br><br>
+        </div>  
+        <?php
+      }
+    }  
+  } else {
+    echo '<aside>Only administrator can manage student accounts.</aside>';
+    echo "<aside><a href='index.php'>Go back</a></aside>";
+  }
+}
+
+function enrolStudent() {  
+  global $conn;
+  if (!empty([$_POST])) {
+    $loginid = !empty($_POST['loginid'])? sanitise(($_POST['loginid'])): null; 
+    $role = !empty($_POST['role']) ? sanitise(($_POST['role'])): null;
+    $name = !empty($_POST['name']) ? sanitise(($_POST['name'])): null;
+    $surname = !empty($_POST['surname'])? sanitise(($_POST['surname'])): null;
+    $address = !empty($_POST['address']) ? sanitise(($_POST['address'])): null;
+    $email = !empty($_POST['email']) ? sanitise(($_POST['email'])): null;
+    $phone = !empty($_POST['phone']) ? sanitise(($_POST['phone'])): null;
+    $dob = !empty($_POST['dob']) ? sanitise(($_POST['dob'])): null;
+    $class = !empty($_POST['class']) ? sanitise(($_POST['class'])): null;
+    if($_REQUEST['actiontype'] == 'enrol') {
+      $query = $conn->prepare("SELECT login_id FROM login WHERE login_id = :loginid");
+      $query->bindValue(':loginid', $loginid);
+      $query->execute();
+      if ($query->rowCount() >= 1) {
+        try {
+          enrol($loginid, $role, $name, $surname, $address, $email, $phone, $dob, $class);
+          $_SESSION['message'] = "Student enrolled successfully.";
+          header('Location: index.php');
+        }
+        catch(PDOException $e) { 
+          echo "Enrollment problems".$e -> getMessage();
+          die();
+        }
+      }
+      else {
+        $_SESSION['message'] = "Login ID does not exist.";
+        header('Location: index.php');
+      }
+      exit;
+    }
+  }
+}
+
 ?>

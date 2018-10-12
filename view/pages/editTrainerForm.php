@@ -16,7 +16,8 @@ if ($_SESSION['level'] == 'Admin') {
 				<label>Username:</label>
 				<input type="text" name=username value="<?php echo $result['username'] ?>"><br><br>
 				<label>Password:</label>
-				<input type="password" name=password value="<?php echo $result['password'] ?>"><br><br>
+				<input type="password" name=password id="trainerpw" required><br>
+				<input type="checkbox" onclick="showPassword3()">Show Password<br><br>
 				<label>Role:</label>
 				<input type="radio" name=role value="Admin" <?php echo ($result['access_level'] == "Admin" ? 'checked="checked"': ''); ?>>Admin  
 				<input type="radio" name=role value="Trainer" <?php echo ($result['access_level'] == "Trainer" ? 'checked="checked"': ''); ?>>Trainer  
@@ -39,9 +40,9 @@ if ($_SESSION['level'] == 'Admin') {
 	<?php
 } else {
 	echo '<aside>Only administrator can edit trainer accounts.</aside>';
-	echo "<aside><a href='?pageid=home'>Go back</a></aside>";
-	//header('location:../../controller/pdoLogout.php');
-}?>
+	echo "<aside><a href='index.php'>Go back</a></aside>";
+}
+?>
 
 
 

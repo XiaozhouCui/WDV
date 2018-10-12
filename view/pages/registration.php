@@ -5,7 +5,8 @@
 		<label>Username:</label>
 		<input type="text" name=username required><br><br>
 		<label>Password:</label>
-		<input type="text" name=password required><br><br>
+		<input type="password" name=password id="regpw"required><br>
+		<input type="checkbox" onclick="showPassword1()">Show Password<br><br>
 		<label>Role:</label>		
 		<input type="radio" name=role value="Admin">Admin  
 		<input type="radio" name=role value="Trainer">Trainer		
@@ -22,7 +23,7 @@
 		<div id="errmsg"></div><br>
 		<input type="hidden" name="action type" value="add"/>
 		<input type="submit">
-		<input type="button" onclick="location.href='index.php?pageid=loggedin';" value="Cancel" />
+		<input type="button" onclick="location.href='index.php';" value="Cancel" />
 	</fieldset>
 </form>
 

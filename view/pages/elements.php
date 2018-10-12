@@ -25,18 +25,19 @@ function showHeader() {
 }
 
 function showMenu() {  ?>
-  <div class="contentLeft"> <?php
+  <div class="controlPanel"> <?php
     if (isset( $_SESSION['level'] ) ) {
       if ($_SESSION['level'] == "Admin") { ?>
-        <ul>      
-          <li><a href="?pageid=adduser">Create User</a></li>
-          <li><a href="?pageid=showuser">Manage Admin</a></li>
-          <li><a href="?pageid=showtrainer">Manage Trainer</a></li>
-          <li><a href="?pageid=addcourse">Create Course</a></li>
-          <li><a href="?pageid=showcourse">Manage Course</a></li>
-          <li><a href="?pageid=addclass">Create Class</a></li>
-          <li><a href="?pageid=showclass">Manage Class</a></li>
-          <li><a href="?pageid=enrol">Enrol Student</a></li>
+        <ul>
+          <li><a href="?pageid=adduser">Create a User</a></li>
+          <li><a href="?pageid=showuser">Manage Admins</a></li>
+          <li><a href="?pageid=showtrainer">Manage Trainers</a></li>
+          <li><a href="?pageid=showstudent">Manage Students</a></li>
+          <li><a href="?pageid=showcustomer">Enrol a Student</a></li>
+          <li><a href="?pageid=addcourse">Create a Course</a></li>
+          <li><a href="?pageid=showcourse">Manage Courses</a></li>
+          <li><a href="?pageid=addclass">Create a Class</a></li>
+          <li><a href="?pageid=showclass">Manage Classes</a></li>
           <li><a href="?pageid=logout">Logout</a></li>
         </ul><?php
       }
@@ -69,7 +70,7 @@ function showMenu() {  ?>
 }
 
 function showFooter() {?>
-    <div class="contentRight">right </div>
+    <div class="contentRight"></div>
     <footer>
       <?php 
         echo "<div>";

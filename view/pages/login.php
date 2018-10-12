@@ -7,6 +7,6 @@
 			<label>Password:</label>
 			<input type="text" name="password" required><br><br>
 			<input type="submit" value=" Login ">
-			<input type="button" onclick="location.href='?pageid=reg';" value="Register" />
+			<input type="button" onclick="location.href='index.php';" value="Cancel" />
 	</fieldset>
 </form>

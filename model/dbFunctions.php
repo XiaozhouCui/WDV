@@ -152,30 +152,52 @@ function addCourse($coursename, $description, $level, $price) {
     }
 }
 
-
-function enrol($username, $password, $role, $name, $surname, $address, $email, $phone, $dob, $class) {
+function editCourse($rowid, $coursename, $description, $level, $price) {
     global $conn;
     try {
-        $conn->beginTransaction(); //SQL transaction
-        $newlogin = "INSERT INTO login(username, password, access_level) VALUES (:username, :password, :role)";
-        $stmt = $conn->prepare($newlogin);
-        $stmt->bindValue(':username', $username);
-        $stmt->bindValue(':password', $password);
+        $editcourse = "UPDATE course SET course_name = :coursename, description = :description, course_level = :level, price = :price WHERE course_id = :rowid";
+        $stmt = $conn->prepare($editcourse);
+        $stmt->bindValue(':rowid', $rowid);
+        $stmt->bindValue(':coursename', $coursename);
+        $stmt->bindValue(':description', $description);
+        $stmt->bindValue(':level', $level);
+        $stmt->bindValue(':price', $price);
+        $stmt->execute();
+    }
+    catch(PDOException $ex) { 
+        $conn->rollBack();
+        throw $ex;
+    }
+}
+
+function enrol($loginid, $role, $name, $surname, $address, $email, $phone, $dob, $class) {
+    global $conn;
+    try {
+        $conn->beginTransaction(); 
+        //Step 1: upgrade access level
+        $newrole = "UPDATE login SET access_level = :role WHERE login_id = :loginid";
+        $stmt = $conn->prepare($newrole);
+        $stmt->bindValue(':loginid', $loginid);
         $stmt->bindValue(':role', $role);
         $stmt->execute();
-        $lastLoginId = $conn->lastInsertId();
-
-        $newuser = "INSERT INTO current_student(name, surname, address, email, phone, dob, login_id, class_id) VALUES (:name, :surname, :address, :email, :phone, :dob, :loginId, :classId)";
-        $stmt = $conn->prepare($newuser);
+        //Step 2: create student details in student table
+        $newstudent = "INSERT INTO current_student(name, surname, address, email, phone, dob, login_id, class_id) VALUES (:name, :surname, :address, :email, :phone, :dob, :loginid, :classId)";
+        $stmt = $conn->prepare($newstudent);
         $stmt->bindValue(':name', $name);
         $stmt->bindValue(':surname', $surname);
         $stmt->bindValue(':address', $address);
         $stmt->bindValue(':email', $email);
         $stmt->bindValue(':phone', $phone);
         $stmt->bindValue(':dob', $dob);
-        $stmt->bindValue(':loginId', $lastLoginId);
+        $stmt->bindValue(':loginid', $loginid);
         $stmt->bindValue(':classId', $class);
         $stmt->execute();
+        //Step 3: remove customer details from customer table
+        $delcustomer = "DELETE FROM prospective_student WHERE login_id = :loginid";
+        $stmt = $conn->prepare($delcustomer);
+        $stmt->bindValue(':loginid', $loginid);
+        $stmt->execute();
+
         $conn->commit();   
     }
     catch(PDOException $ex) { 

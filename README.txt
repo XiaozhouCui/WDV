@@ -9,25 +9,37 @@ username - admin
 password - admin
 
 Website overview:
-SafeTec website is built to advertise the consulting services and training courses of SafeTec Pacific Inc. Anyone who are interested in the courses can apply online. Once the prospective students are enrolled, they can interact with the company and their trainers on the website through the Learning Management System.
-The Learning Management System that can handle the information of courses, classes, students, instructors and training materials. For example, a student can check the status of his/her class, browse training materials, and join the online discussion with trainers and fellow students.
+SafeTec Pacific website is built to advertise the  courses of SafeTec Pacific Inc. Anyone who are interested in the courses can register and apply for a course online. Once the prospective students are enrolled by admin, they can interact with the company and their trainers on the website through the Learning Management System.
+The Learning Management System can handle the information of courses, classes, students, trainers and training materials. For example, any visitor can register their interest and became a prospective student. Once the prospective student is enrolled into a class by the admin, he or she then becomes a current student. A trainer can upload training materials. A current student can check the status of his/her class, browse training materials, and join the online discussion with trainers and fellow students.
 
-Roles: Admin; Instructor; Current student
 
-Content type: Course; Class
+Login as 4 different roles (access levels): 
+Admin
+Trainer
+Current student
+Prospective student (customer)
 
-Functionality so far:
-Register admin users and trainers through a registration form
-Enrol students through a diffrerent registration form
-Login/Logout as different roles
-After logging in, admin and student will see different menu options
-Admin user can add, edit and delete any account of any role.
-Admin user can add a course through a registration form
-Admin user can add a class through a registration form
-Admin user can browse all the classes and check the enrolled students of each class
-GIT repository is setup, future changes will be committed and pushed to GitHub
+
+Functionalities achieved so far:
+Registration and login
+Any visitor can register as a prospective student.
+For testing purposes, anyone can also register as an admin or a trainer at the moment.
+After login, different roles will see different control panels.
+Admin user can read/create/update/delete any account of any role.
+Admin user can read/create/update any course.
+Admin user can read/create any class.
+Admin user can enrol a new student (convert a prospective student into a current student).
+Admin user can browse all the enrolled students of a particular class, and edit the student details from there.
+Trainer user can Browse all courses and classes.
+Current Student user can Browse all courses and classes.
+
+
+Other progress so far:
+GIT repository is setup, all changes will be committed and pushed to GitHub
 jQuery CDN is added
+javascript is used to show/hide password in input fields.
 Ajax is applied in registration form to check if the email address exists
+
 
 To do list:
 Optimise the MCV architecture
@@ -36,12 +48,12 @@ Complete the CSS file
 Add JavaScript functions
 Apply more jQuery and AJAX
 
+
 To be added in the future:
-Prospective Student (new role)
 Course order (new content type)
 Training Material (new content type)
 Discussion message (new content type)
-Trainer can browse and edit a class (new functionality)
+Trainer can edit a class (new functionality)
 Trainer can add, edit and delete training materials (new functionality)
 Trainer can leave a message (new functionality)
 Student can browse own class (new functionality)
