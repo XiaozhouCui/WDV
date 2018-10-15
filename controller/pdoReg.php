@@ -30,10 +30,13 @@ if (!empty([$_POST])) {
                     $_SESSION['message'] = "Trainer added successfully.";
                     header('Location: ../index.php');
                 }
-                if ($role == "Student") {
+                if ($role == "Customer") {
                     addStudent($username, $password, $role, $name, $surname, $email);
-                    $_SESSION['message'] = "Student added successfully.";
+                    $_SESSION['message'] = "Customer added successfully.";
                     header('Location: ../index.php');
+                }
+                else {
+                    echo "Registration failed! Please make sure the role of the new user is valid";
                 }
             }
             catch(PDOException $e) { 

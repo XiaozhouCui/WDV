@@ -197,7 +197,41 @@ function enrol($loginid, $role, $name, $surname, $address, $email, $phone, $dob,
         $stmt = $conn->prepare($delcustomer);
         $stmt->bindValue(':loginid', $loginid);
         $stmt->execute();
+        //Step 4: commit
+        $conn->commit();   
+    }
+    catch(PDOException $ex) { 
+        $conn->rollBack();
+        throw $ex;
+    }
+}
 
+function editStudent($loginid, $username, $password, $role, $name, $surname, $address, $email, $phone, $dob, $class) {
+    global $conn;
+    try {
+        $conn->beginTransaction(); 
+        //Step 1: update login details in login table
+        $editlogin = "UPDATE login SET username = :username, password = :password, access_level = :role WHERE login_id = :loginid";
+        $stmt = $conn->prepare($editlogin);
+        $stmt->bindValue(':loginid', $loginid);
+        $stmt->bindValue(':username', $username);
+        $stmt->bindValue(':password', $password);
+        $stmt->bindValue(':role', $role);
+        $stmt->execute();
+        //Step 2: update student details in student table
+        $editstudent = "UPDATE current_student SET name = :name, surname = :surname, address = :address, email = :email, phone = :phone, dob = :dob, class_id = :class WHERE login_id = :loginid";
+        $stmt = $conn->prepare($editstudent);
+        $stmt->bindValue(':loginid', $loginid);
+        $stmt->bindValue(':name', $name);
+        $stmt->bindValue(':surname', $surname);
+        $stmt->bindValue(':address', $address);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':phone', $phone);
+        $stmt->bindValue(':dob', $dob);
+        $stmt->bindValue(':loginid', $loginid);
+        $stmt->bindValue(':class', $class);
+        $stmt->execute();
+        //Step 3: commit
         $conn->commit();   
     }
     catch(PDOException $ex) { 

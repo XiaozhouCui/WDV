@@ -120,21 +120,40 @@ fieldset {
 	height:100%;
 }
 
+.button {
+	width: 60px;
+	float: left;
+	background-color: orange;
+	color: white;
+	padding: 10px 15px;
+	margin: 5px 0;
+	border: none;
+	border-radius: 8px;
+	text-align: center;
+	cursor: pointer;
+	margin-right:50px;
+	font-size: 0.8em;
+}
+
+.button:hover {
+	background-color: rgb(250, 187, 71);
+}
+
 input[type=button], input[type=submit] {
-    width: 100px;
-    float: left;
-    background-color: orange;
-    color: white;
-    padding: 12px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
+	width: 100px;
+	float: left;
+	background-color: orange;
+	color: white;
+	padding: 12px 20px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 5px;
+	text-align: center;
 	cursor: pointer;
 	margin-right:50px;
 }
 
-input[type=button]:hover, input[type=submit]:hover {
+.button:hover, input[type=button]:hover, input[type=submit]:hover {
     background-color: rgb(250, 187, 71);
 }
 

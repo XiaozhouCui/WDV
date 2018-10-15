@@ -52,8 +52,8 @@ function showUsersAction() {
       <div class="holder">
         <?php echo $row['name'].' '.$row['surname']; ?><br>
         <?php echo '<p>'. $row['email'].'</p>'; ?><br>
-        <a href="?pageid=edituser&rowid=<?php echo $row['login_id']; ?>">Edit</a><br>
-        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>">Delete</a><br><br>
+        <a href="?pageid=edituser&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a><br>
+        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
       </div>  
       <?php
     }
@@ -73,8 +73,8 @@ function showTrainersAction() {
       <div class="holder">
         <?php echo $row['name'].' '.$row['surname']; ?><br>
         <?php echo '<p>'. $row['email'].'</p>'; ?><br>
-        <a href="?pageid=edittrainer&rowid=<?php echo $row['login_id']; ?>">Edit</a><br>
-        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>">Delete</a><br><br>
+        <a href="?pageid=edittrainer&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a><br>
+        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
       </div>  
       <?php
     }
@@ -92,11 +92,11 @@ function showCoursesAction() {
   } else {
     foreach($result as $row) {?>
       <div class="holder">
-        <?php echo '<p>'. $row['course_name'].'</p>'; ?><br>
-        <?php echo '<p>Course Level: '. $row['course_level'].'</p>'; ?><br>
-        <?php echo '<p>Price: $'. $row['price'].'</p>'; ?><br>
-        <a href="?pageid=editcourse&rowid=<?php echo $row['course_id']; ?>">Edit</a><br>
-        <a href="?pageid=deletecourse&rowid=<?php echo $row['course_id']; ?>">Delete</a><br><br>
+        <?php echo '<p>'. $row['course_name'].'</p>'; ?>
+        <?php echo '<p>Course Level: '. $row['course_level'].'</p>'; ?>
+        <?php echo '<p>Price: $'. $row['price'].'</p>'; ?>
+        <a href="?pageid=editcourse&rowid=<?php echo $row['course_id']; ?>" class="button">Edit</a><br>
+        <a href="?pageid=deletecourse&rowid=<?php echo $row['course_id']; ?>" class="button">Delete</a><br><br>
       </div>  
       <?php
     }
@@ -119,9 +119,9 @@ function showClassesAction() {
         <?php echo '<p>Status: '. $row['status'].'</p>'; ?>
         <?php echo '<p>Trainer: '. $row['name'].'</p>'; ?>
         <?php echo '<p>Topic: '. $row['course_name'].'</p>'; ?><br>
-        <a href="?pageid=showclassstudent&rowid=<?php echo $row['class_id']; ?>">Manage Students</a><br>
-        <a href="?pageid=editclass&rowid=<?php echo $row['class_id']; ?>">Edit</a><br>
-        <a href="?pageid=deleteclass&rowid=<?php echo $row['class_id']; ?>">Delete</a><br><br>
+        <a href="?pageid=showclassstudent&rowid=<?php echo $row['class_id']; ?>" class="button">Manage Students</a><br>
+        <a href="?pageid=editclass&rowid=<?php echo $row['class_id']; ?>" class="button">Edit Class</a><br>
+        <a href="?pageid=deleteclass&rowid=<?php echo $row['class_id']; ?>" class="button">Delete</a><br><br>
       </div>  
       <?php
     }
@@ -143,8 +143,8 @@ function showCurrentStudents() {
         <div class="holder">      
         <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?><br>
         <?php echo '<p>Student ID: '. $row['student_id'].'</p>'; ?><br>
-        <a href="?pageid=edituser&rowid=<?php echo $row['login_id']; ?>">Edit</a><br>
-        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>">Delete</a><br><br>
+        <a href="?pageid=editstudent&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a><br>
+        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
         </div>  
         <?php
       }
@@ -170,8 +170,8 @@ function showClassStudents() {
         <div class="holder">      
         <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?><br>
         <?php echo '<p>Student ID: '. $row['student_id'].'</p>'; ?><br>
-        <a href="?pageid=edituser&rowid=<?php echo $row['login_id']; ?>">Edit</a><br>
-        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>">Delete</a><br><br>
+        <a href="?pageid=editstudent&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a><br>
+        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
         </div>  
         <?php
       }
@@ -210,8 +210,8 @@ function showCustomers() {
         <div class="holder">      
         <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?><br>
         <?php echo '<p>Student ID: '. $row['email'].'</p>'; ?><br>
-        <a href="?pageid=enrol&rowid=<?php echo $row['login_id']; ?>">Enrol</a><br>
-        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>">Delete</a><br><br>
+        <a href="?pageid=enrol&rowid=<?php echo $row['login_id']; ?>" class="button">Enrol</a><br>
+        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
         </div>  
         <?php
       }
@@ -257,5 +257,44 @@ function enrolStudent() {
     }
   }
 }
+
+function editCurrentStudent() {  
+  global $conn;
+  if (!empty([$_POST])) {
+    $loginid = !empty($_POST['loginid'])? sanitise(($_POST['loginid'])): null; 
+    $username = !empty($_POST['username'])? sanitise(($_POST['username'])): null; 
+    $password = !empty($_POST['password'])? sanitise(($_POST['password'])): null; 
+    $role = !empty($_POST['role']) ? sanitise(($_POST['role'])): null;
+    $name = !empty($_POST['name']) ? sanitise(($_POST['name'])): null;
+    $surname = !empty($_POST['surname'])? sanitise(($_POST['surname'])): null;
+    $address = !empty($_POST['address']) ? sanitise(($_POST['address'])): null;
+    $email = !empty($_POST['email']) ? sanitise(($_POST['email'])): null;
+    $phone = !empty($_POST['phone']) ? sanitise(($_POST['phone'])): null;
+    $dob = !empty($_POST['dob']) ? sanitise(($_POST['dob'])): null;
+    $class = !empty($_POST['class']) ? sanitise(($_POST['class'])): null;
+    if($_REQUEST['actiontype'] == 'editstudent') {
+      $query = $conn->prepare("SELECT login_id FROM login WHERE login_id = :loginid");
+      $query->bindValue(':loginid', $loginid);
+      $query->execute();
+      if ($query->rowCount() >= 1) {
+        try {
+          editStudent($loginid, $username, $password, $role, $name, $surname, $address, $email, $phone, $dob, $class);
+          $_SESSION['message'] = "Student updated successfully.";
+          header('Location: index.php');
+        }
+        catch(PDOException $e) { 
+          echo "Student data update problems".$e -> getMessage();
+          die();
+        }
+      }
+      else {
+        $_SESSION['message'] = "Login ID does not exist.";
+        header('Location: index.php');
+      }
+      exit;
+    }
+  }
+}
+
 
 ?>

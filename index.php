@@ -37,7 +37,7 @@ showMenu();
       if (isset($_GET['pageid'])) {
         $action = $_GET['pageid'];
         if ( $action == 'loggedin' ) {
-          echo "<p><h3>Welcome to the control panel.<h3></p>";
+          echo "<p><h3>Welcome to SafeTec Learning Management System.<h3></p>";
         }
         if ( $action == 'adduser' ) {
           include("view/pages/registration.php");
@@ -62,6 +62,12 @@ showMenu();
         }
         if ( $action == 'showstudent' ) {
           showCurrentStudents();
+        }
+        if ( $action == 'editstudent' ) {
+          include("view/pages/editStudentForm.php");
+        }
+        if ( $action == 'editingstudent' ) {
+          editCurrentStudent();
         }
         if ( $action == 'addcourse' ) {
           include("view/pages/addCourse.php");
