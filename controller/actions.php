@@ -120,6 +120,7 @@ function showClassesAction() {
         <?php echo '<p>Trainer: '. $row['name'].'</p>'; ?>
         <?php echo '<p>Topic: '. $row['course_name'].'</p>'; ?><br>
         <a href="?pageid=showclassstudent&rowid=<?php echo $row['class_id']; ?>" class="button">Manage Students</a><br>
+        <a href="?pageid=upload&rowid=<?php echo $row['class_id']; ?>" class="button">Upload Files</a><br>
         <a href="?pageid=editclass&rowid=<?php echo $row['class_id']; ?>" class="button">Edit Class</a><br>
         <a href="?pageid=deleteclass&rowid=<?php echo $row['class_id']; ?>" class="button">Delete</a><br><br>
       </div>  

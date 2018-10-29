@@ -87,6 +87,9 @@ showMenu();
         if ( $action == 'showmates' ) {
           include ("controller/mymates.php");
         }
+        if ( $action == 'upload' ) {
+          include ("view/pages/uploadForm.php");
+        }
         if ( $action == 'showclassstudent' ) {
           showClassStudents();
         }
