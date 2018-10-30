@@ -50,10 +50,12 @@ function showUsersAction() {
   } else {
     foreach($result as $row) {?>
       <div class="holder">
-        <?php echo $row['name'].' '.$row['surname']; ?><br>
-        <?php echo '<p>'. $row['email'].'</p>'; ?><br>
-        <a href="?pageid=edituser&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a><br>
-        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
+        <div class="frame">
+          <p><?php echo $row['name'].' '.$row['surname']; ?></p>
+          <p><?php echo $row['email']; ?></p>
+          <a href="?pageid=edituser&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a>
+          <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br>
+        </div>
       </div>  
       <?php
     }
@@ -71,10 +73,12 @@ function showTrainersAction() {
   } else {
     foreach($result as $row) {?>
       <div class="holder">
-        <?php echo $row['name'].' '.$row['surname']; ?><br>
-        <?php echo '<p>'. $row['email'].'</p>'; ?><br>
-        <a href="?pageid=edittrainer&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a><br>
-        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
+        <div class="frame">
+          <?php echo $row['name'].' '.$row['surname']; ?><br>
+          <?php echo '<p>'. $row['email'].'</p>'; ?><br>
+          <a href="?pageid=edittrainer&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a>
+          <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
+        </div>
       </div>  
       <?php
     }
@@ -92,11 +96,13 @@ function showCoursesAction() {
   } else {
     foreach($result as $row) {?>
       <div class="holder">
-        <?php echo '<p>'. $row['course_name'].'</p>'; ?>
-        <?php echo '<p>Course Level: '. $row['course_level'].'</p>'; ?>
-        <?php echo '<p>Price: $'. $row['price'].'</p>'; ?>
-        <a href="?pageid=editcourse&rowid=<?php echo $row['course_id']; ?>" class="button">Edit</a><br>
-        <a href="?pageid=deletecourse&rowid=<?php echo $row['course_id']; ?>" class="button">Delete</a><br><br>
+        <div class="frame">
+          <?php echo '<p>'. $row['course_name'].'</p>'; ?>
+          <?php echo '<p>Course Level: '. $row['course_level'].'</p>'; ?>
+          <?php echo '<p>Price: $'. $row['price'].'</p>'; ?>
+          <a href="?pageid=editcourse&rowid=<?php echo $row['course_id']; ?>" class="button">Edit</a>
+          <a href="?pageid=deletecourse&rowid=<?php echo $row['course_id']; ?>" class="button">Delete</a><br><br>
+        </div>
       </div>  
       <?php
     }
@@ -113,17 +119,19 @@ function showClassesAction() {
     echo "The course database is empty.";
   } else {
     foreach($result as $row) {?>
-      <div class="holder">      
-        <?php echo '<p>Start date: '. $row['start_date'].'</p>'; ?>
-        <?php echo '<p>Start date: '. $row['end_date'].'</p>'; ?>
-        <?php echo '<p>Status: '. $row['status'].'</p>'; ?>
-        <?php echo '<p>Trainer: '. $row['name'].'</p>'; ?>
-        <?php echo '<p>Topic: '. $row['course_name'].'</p>'; ?><br>
-        <a href="?pageid=showclassstudent&rowid=<?php echo $row['class_id']; ?>" class="button">Manage Students</a><br>
-        <a href="?pageid=upload&classid=<?php echo $row['class_id']; ?>" class="button">Upload Files</a><br>
-        <a href="?pageid=showfiles&classid=<?php echo $row['class_id']; ?>" class="button">Manage Files</a><br>
-        <a href="?pageid=editclass&rowid=<?php echo $row['class_id']; ?>" class="button">Edit Class</a><br>
-        <a href="?pageid=deleteclass&rowid=<?php echo $row['class_id']; ?>" class="button">Delete</a><br><br>
+      <div class="holder"> 
+        <div class="frame">     
+          <?php echo '<p>Start date: '. $row['start_date'].'</p>'; ?>
+          <?php echo '<p>Start date: '. $row['end_date'].'</p>'; ?>
+          <?php echo '<p>Status: '. $row['status'].'</p>'; ?>
+          <?php echo '<p>Trainer: '. $row['name'].'</p>'; ?>
+          <?php echo '<p>Topic: '. $row['course_name'].'</p>'; ?><br>
+          <a href="?pageid=showclassstudent&rowid=<?php echo $row['class_id']; ?>" class="button">Manage Students</a>
+          <a href="?pageid=upload&classid=<?php echo $row['class_id']; ?>" class="button">Upload Files</a>
+          <a href="?pageid=showfiles&classid=<?php echo $row['class_id']; ?>" class="button">Manage Files</a>
+          <a href="?pageid=editclass&rowid=<?php echo $row['class_id']; ?>" class="button">Edit Class</a>
+          <a href="?pageid=deleteclass&rowid=<?php echo $row['class_id']; ?>" class="button">Delete</a>
+        </div>  
       </div>  
       <?php
     }
@@ -142,11 +150,13 @@ function showCurrentStudents() {
       echo "There is no currently enroled student";
     } else {
       foreach($result as $row) {?>
-        <div class="holder">      
-        <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?><br>
-        <?php echo '<p>Student ID: '. $row['student_id'].'</p>'; ?><br>
-        <a href="?pageid=editstudent&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a><br>
-        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
+        <div class="holder">   
+          <div class="frame">     
+            <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?>
+            <?php echo '<p>Student ID: '. $row['student_id'].'</p>'; ?>
+            <a href="?pageid=editstudent&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a>
+            <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
+          </div>
         </div>  
         <?php
       }
@@ -169,11 +179,13 @@ function showClassStudents() {
       echo "This class has no student.";
     } else {
       foreach($result as $row) {?>
-        <div class="holder">      
-        <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?><br>
-        <?php echo '<p>Student ID: '. $row['student_id'].'</p>'; ?><br>
-        <a href="?pageid=editstudent&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a><br>
-        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
+        <div class="holder">     
+          <div class="frame">   
+            <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?>
+            <?php echo '<p>Student ID: '. $row['student_id'].'</p>'; ?>
+            <a href="?pageid=editstudent&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a>
+            <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br>
+          </div>
         </div>  
         <?php
       }
@@ -249,11 +261,13 @@ function showClassFiles() {
   } else {
     foreach($result as $row) {?>
       <div class="holder">
-        <?php echo '<p>Class: '. $row['class_id'].'</p>'; ?>
-        <?php echo '<p>'. $row['file_name'].'</p>'; ?>
-        <?php echo '<p><a href="'. $row['content_link'].'">Link</a></p>'; ?>
-        <?php echo '<p>Added: '. $row['time_added'].'</p>'; ?>
-        <a href="?pageid=deletefile&rowid=<?php echo $row['content_id']; ?>" class="button">Delete</a><br><br>
+        <div class="frame">  
+          <?php echo '<p>Class: '. $row['class_id'].'</p>'; ?>
+          <?php echo '<p>'. $row['file_name'].'</p>'; ?>
+          <?php echo '<p><a href="'. $row['content_link'].'">Link</a></p>'; ?>
+          <?php echo '<p>Added: '. $row['time_added'].'</p>'; ?>
+          <a href="?pageid=deletefile&rowid=<?php echo $row['content_id']; ?>" class="button">Delete</a><br><br>
+        </div>
       </div>  
       <?php
     }
@@ -285,11 +299,13 @@ function showCustomers() {
       echo "There is no student to be enrolled";
     } else {
       foreach($result as $row) {?>
-        <div class="holder">      
-        <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?><br>
-        <?php echo '<p>Student ID: '. $row['email'].'</p>'; ?><br>
-        <a href="?pageid=enrol&rowid=<?php echo $row['login_id']; ?>" class="button">Enrol</a><br>
-        <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
+        <div class="holder">    
+          <div class="frame">    
+            <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?><br>
+            <?php echo '<p>Student ID: '. $row['email'].'</p>'; ?><br>
+            <a href="?pageid=enrol&rowid=<?php echo $row['login_id']; ?>" class="button">Enrol</a>
+            <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br>
+          </div>
         </div>  
         <?php
       }
