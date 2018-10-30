@@ -120,7 +120,8 @@ function showClassesAction() {
         <?php echo '<p>Trainer: '. $row['name'].'</p>'; ?>
         <?php echo '<p>Topic: '. $row['course_name'].'</p>'; ?><br>
         <a href="?pageid=showclassstudent&rowid=<?php echo $row['class_id']; ?>" class="button">Manage Students</a><br>
-        <a href="?pageid=upload&rowid=<?php echo $row['class_id']; ?>" class="button">Upload Files</a><br>
+        <a href="?pageid=upload&classid=<?php echo $row['class_id']; ?>" class="button">Upload Files</a><br>
+        <a href="?pageid=showfiles&classid=<?php echo $row['class_id']; ?>" class="button">Manage Files</a><br>
         <a href="?pageid=editclass&rowid=<?php echo $row['class_id']; ?>" class="button">Edit Class</a><br>
         <a href="?pageid=deleteclass&rowid=<?php echo $row['class_id']; ?>" class="button">Delete</a><br><br>
       </div>  
@@ -180,6 +181,82 @@ function showClassStudents() {
   } else {
     echo '<aside>Only administrator can edit student accounts.</aside>';
     echo "<aside><a href='index.php'>Go back</a></aside>";
+  }
+}
+
+function uploadFileAction() {
+  global $conn;  
+  $class_id = !empty($_POST['classid'])? sanitise(($_POST['classid'])): null; 
+  $date = date('Y-m-d H:i:s'); //record current date and time
+  $target_dir = "./view/uploads/class-".$class_id."/"; //define class subfolders under the "upload" folder as target directories
+  $file_name = basename($_FILES["contentfile"]["name"]); //pick file name
+  $full_path = $target_dir . $file_name; //full directory and file name
+  $go_code = 1; //define go code for various checks. 1 means OK to upload; 0 means not OK
+  $ext = pathinfo($full_path)['extension']; //pick file extension
+  $file_type = strtolower($ext);// rewrite extension in lower case for file type screening
+  // Check if file already exists
+  if (file_exists($full_path)) {
+    echo "Sorry, file already exists.";
+    $go_code = 0; // 0 means not OK to upload
+  }
+  // Check file size
+  if ($_FILES["contentfile"]["size"] > 1000000) {
+    echo "Sorry, file is too big, size limit is 1 MB.";
+    $go_code = 0; // 0 means not OK to upload
+  }
+  // Allow certain file formats
+  if($file_type != "pdf" && $file_type != "txt" && $file_type != "doc"
+  && $file_type != "docx" && $file_type != "ppt") {
+      echo "Sorry, only PDF, TXT, DOC, DOCX and PPT files are allowed.";
+      $go_code = 0; // 0 means not OK to upload
+  }
+  // Check if it passes all checks
+  if ($go_code == 0) {
+    echo "Sorry, your file was not uploaded.";
+  // if everything is ok, try to upload file
+  } else {
+    // step 1: create a target directory if it does not exist
+    if (!file_exists($target_dir)) {
+      mkdir($target_dir, 0777, true);
+    }
+    // step 2: put file into target folder
+    if (move_uploaded_file($_FILES["contentfile"]["tmp_name"], $full_path)) {
+      echo "The file ". basename( $_FILES["contentfile"]["name"]). " has been uploaded successfully.";
+      // step 3: insert the file information into database
+      try {
+        uploadFile($class_id, $file_name, $full_path, $date);
+        $_SESSION['message'] = 'File uploaded successfully.';            
+        header('location:./index.php');
+      }
+      catch(PDOException $e) { 
+        echo "Account update problems".$e -> getMessage();
+        die();
+      }
+    } else {
+      echo "Sorry, there was an error uploading your file.";
+    }    
+  }
+}
+
+function showClassFiles() {
+  global $conn;
+  $sql = "SELECT * FROM learning_material WHERE class_id = '". $_GET['classid']."'";    
+  $stmt = $conn->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  if($stmt->rowCount()< 1 ) {
+    echo "There is no file uploaded to this class yet.";
+  } else {
+    foreach($result as $row) {?>
+      <div class="holder">
+        <?php echo '<p>Class: '. $row['class_id'].'</p>'; ?>
+        <?php echo '<p>'. $row['file_name'].'</p>'; ?>
+        <?php echo '<p><a href="'. $row['content_link'].'">Link</a></p>'; ?>
+        <?php echo '<p>Added: '. $row['time_added'].'</p>'; ?>
+        <a href="?pageid=deletefile&rowid=<?php echo $row['content_id']; ?>" class="button">Delete</a><br><br>
+      </div>  
+      <?php
+    }
   }
 }
 

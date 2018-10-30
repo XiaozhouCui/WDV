@@ -4,6 +4,7 @@ include("model/db.php");
 include("model/dbFunctions.php");
 include("controller/actions.php");
 include("view/pages/elements.php");
+date_default_timezone_set('Australia/Brisbane');//set time zone to Brisbane
 
 showHeader();
 showMenu();
@@ -89,6 +90,12 @@ showMenu();
         }
         if ( $action == 'upload' ) {
           include ("view/pages/uploadForm.php");
+        }
+        if ( $action == 'uploading' ) {
+          uploadFileAction();
+        }
+        if ( $action == 'showfiles' ) {
+          showClassFiles();
         }
         if ( $action == 'showclassstudent' ) {
           showClassStudents();

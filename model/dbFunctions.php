@@ -240,6 +240,25 @@ function editStudent($loginid, $username, $password, $role, $name, $surname, $ad
     }
 }
 
+function uploadFile($class_id, $file_name, $full_path, $date) {
+    global $conn;
+    try {
+        $conn->beginTransaction(); 
+        $newfile = "INSERT INTO learning_material(class_id, file_name, content_link, time_added) VALUES (:class_id, :file_name, :full_path, :date)";
+        $stmt = $conn->prepare($newfile);
+        $stmt->bindValue(':class_id', $class_id);
+        $stmt->bindValue(':file_name', $file_name);
+        $stmt->bindValue(':full_path', $full_path);
+        $stmt->bindValue(':date', $date);
+        $stmt->execute();
+        $conn->commit();   
+    }
+    catch(PDOException $ex) { 
+        $conn->rollBack();
+        throw $ex;
+    }
+}
+
 function sanitise($data) {
     $data = trim($data);
     $data = stripslashes($data);
