@@ -497,7 +497,7 @@ function addCourseAction() {
           header('Location: index.php?pageid=showcourse');
         }
         catch(PDOException $e) { 
-          echo "Account creation problems".$e -> getMessage();
+          echo "Course creation problems".$e -> getMessage();
           die();
         }
       }
@@ -549,6 +549,58 @@ function delCourseAction() {
     header('Location: index.php');
   } else {
     echo "Only administrator can delete a course.";
+  }
+}
+
+function addClassAction() {
+  global $conn;
+  if (!empty([$_POST])) {
+    $startdate = !empty($_POST['startdate'])? sanitise(($_POST['startdate'])): null; 
+    $enddate = !empty($_POST['enddate'])? sanitise(($_POST['enddate'])): null; 
+    $status = !empty($_POST['status']) ? sanitise(($_POST['status'])): null;
+    $trainerid = !empty($_POST['trainerid']) ? sanitise(($_POST['trainerid'])): null;
+    $courseid = !empty($_POST['courseid'])? sanitise(($_POST['courseid'])): null;
+
+    if($_REQUEST['actiontype'] == 'addclass') {
+      try {
+        addClass($startdate, $enddate, $status, $courseid, $trainerid);
+        $_SESSION['message'] = "Class added successfully.";
+        header('Location: index.php?pageid=showclass');
+      }
+      catch(PDOException $e) { 
+        echo "Class creation problems".$e -> getMessage();
+        die();
+      }
+    }
+  }
+}
+
+function editClassAction() {
+  global $conn;
+  if ($_SESSION['level'] == 'Admin') { 
+    if($_POST['actiontype'] == 'editclass') {
+      $startdate = !empty($_POST['startdate'])? sanitise(($_POST['startdate'])): null; 
+      $enddate = !empty($_POST['enddate'])? sanitise(($_POST['enddate'])): null; 
+      $status = !empty($_POST['status']) ? sanitise(($_POST['status'])): null;
+      $trainerid = !empty($_POST['trainerid']) ? sanitise(($_POST['trainerid'])): null;
+      $courseid = !empty($_POST['courseid'])? sanitise(($_POST['courseid'])): null;
+      $rowid = !empty($_POST['rowid']) ? sanitise(($_POST['rowid'])): null;
+      try {
+        editClass($rowid, $startdate, $enddate, $status, $trainerid, $courseid);
+        $_SESSION['message'] = 'Class updated successfully.';            
+        header('location: index.php');
+      }
+      catch(PDOException $e) { 
+        echo "Class update problems".$e -> getMessage();
+        die();
+      } 
+    } else {
+      $_SESSION['message'] = 'Failed to update class.';
+      header('location: index.php');
+    }
+  } else {
+    $_SESSION['message'] = 'Only administrator can edit classes.';
+    header('location: index.php');
   }
 }
 

@@ -147,7 +147,7 @@ function addCourse($coursename, $description, $level, $price) {
         $stmt->execute();  
     }
     catch(PDOException $e) { 
-        echo "Failed to create a course.".$e -> getMessage();
+        echo "Failed to create a course. ".$e -> getMessage();
         die();
     }
 }
@@ -163,6 +163,46 @@ function editCourse($rowid, $coursename, $description, $level, $price) {
         $stmt->bindValue(':level', $level);
         $stmt->bindValue(':price', $price);
         $stmt->execute();
+    }
+    catch(PDOException $ex) { 
+        $conn->rollBack();
+        throw $ex;
+    }
+}
+
+function addClass($startdate, $enddate, $status, $trainerid, $courseid) {
+    global $conn;
+    try {
+        $newclass = "INSERT INTO class(start_date, end_date, status, course_id, trainer_id) VALUES (:startdate, :enddate, :status, :trainerid, :courseid)";
+        $stmt = $conn->prepare($newclass);
+        $stmt->bindValue(':startdate', $startdate);
+        $stmt->bindValue(':enddate', $enddate);
+        $stmt->bindValue(':status', $status);
+        $stmt->bindValue(':courseid', $courseid);
+        $stmt->bindValue(':trainerid', $trainerid); 
+        $stmt->execute();  
+    }
+    catch(PDOException $e) { 
+        echo "Failed to create a class. ".$e -> getMessage();
+        die();
+    }
+}
+
+function editClass($rowid, $startdate, $enddate, $status, $trainerid, $courseid) {
+    global $conn;
+    try {
+        $conn->beginTransaction();
+        $editclass = "UPDATE class SET start_date = :startdate, end_date = :enddate, status = :status, course_id = :courseid, trainer_id = :trainerid WHERE class_id = :rowid";        
+        $stmt = $conn->prepare($editclass);
+        $stmt->bindValue(':rowid', $rowid);
+        $stmt->bindValue(':startdate', $startdate);
+        $stmt->bindValue(':enddate', $enddate);
+        $stmt->bindValue(':status', $status);
+        $stmt->bindValue(':courseid', $courseid);
+        $stmt->bindValue(':trainerid', $trainerid);        
+        $stmt->execute();
+        
+        $conn->commit();
     }
     catch(PDOException $ex) { 
         $conn->rollBack();

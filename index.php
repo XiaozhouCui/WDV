@@ -95,10 +95,19 @@ showMenu();
           delCourseAction();
         }
         if ( $action == 'addclass' ) {
-          include("view/pages/addClass.php");
+          include("view/pages/addClassForm.php");
+        }
+        if ( $action == 'addingclass' ) {
+          addClassAction();
         }
         if ( $action == 'showclass' ) {
           showClassesAction();
+        }
+        if ( $action == 'editclass' ) {
+          include("view/pages/editClassForm.php");
+        }
+        if ( $action == 'editingclass' ) {
+          editClassAction();
         }
         if ( $action == 'showmates' ) {
           include ("controller/mymates.php");
