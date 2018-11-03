@@ -36,7 +36,7 @@ if ($_SESSION['level'] == 'Admin') {
 					<input type="text" name=class value="<?php echo $result['class_id'] ?>"required><br><br>			
 					<input type="hidden" name="actiontype" value="editstudent"/>
 					<input type="submit">
-					<input type="button" onclick="location.href='index.php';" value="Cancel" />
+					<input type="button" onclick="location.href='?pageid=showstudent';" value="Cancel" />
 				</fieldset>
 			</form>
 		</div>

@@ -1,4 +1,74 @@
-function showPassword1() {
+document.getElementById('edituserform').addEventListener('submit', AJAXupdateUser);
+
+window.onload = function() {
+  edituserform.style.display = 'none';
+}
+
+function editUserForm(oneuser) {
+  var userURL = "model/webservice.php?getData=oneuser&id=" + oneuser;
+  $.ajax({
+    url: userURL,
+    method: 'get',
+    datatype: 'json',
+    success: function(res) {
+        edituserform.style.display = 'block';
+        populateForm(res);
+    },
+    error: function(err) {
+        console.log(err);
+    }
+  });
+}
+
+function populateForm(user) {
+  document.getElementById('usereditid').value = user.login_id;
+  document.getElementById('usereditum').value = user.username;
+  document.getElementById('usereditpw').value = '';
+  document.getElementById('usereditname').value = user.name;
+  document.getElementById('usereditsurname').value = user.surname;
+  document.getElementById('usereditemail').value = user.email;
+}
+
+function AJAXupdateUser() {
+  var pubURL = "model/webservice.php?getData=updateuser";
+  $.ajax({
+    url: pubURL,
+    method: 'post',
+    data: $('#edituserform').serialize(),
+    datatype: 'json',
+    success: function(res) {
+      alert("User updated successfully");
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  });
+}
+
+function deleteUserForm(userid) {
+  var returnVal = confirm('Are you sure?');
+  if(returnVal == true) {
+    AJAXdeleteUser(userid);
+  }
+}
+
+function AJAXdeleteUser(userid) {
+  var userURL = "model/webservice.php?getData=deleteuser&userid=" + userid;
+  $.ajax({
+    url: userURL,
+    method: 'get',
+    datatype: 'json',
+    success: function(res) {
+      alert("User deleted successfully");
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  });
+}
+
+
+function showPassword() {
   var p1 = document.getElementById("regpw");   
   if (p1.type == "password") {
     p1.type = "text";
@@ -7,41 +77,6 @@ function showPassword1() {
   }
 }
 
-function showPassword2() {
-  var p2 = document.getElementById("userpw");
-  if (p2.type == "password") {
-    p2.type = "text";
-  } else {
-    p2.type = "password";
-  }
-}
-
-function showPassword3() {
-  var p3 = document.getElementById("trainerpw");
-  if (p3.type == "password") {
-    p3.type = "text";
-  } else {
-    p3.type = "password";
-  }
-}
-
-function showPassword4() {
-  var p4 = document.getElementById("studentpw");
-  if (p4.type == "password") {
-    p4.type = "text";
-  } else {
-    p4.type = "password";
-  }
-}
-
-function showPassword5() {
-  var p5 = document.getElementById("customerpw");
-  if (p5.type == "password") {
-    p5.type = "text";
-  } else {
-    p5.type = "password";
-  }
-}
 
 function doEmailCheck(emailAddr) {     
   var ajaxUrl = 'controller/checkemail.php?email=' + emailAddr;

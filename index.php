@@ -43,6 +43,9 @@ showMenu();
         if ( $action == 'adduser' ) {
           include("view/pages/registration.php");
         }
+        if ( $action == 'addinguser' ) {
+          addUserAction();
+        }
         if ( $action == 'showuser' ) {
           showUsersAction();
         }
@@ -73,11 +76,23 @@ showMenu();
         if ( $action == 'addcourse' ) {
           include("view/pages/addCourse.php");
         }
+        if ( $action == 'addingcourse' ) {
+          addCourseAction();
+        }
         if ( $action == 'showcourse' ) {
           showCoursesAction();
         }
         if ( $action == 'editcourse' ) {
           include("view/pages/editCourseForm.php");
+        }
+        if ( $action == 'editingcourse' ) {
+          editCourseAction();
+        }
+        if ( $action == 'deletecourse' ) {
+          include("view/pages/delCourseForm.php");
+        }
+        if ( $action == 'deletingcourse' ) {
+          delCourseAction();
         }
         if ( $action == 'addclass' ) {
           include("view/pages/addClass.php");

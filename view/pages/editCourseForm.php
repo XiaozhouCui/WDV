@@ -6,7 +6,7 @@ if ($_SESSION['level'] == 'Admin') {
 	$result = $stmt->fetch(PDO::FETCH_ASSOC);	 
 	?>  
   <h2>Create a new course</h2>
-  <form action="controller/updateCourse.php"  method="post">
+  <form action="?pageid=editingcourse"  method="post">
     <fieldset>
       <legend>Course details</legend>
       <input type="hidden" name="rowid" value="<?php echo $_GET['rowid'] ?>">

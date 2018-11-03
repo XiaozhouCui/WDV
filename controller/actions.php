@@ -39,6 +39,56 @@ function logoutAction() {
   }
 }
 
+function addUserAction() {
+  global $conn;
+  if (!empty([$_POST])) {
+    $username = !empty($_POST['username'])? sanitise(($_POST['username'])): null; 
+    $mypass = !empty($_POST['password'])? sanitise(($_POST['password'])): null;
+    $password = password_hash($mypass, PASSWORD_DEFAULT); 
+    $role = !empty($_POST['role']) ? sanitise(($_POST['role'])): null;
+    $name = !empty($_POST['name']) ? sanitise(($_POST['name'])): null;
+    $surname = !empty($_POST['surname'])? sanitise(($_POST['surname'])): null;
+    $email = !empty($_POST['email']) ? sanitise(($_POST['email'])): null;
+
+    if($_REQUEST['action_type'] == 'add') {
+      $query = $conn->prepare("SELECT username FROM login WHERE username = :user");
+      $query->bindValue(':user', $username);
+      $query->execute();
+      if ($query->rowCount() < 1) {
+        try {
+          if ($role == "Admin") {
+            addUser($username, $password, $role, $name, $surname, $email);
+            $_SESSION['message'] = "Admin added successfully.";
+            header('Location: index.php');
+          }
+          if ($role == "Trainer") {
+            addTrainer($username, $password, $role, $name, $surname, $email);
+            $_SESSION['message'] = "Trainer added successfully.";
+            header('Location: index.php');
+          }
+          if ($role == "Customer") {
+            addCustomer($username, $password, $role, $name, $surname, $email);
+            $_SESSION['message'] = "Customer added successfully.";
+            header('Location: index.php');
+          }
+          else {
+            echo "Registration failed! Please make sure the role of the new user is valid";
+          }
+        }
+        catch(PDOException $e) { 
+          echo "Account creation problems".$e -> getMessage();
+          die();
+        }        
+      }
+      else {
+        $_SESSION['message'] = "Username already exists, try another.";
+        header('Location: index.php');      
+      }
+      exit;
+    }
+  }
+}
+
 function showUsersAction() {
   global $conn;
   $sql = "SELECT * FROM login INNER JOIN user ON login.login_id = user.login_id";    
@@ -51,14 +101,48 @@ function showUsersAction() {
     foreach($result as $row) {?>
       <div class="holder">
         <div class="frame">
-          <p><?php echo $row['name'].' '.$row['surname']; ?></p>
-          <p><?php echo $row['email']; ?></p>
+          <p>Username: <?php echo $row['username']; ?></p>
+          <p>Full Name: <?php echo $row['name'].' '.$row['surname']; ?></p>
+          <p>Email: <?php echo $row['email']; ?></p>
           <a href="?pageid=edituser&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a>
-          <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br>
+          <a href="#" class="button" onclick="editUserForm(<?php echo $row['login_id']; ?>)">Ajax Edit</a>
+          <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a>
+          <a href="#" class="button" onclick="deleteUserForm(<?php echo $row['login_id']; ?>)">Ajax Delete</a>
         </div>
       </div>  
       <?php
     }
+    ?>  
+    <div class="bigholder">      
+      <form action="#"  method="post" id="edituserform" novalidate onsubmit="return false">
+      <h1>Edit User</h1>
+        <fieldset>
+          <legend>Login details</legend>
+          <input type="hidden" name="rowid" id="usereditid"><br>
+          <label>Username:</label>
+          <input type="text" name="username" id="usereditum"><br><br>
+          <label>Password:</label>
+          <input type="password" name="password" id="usereditpw" required><br><br>
+          <label>Role:</label>
+          <input type="radio" name="role" value="Admin" checked>Admin  
+        </fieldset>
+        <fieldset>
+          <legend>Personal details</legend>
+          <label>Given Name:</label>
+          <input type="text" name="name" id="usereditname"><br><br>
+          <label>Surname:</label>
+          <input type="text" name="surname" id="usereditsurname"><br><br>
+          <label>Email:</label>
+          <input type="text" name="email" id="usereditemail"><br><br>	
+          <input type="hidden" name="action_type" value="edit"/>
+          <button name="edituser_button" id="edituser_button_form">
+            Edit User
+          </button>
+          <input type="button" onclick="location.href='?pageid=showuser';" value="Cancel" />
+        </fieldset>
+      </form>
+    </div>
+    <?php
   }
 }
 
@@ -74,8 +158,9 @@ function showTrainersAction() {
     foreach($result as $row) {?>
       <div class="holder">
         <div class="frame">
-          <?php echo $row['name'].' '.$row['surname']; ?><br>
-          <?php echo '<p>'. $row['email'].'</p>'; ?><br>
+          <p>Username: <?php echo $row['username']; ?></p>
+          <p>Full Name: <?php echo $row['name'].' '.$row['surname']; ?></p>
+          <p>Email: <?php echo $row['email']; ?></p>
           <a href="?pageid=edittrainer&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a>
           <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
         </div>
@@ -87,7 +172,7 @@ function showTrainersAction() {
 
 function showCoursesAction() {
   global $conn;
-  $sql = "SELECT course_id, course_name, course_level, price FROM course";    
+  $sql = "SELECT * FROM course";    
   $stmt = $conn->prepare($sql);
   $stmt->execute();
   $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -152,10 +237,11 @@ function showCurrentStudents() {
       foreach($result as $row) {?>
         <div class="holder">   
           <div class="frame">     
-            <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?>
-            <?php echo '<p>Student ID: '. $row['student_id'].'</p>'; ?>
+            <p>Full Name: <?php echo $row['name'].' '.$row['surname']; ?></p>
+            <p>Student ID: <?php echo $row['student_id']; ?></p>
+            <p>Class ID: <?php echo $row['class_id']; ?></p>
             <a href="?pageid=editstudent&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a>
-            <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
+            <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a>
           </div>
         </div>  
         <?php
@@ -252,8 +338,9 @@ function uploadFileAction() {
 
 function showClassFiles() {
   global $conn;
-  $sql = "SELECT * FROM learning_material WHERE class_id = '". $_GET['classid']."'";    
+  $sql = "SELECT * FROM learning_material WHERE class_id = :classid"; 
   $stmt = $conn->prepare($sql);
+  $stmt->bindValue(':classid', $_GET['classid']);
   $stmt->execute();
   $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   if($stmt->rowCount()< 1 ) {
@@ -277,8 +364,9 @@ function showClassFiles() {
 function delUserAction() {
   global $conn;
   if ($_SESSION['level'] == 'Admin') {
-    $sql = "DELETE FROM login WHERE login.login_id = '". $_POST['rowid']."'";
+    $sql = "DELETE FROM login WHERE login.login_id = :rowid";
     $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':rowid', $_POST['rowid']);
     $stmt->execute();
     $_SESSION['message']="Admin user deleted successfully";
     header('Location: index.php');
@@ -302,7 +390,7 @@ function showCustomers() {
         <div class="holder">    
           <div class="frame">    
             <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?><br>
-            <?php echo '<p>Student ID: '. $row['email'].'</p>'; ?><br>
+            <?php echo '<p>Email: '. $row['email'].'</p>'; ?><br>
             <a href="?pageid=enrol&rowid=<?php echo $row['login_id']; ?>" class="button">Enrol</a>
             <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br>
           </div>
@@ -390,5 +478,78 @@ function editCurrentStudent() {
   }
 }
 
+function addCourseAction() {
+  global $conn;
+  if (!empty([$_POST])) {
+    $coursename = !empty($_POST['coursename'])? sanitise(($_POST['coursename'])): null; 
+    $description = !empty($_POST['description'])? sanitise(($_POST['description'])): null; 
+    $level = !empty($_POST['level']) ? sanitise(($_POST['level'])): null;
+    $price = !empty($_POST['price']) ? sanitise(($_POST['price'])): null;
+
+    if($_REQUEST['actiontype'] == 'newcourse') {
+      $query = $conn->prepare("SELECT course_name FROM course WHERE course_name = :coursename");
+      $query->bindValue(':coursename', $coursename);
+      $query->execute();
+      if ($query->rowCount() < 1) {
+        try {
+          addCourse($coursename, $description, $level, $price);
+          $_SESSION['message'] = "Course added successfully.";
+          header('Location: index.php?pageid=showcourse');
+        }
+        catch(PDOException $e) { 
+          echo "Account creation problems".$e -> getMessage();
+          die();
+        }
+      }
+      else {
+        $_SESSION['message'] = 'Course already exists, try another.';
+        header('Location: index.php');
+      }
+      exit;
+    }
+  }
+}
+
+function editCourseAction() {
+  global $conn;
+  if ($_SESSION['level'] == 'Admin') { 
+    if($_POST['actiontype'] == 'editcourse') {
+      $coursename = !empty($_POST['coursename'])? sanitise(($_POST['coursename'])): null; 
+      $description = !empty($_POST['description'])? sanitise(($_POST['description'])): null; 
+      $level = !empty($_POST['level']) ? sanitise(($_POST['level'])): null;
+      $price = !empty($_POST['price'])? sanitise(($_POST['price'])): null;
+      $rowid = !empty($_POST['rowid']) ? sanitise(($_POST['rowid'])): null;
+      try {
+        editCourse($rowid, $coursename, $description, $level, $price);
+        $_SESSION['message'] = 'Course updated successfully.';            
+        header('location: index.php');
+      }
+      catch(PDOException $e) { 
+        echo "Course update problems".$e -> getMessage();
+        die();
+      } 
+    } else {
+      $_SESSION['message'] = 'Failed to update course.';
+      header('location: index.php');
+    }
+  } else {
+    $_SESSION['message'] = 'Only administrator can edit courses.';
+    header('location: index.php');
+  }
+}
+
+function delCourseAction() {
+  global $conn;
+  if ($_SESSION['level'] == 'Admin') {
+    $sql = "DELETE FROM course WHERE course_id = :rowid";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':rowid', $_POST['rowid']);
+    $stmt->execute();
+    $_SESSION['message']="Course deleted successfully";
+    header('Location: index.php');
+  } else {
+    echo "Only administrator can delete a course.";
+  }
+}
 
 ?>

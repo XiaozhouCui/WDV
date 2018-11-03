@@ -1,14 +1,14 @@
 <?php
 function showHeader() {
-  ?>
+?>
   <!doctype html>
   <html>
   <head>
     <meta charset="utf-8">
     <title>Home</title>
     <link href="view/css/style.css" rel="stylesheet">
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="view/js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="view/js/script.js" defer></script>
   </head>
   <body>
     <div class="flex-container">
@@ -21,7 +21,7 @@ function showHeader() {
         <div class="menuItem">SERVICES</div>
         <div class="menuItem">CONTACT</div>
       </nav>
-  <?php
+<?php
 }
 
 function showMenu() {  ?>
@@ -33,7 +33,7 @@ function showMenu() {  ?>
           <li><a href="?pageid=showuser">Manage Admins</a></li>
           <li><a href="?pageid=showtrainer">Manage Trainers</a></li>
           <li><a href="?pageid=showstudent">Manage Students</a></li>
-          <li><a href="?pageid=showcustomer">Enrol a Student</a></li>
+          <li><a href="?pageid=showcustomer">Manage Customers</a></li>
           <li><a href="?pageid=addcourse">Create a Course</a></li>
           <li><a href="?pageid=showcourse">Manage Courses</a></li>
           <li><a href="?pageid=addclass">Create a Class</a></li>

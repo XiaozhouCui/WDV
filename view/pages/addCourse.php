@@ -1,5 +1,5 @@
 <h2>Create a new course</h2>
-<form action="../../controller/pdoCourse.php"  method="post">
+<form action="?pageid=addingcourse"  method="post">
 	<fieldset>
 		<legend>Course details</legend>
 		<label>Course name:</label>
@@ -16,6 +16,6 @@
 		<input type="text" name=price required><br><br>
 		<input type="hidden" name="actiontype" value="newcourse"/>
 		<input type="submit">
-		<input type="button" onclick="location.href='?pageid=home';" value="Cancel" />
+		<input type="button" onclick="location.href='?pageid=showcourse';" value="Cancel" />
 	</fieldset>
 </form>

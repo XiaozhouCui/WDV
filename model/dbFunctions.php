@@ -107,7 +107,7 @@ function editTrainer($rowid, $username, $password, $role, $name, $surname, $emai
     }
 }
 
-function addStudent($username, $password, $role, $name, $surname, $email) {
+function addCustomer($username, $password, $role, $name, $surname, $email) {
     global $conn;
     try {
         $conn->beginTransaction(); //SQL transaction
