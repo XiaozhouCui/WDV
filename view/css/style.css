@@ -107,7 +107,8 @@ fieldset {
 	min-height:300px;
 	float:left;	
 	box-sizing: border-box;
-	border: 1px solid black;
+	border: 2px solid white;
+	border-radius: 10px;
 }
 
 .frame {
@@ -118,8 +119,6 @@ fieldset {
 	flex-wrap: wrap;
 	align-items: flex-end; 
 	justify-content: space-around;
-	box-sizing: border-box;
-	border: 1px solid blue;
 }
 
 .frame p {

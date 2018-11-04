@@ -105,44 +105,11 @@ function showUsersAction() {
           <p>Full Name: <?php echo $row['name'].' '.$row['surname']; ?></p>
           <p>Email: <?php echo $row['email']; ?></p>
           <a href="?pageid=edituser&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a>
-          <a href="#" class="button" onclick="editUserForm(<?php echo $row['login_id']; ?>)">Ajax Edit</a>
           <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a>
-          <a href="#" class="button" onclick="deleteUserForm(<?php echo $row['login_id']; ?>)">Ajax Delete</a>
         </div>
       </div>  
       <?php
     }
-    ?>  
-    <div class="bigholder">      
-      <form action="#"  method="post" id="edituserform" novalidate onsubmit="return false">
-      <h1>Edit User</h1>
-        <fieldset>
-          <legend>Login details</legend>
-          <input type="hidden" name="rowid" id="usereditid"><br>
-          <label>Username:</label>
-          <input type="text" name="username" id="usereditum"><br><br>
-          <label>Password:</label>
-          <input type="password" name="password" id="usereditpw" required><br><br>
-          <label>Role:</label>
-          <input type="radio" name="role" value="Admin" checked>Admin  
-        </fieldset>
-        <fieldset>
-          <legend>Personal details</legend>
-          <label>Given Name:</label>
-          <input type="text" name="name" id="usereditname"><br><br>
-          <label>Surname:</label>
-          <input type="text" name="surname" id="usereditsurname"><br><br>
-          <label>Email:</label>
-          <input type="text" name="email" id="usereditemail"><br><br>	
-          <input type="hidden" name="action_type" value="edit"/>
-          <button name="edituser_button" id="edituser_button_form">
-            Edit User
-          </button>
-          <input type="button" onclick="location.href='?pageid=showuser';" value="Cancel" />
-        </fieldset>
-      </form>
-    </div>
-    <?php
   }
 }
 

@@ -20,7 +20,7 @@ showMenu();
   unset($_SESSION['message']);
   }?>
   </div>
-
+  <div id="userlist"></div>
   <div class="bigholder">
     <?php
     if (isset($_GET['pageid'])) {
@@ -39,6 +39,9 @@ showMenu();
         $action = $_GET['pageid'];
         if ( $action == 'loggedin' ) {
           echo "<p><h3>Welcome to SafeTec Learning Management System.<h3></p>";
+        }
+        if ( $action == 'ajax' ) {
+          include("view/pages/ajaxPage.html");
         }
         if ( $action == 'adduser' ) {
           include("view/pages/registration.php");

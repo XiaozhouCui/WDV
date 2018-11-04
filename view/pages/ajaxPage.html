@@ -1,0 +1,63 @@
+<div class="bigholder">
+  <p><a href="#" onclick="addUserForm()">Add a User</a></p>
+  <p><a href="#" onclick="getUsers()">Show Users</a></p>
+</div>
+<div id="userlist" class="bigholder"></div>
+<div class="bigholder">
+  <form action="#"  method="post" id="adduserform" novalidate onsubmit="return false">
+  <h1>Add User</h1>
+    <fieldset>
+      <legend>Login details</legend>
+      <input type="hidden" name="rowid" id="useraddid"><br>
+      <label>Username:</label>
+      <input type="text" name="username" id="useraddum"><br><br>
+      <label>Password:</label>
+      <input type="password" name="password" id="useraddpw" required><br><br>
+      <label>Role:</label>
+      <input type="radio" name="role" value="Admin" checked>Admin  
+    </fieldset>
+    <fieldset>
+      <legend>Personal details</legend>
+      <label>Given Name:</label>
+      <input type="text" name="name" id="useraddname"><br><br>
+      <label>Surname:</label>
+      <input type="text" name="surname" id="useraddsurname"><br><br>
+      <label>Email:</label>
+      <input type="text" name="email" id="useraddemail"><br><br>	
+      <input type="hidden" name="action_type" value="add"/>
+      <button name="adduser_button" id="adduser_button_form">
+        Add User
+      </button>
+      <input type="button" onclick="hideUserForm()" value="Cancel" />
+    </fieldset>
+  </form>
+</div>
+<div class="bigholder">
+  <form action="#"  method="post" id="edituserform" novalidate onsubmit="return false">
+  <h1>Edit User</h1>
+    <fieldset>
+      <legend>Login details</legend>
+      <input type="hidden" name="rowid" id="usereditid"><br>
+      <label>Username:</label>
+      <input type="text" name="username" id="usereditum"><br><br>
+      <label>Password:</label>
+      <input type="password" name="password" id="usereditpw" required><br><br>
+      <label>Role:</label>
+      <input type="radio" name="role" value="Admin" checked>Admin  
+    </fieldset>
+    <fieldset>
+      <legend>Personal details</legend>
+      <label>Given Name:</label>
+      <input type="text" name="name" id="usereditname"><br><br>
+      <label>Surname:</label>
+      <input type="text" name="surname" id="usereditsurname"><br><br>
+      <label>Email:</label>
+      <input type="text" name="email" id="usereditemail"><br><br>	
+      <input type="hidden" name="action_type" value="edit"/>
+      <button name="edituser_button" id="edituser_button_form">
+        Edit User
+      </button>
+      <input type="button" onclick="getUsers()" value="Cancel" />
+    </fieldset>
+  </form>
+</div>

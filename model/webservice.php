@@ -24,8 +24,8 @@ if(isset($_GET['getData'])) {
       echo json_encode(array(['error'=>'true']));
     } 
   }
-  if($_GET['getData'] == 'pubs') {
-    $sql = "SELECT * FROM pub";
+  if($_GET['getData'] == 'users') {
+    $sql = "SELECT * FROM login INNER JOIN user ON login.login_id = user.login_id";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -35,24 +35,53 @@ if(isset($_GET['getData'])) {
       echo array(['error'=>'true']);
     }
   }
-  if($_GET['getData'] == 'addpub') {
-    if(isset($_POST)) {
-      $sql = "INSERT INTO pub (name, description, address, suburb, state, postcode, logo, last_updated, latitude, longitude)  VALUES (:pubname, :pubdesc, :pubaddress, :pubsuburb, :pubstate, :pubpcode, NULL, curtime(), :publat, :publong)";
-      $stmt = $conn->prepare($sql);
-      $stmt->bindParam(':pubname', $_POST['pubname'], PDO::PARAM_STR, 256);
-      $stmt->bindParam(':pubdesc', $_POST['pubdesc'], PDO::PARAM_STR, 256);
-      $stmt->bindParam(':pubaddress', $_POST['pubaddress'], PDO::PARAM_STR, 128);
-      $stmt->bindParam(':pubsuburb', $_POST['pubsuburb'], PDO::PARAM_STR, 128);
-      $stmt->bindParam(':pubpcode', $_POST['pubpcode'], PDO::PARAM_INT, 5);
-      $stmt->bindParam(':pubstate', $_POST['pubstate'], PDO::PARAM_STR, 128);
-      $stmt->bindParam(':publat', $_POST['publat'], PDO::PARAM_STR, 10);
-      $stmt->bindParam(':publong', $_POST['publong'], PDO::PARAM_STR, 10);
-      $res = $stmt->execute();
-      if($res == true) {
-        echo json_encode(array(['insert'=>'true']));
-      } else {
-        echo json_encode(array(['error'=>'true']));
-      }    
+  if($_GET['getData'] == 'adduser') {
+    if (!empty([$_POST])) {
+      $username = !empty($_POST['username'])? sanitise(($_POST['username'])): null; 
+      $mypass = !empty($_POST['password'])? sanitise(($_POST['password'])): null;
+      $password = password_hash($mypass, PASSWORD_DEFAULT); 
+      $role = !empty($_POST['role']) ? sanitise(($_POST['role'])): null;
+      $name = !empty($_POST['name']) ? sanitise(($_POST['name'])): null;
+      $surname = !empty($_POST['surname'])? sanitise(($_POST['surname'])): null;
+      $email = !empty($_POST['email']) ? sanitise(($_POST['email'])): null;
+  
+      if($_REQUEST['action_type'] == 'add') {
+        $query = $conn->prepare("SELECT username FROM login WHERE username = :user");
+        $query->bindValue(':user', $username);
+        $query->execute();
+        if ($query->rowCount() < 1) {
+          try {
+            $conn->beginTransaction(); 
+            $newlogin = "INSERT INTO login(username, password, access_level) VALUES (:username, :password, :role)";
+            $stmt = $conn->prepare($newlogin);
+            $stmt->bindValue(':username', $username);
+            $stmt->bindValue(':password', $password);
+            $stmt->bindValue(':role', $role);
+            $stmt->execute();
+            $lastLoginId = $conn->lastInsertId();
+    
+            $newuser = "INSERT INTO user(name, surname, email, login_id) VALUES (:name, :surname, :email, :loginId)";
+            $stmt = $conn->prepare($newuser);
+            $stmt->bindValue(':name', $name);
+            $stmt->bindValue(':surname', $surname);
+            $stmt->bindValue(':email', $email);
+            $stmt->bindValue(':loginId', $lastLoginId);
+            $stmt->execute();
+            $conn->commit();   
+
+            echo json_encode(array(['insert'=>'true']));
+          }
+          catch(PDOException $e) { 
+            echo "Account creation problems".$e -> getMessage();
+            die();
+          }        
+        }
+        else {
+          echo "Username already exists, try another.";
+          echo json_encode(array(['error'=>'true']));
+        }
+        exit;
+      }
     }
   }
   if($_GET['getData'] == 'updateuser') {
@@ -84,7 +113,7 @@ if(isset($_GET['getData'])) {
       $stmt->execute();
       $conn->commit();   
 
-      if($stmt == true) {
+      if($conn == true) {
         echo json_encode(array(['update'=>'true']));
       } else {
         echo json_encode(array(['error'=>'true']));

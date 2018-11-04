@@ -1,7 +1,70 @@
 document.getElementById('edituserform').addEventListener('submit', AJAXupdateUser);
+document.getElementById('adduserform').addEventListener('submit', AJAXaddUser);
 
 window.onload = function() {
-  edituserform.style.display = 'none';
+  document.getElementById('edituserform').style.display = 'none';
+  document.getElementById('adduserform').style.display = 'none';
+}
+
+function addUserForm() {
+  document.getElementById('adduserform').style.display = 'block';
+  document.getElementById('userlist').style.display = 'none';
+}
+
+function hideUserForm() {
+  document.getElementById('adduserform').style.display = 'none';
+}
+
+function AJAXaddUser() {
+  var pubURL = "model/webservice.php?getData=adduser";
+  $.ajax({
+    url: pubURL,
+    method: 'post',
+    data: $('#adduserform').serialize(),
+    datatype: 'json',
+    success: function() {
+      alert("User added successfully");      
+      getUsers();    
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  });
+}
+
+
+function getUsers() {
+  var pubURL = "model/webservice.php?getData=users";
+  $.ajax({
+    url: pubURL,
+    method: 'get',
+    datatype: 'json',
+    success: function(res) {
+      listUsers(res);
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  });
+}
+
+function listUsers(usersArray) {
+  outHTML = '';
+  for(var loop=0;loop<usersArray.length;loop++) {
+    outHTML += '<div class="holder">';
+    outHTML += '<div class="frame">';
+    outHTML += '<p>Full Name: ' + usersArray[loop].name + ' ' + usersArray[loop].surname +'</p>';
+    outHTML += '<p>Username: ' + usersArray[loop].username + '</p>';
+    outHTML += '<p>Email: ' + usersArray[loop].email + '</p>';
+    outHTML += '<a href="#" class="button" onClick="editUserForm(' + usersArray[loop].login_id + ')">Edit</a>';
+    outHTML += '<a href="#" class="button" onClick="deleteUserForm(' + usersArray[loop].login_id + ')">Delete</a>';
+    outHTML += '</div>';
+    outHTML += '</div>';
+  }
+  document.getElementById('userlist').innerHTML = outHTML;
+  document.getElementById('userlist').style.display = 'block';
+  document.getElementById('edituserform').style.display = 'none';
+  document.getElementById('adduserform').style.display = 'none';
 }
 
 function editUserForm(oneuser) {
@@ -11,11 +74,11 @@ function editUserForm(oneuser) {
     method: 'get',
     datatype: 'json',
     success: function(res) {
-        edituserform.style.display = 'block';
-        populateForm(res);
+      edituserform.style.display = 'block';
+      populateForm(res);
     },
     error: function(err) {
-        console.log(err);
+      console.log(err);
     }
   });
 }
@@ -36,8 +99,9 @@ function AJAXupdateUser() {
     method: 'post',
     data: $('#edituserform').serialize(),
     datatype: 'json',
-    success: function(res) {
-      alert("User updated successfully");
+    success: function() {
+      alert("User updated successfully");      
+      getUsers();      
     },
     error: function(err) {
       console.log(err);
@@ -60,6 +124,7 @@ function AJAXdeleteUser(userid) {
     datatype: 'json',
     success: function(res) {
       alert("User deleted successfully");
+      getUsers();
     },
     error: function(err) {
       console.log(err);

@@ -31,6 +31,7 @@ function showMenu() {  ?>
         <ul>
           <li><a href="?pageid=adduser">Create a User</a></li>
           <li><a href="?pageid=showuser">Manage Admins</a></li>
+          <li><a href="?pageid=ajax">AJAX Admins</a></li>
           <li><a href="?pageid=showtrainer">Manage Trainers</a></li>
           <li><a href="?pageid=showstudent">Manage Students</a></li>
           <li><a href="?pageid=showcustomer">Manage Customers</a></li>
