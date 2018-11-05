@@ -1,10 +1,12 @@
 <div class="bigholder">
-  <p><a href="#" onclick="addUserForm()">Add a User</a></p>
-  <p><a href="#" onclick="getUsers()">Show Users</a></p>
+  <button onclick="addUserForm()">Add a User</button>
+  <button onclick="getUsers()">Show Users</button>
+  <button onclick="showModal()">Open Modal</button>
+
 </div>
 <div id="userlist" class="bigholder"></div>
 <div class="bigholder">
-  <form action="#"  method="post" id="adduserform" novalidate onsubmit="return false">
+  <form action="#"  method="post" id="adduserform" class="ajaxform" novalidate onsubmit="return false">
   <h1>Add User</h1>
     <fieldset>
       <legend>Login details</legend>
@@ -25,7 +27,7 @@
       <label>Email:</label>
       <input type="text" name="email" id="useraddemail"><br><br>	
       <input type="hidden" name="action_type" value="add"/>
-      <button name="adduser_button" id="adduser_button_form">
+      <button name="adduser_button" id="adduser_button_form" onclick="AJAXaddUser()">
         Add User
       </button>
       <input type="button" onclick="hideUserForm()" value="Cancel" />
@@ -33,7 +35,7 @@
   </form>
 </div>
 <div class="bigholder">
-  <form action="#"  method="post" id="edituserform" novalidate onsubmit="return false">
+  <form action="#"  method="post" id="edituserform" class="ajaxform" novalidate onsubmit="return false">
   <h1>Edit User</h1>
     <fieldset>
       <legend>Login details</legend>
@@ -54,10 +56,12 @@
       <label>Email:</label>
       <input type="text" name="email" id="usereditemail"><br><br>	
       <input type="hidden" name="action_type" value="edit"/>
-      <button name="edituser_button" id="edituser_button_form">
+      <button name="edituser_button" id="edituser_button_form" onclick="AJAXupdateUser()">
         Edit User
       </button>
       <input type="button" onclick="getUsers()" value="Cancel" />
     </fieldset>
   </form>
 </div>
+
+

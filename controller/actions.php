@@ -6,19 +6,22 @@ function loginAction() {
     $username = !empty($_POST['username'])? sanitise(($_POST['username'])): null;
     $password = !empty($_POST['password'])? sanitise(($_POST['password'])): null;    
     try {
-      $stmt = $conn->prepare("SELECT * FROM login WHERE username=:user");
+      $stmt = $conn->prepare("SELECT * FROM login INNER JOIN user WHERE username=:user");
       $stmt->bindParam(':user', $username);
       $stmt->execute();
       $rows = $stmt -> fetch();        
       if (password_verify($password, $rows['password'])) {
         // assign session variables
-        $_SESSION['login'] = $username;  
+        $_SESSION['login'] = $rows['username'];  
+        $_SESSION['user'] = $rows['name']." ".$rows['surname'];
         $_SESSION['level'] = $rows['access_level'];
         $_SESSION['time_start_login'] = time();
         header('Location: index.php?pageid=loggedin');
       }
       else {
-        echo "Login incorrect, please try again.";
+        echo '<script type="text/javascript">',
+            'loginFailed();',
+            '</script>';
       }
     }
     catch(PDOException $e) {
@@ -35,7 +38,10 @@ function logoutAction() {
   else  {  
     session_unset(); 
     session_destroy();
-    header("location: index.php");  
+    echo '<script type="text/javascript">',
+    'modalLogout();',
+    '</script>';
+    //header("location: index.php");  
   }
 }
 
@@ -105,7 +111,8 @@ function showUsersAction() {
           <p>Full Name: <?php echo $row['name'].' '.$row['surname']; ?></p>
           <p>Email: <?php echo $row['email']; ?></p>
           <a href="?pageid=edituser&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a>
-          <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a>
+          <a href="#" onclick="deleteUserForm(<?php echo $row['login_id']; ?>)" class="button">Delete</a> <!-- Passing PHP variable to JavaScript function -->
+          
         </div>
       </div>  
       <?php

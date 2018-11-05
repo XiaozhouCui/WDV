@@ -1,14 +1,8 @@
-document.getElementById('edituserform').addEventListener('submit', AJAXupdateUser);
-document.getElementById('adduserform').addEventListener('submit', AJAXaddUser);
-
-window.onload = function() {
-  document.getElementById('edituserform').style.display = 'none';
-  document.getElementById('adduserform').style.display = 'none';
-}
 
 function addUserForm() {
   document.getElementById('adduserform').style.display = 'block';
   document.getElementById('userlist').style.display = 'none';
+  document.getElementById('edituserform').style.display = 'none';
 }
 
 function hideUserForm() {
@@ -23,7 +17,11 @@ function AJAXaddUser() {
     data: $('#adduserform').serialize(),
     datatype: 'json',
     success: function() {
-      alert("User added successfully");      
+      showModal();
+      document.getElementById('modalheadertext').innerHTML = "Done";
+      document.getElementById('modalheader').style.backgroundColor = "green";
+      document.getElementById('modalfooter').style.backgroundColor = "green";
+      document.getElementById('modaltext').innerHTML = "<p>User added successfully</p><button onclick='closeModal()'>OK</button>";
       getUsers();    
     },
     error: function(err) {
@@ -57,7 +55,7 @@ function listUsers(usersArray) {
     outHTML += '<p>Username: ' + usersArray[loop].username + '</p>';
     outHTML += '<p>Email: ' + usersArray[loop].email + '</p>';
     outHTML += '<a href="#" class="button" onClick="editUserForm(' + usersArray[loop].login_id + ')">Edit</a>';
-    outHTML += '<a href="#" class="button" onClick="deleteUserForm(' + usersArray[loop].login_id + ')">Delete</a>';
+    outHTML += '<a href="#" class="button" onClick="modalDelUser(' + usersArray[loop].login_id + ')">Delete</a>';
     outHTML += '</div>';
     outHTML += '</div>';
   }
@@ -100,8 +98,12 @@ function AJAXupdateUser() {
     data: $('#edituserform').serialize(),
     datatype: 'json',
     success: function() {
-      alert("User updated successfully");      
-      getUsers();      
+      showModal();
+      document.getElementById('modalheadertext').innerHTML = "Done";
+      document.getElementById('modalheader').style.backgroundColor = "green";
+      document.getElementById('modalfooter').style.backgroundColor = "green";
+      document.getElementById('modaltext').innerHTML = "<p>User updated successfully</p><button onclick='closeModal()'>OK</button>";
+      getUsers();
     },
     error: function(err) {
       console.log(err);
@@ -109,11 +111,13 @@ function AJAXupdateUser() {
   });
 }
 
-function deleteUserForm(userid) {
-  var returnVal = confirm('Are you sure?');
-  if(returnVal == true) {
-    AJAXdeleteUser(userid);
-  }
+// render the delete user form in a modal
+function deleteUserForm(loginid) {
+  showModal();
+  document.getElementById('modalheadertext').innerHTML = "WARNING! DELETING A USER"
+  document.getElementById('modalheader').style.backgroundColor= "red";
+  document.getElementById('modalfooter').style.backgroundColor= "red";
+  document.getElementById('modaltext').innerHTML = '<form action="?pageid=deletinguser" method="post">	<fieldset> <p>Are you sure you wan to delete this account (login id: ' + loginid + ')?</p> <input type="hidden" name="rowid" value="' + loginid + '"><br> <input type="submit" value="Yes"> <input type="button" onclick="closeModal()" value="Cancel" />	</fieldset> </form>';
 }
 
 function AJAXdeleteUser(userid) {
@@ -123,7 +127,12 @@ function AJAXdeleteUser(userid) {
     method: 'get',
     datatype: 'json',
     success: function(res) {
-      alert("User deleted successfully");
+      resetModal();
+      showModal();
+      document.getElementById('modalheadertext').innerHTML = "Done";
+      document.getElementById('modalheader').style.backgroundColor = "green";
+      document.getElementById('modalfooter').style.backgroundColor = "green";
+      document.getElementById('modaltext').innerHTML = "<p>User deleted successfully</p><button onclick='closeModal()'>OK</button>";
       getUsers();
     },
     error: function(err) {
@@ -153,4 +162,62 @@ function doEmailCheck(emailAddr) {
         $("#errmsg").html(msg);
     }
   });
+}
+
+function showModal() {
+  document.getElementById('myModal').style.display = "block";
+}
+
+function closeModal() {  
+  resetModal();
+  document.getElementById('myModal').style.display = "none";
+}
+
+function resetModal() {
+  document.getElementById('modaltext').innerHTML = "Default content";
+  document.getElementById('modalheadertext').innerHTML = "Default Modal Header";
+  document.getElementById('modalheader').style.backgroundColor = "orange";
+  document.getElementById('modalfooter').style.backgroundColor = "orange";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  var modal = document.getElementById('myModal');
+  if (event.target == modal) {
+    closeModal();
+  }
+}
+
+function modalLoggedin() {
+  document.getElementById('myModal').style.display = "block";
+  document.getElementById('modaltext').innerHTML = "<p>You have logged in successfully</p><button onclick='closeModal()'>OK</button>";
+  document.getElementById('modalheadertext').innerHTML = "WELCOME";
+}
+
+function loginFailed() {
+  document.getElementById('myModal').style.display = "block";  
+  document.getElementById('modalheader').style.backgroundColor= "red";
+  document.getElementById('modalfooter').style.backgroundColor= "red";
+  document.getElementById('modalheadertext').innerHTML = "Login Failed";
+  document.getElementById('modaltext').innerHTML = "<p>Sorry, either your username or your password is incorrect</p><button onclick='closeModal()'>OK</button>";
+
+}
+
+function modalLogout() {
+  document.getElementById('myModal').style.display = "block";
+  document.getElementById('modaltext').innerHTML = "<p>You have successfully logged out</p><a class='button' href='index.php'>OK</a>";
+  document.getElementById('modalheadertext').innerHTML = "GOOD BYE";
+}
+
+// modal button calling AJAX to delete user
+function modalDelUser(userid) {
+  document.getElementById('myModal').style.display = "block";
+  document.getElementById('modalheadertext').innerHTML = "WARNING! DELETING A USER"
+  document.getElementById('modalheader').style.backgroundColor= "red";
+  document.getElementById('modalfooter').style.backgroundColor= "red";
+  document.getElementById('modaltext').innerHTML = "<p>Are you sure you want to delete this user (login id: " + userid + ")?</p><button onclick='AJAXdeleteUser(" + userid + ")'>Yes</button> <button onclick='closeModal()'>Cancel</button>";
+    /*var returnVal = confirm('Are you sure?');
+  if(returnVal == true) {
+    AJAXdeleteUser(userid);
+  }*/
 }

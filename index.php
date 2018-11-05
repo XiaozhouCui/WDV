@@ -10,6 +10,7 @@ showHeader();
 showMenu();
 ?>
 <article>
+  <!-- Show PHP session messages -->
   <div><?php  
   if(isset($_SESSION['error'])) {
   echo "<div>{$_SESSION['error']}</div>";
@@ -19,8 +20,24 @@ showMenu();
   echo "<div>{$_SESSION['message']}</div>";
   unset($_SESSION['message']);
   }?>
+  </div>  
+  <!-- The Modal (background) -->
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header" id="modalheader" >
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalheadertext">Default Modal Header</h2>
+      </div>
+      <div class="modal-body">
+        <div id="modaltext">Default content</div>
+      </div>
+      <div class="modal-footer" id="modalfooter">
+        <h3 id="modalfootertext"></h3>
+      </div>
+    </div>
   </div>
-  <div id="userlist"></div>
+  <!-- All calling functions start here -->
   <div class="bigholder">
     <?php
     if (isset($_GET['pageid'])) {
@@ -38,7 +55,7 @@ showMenu();
       if (isset($_GET['pageid'])) {
         $action = $_GET['pageid'];
         if ( $action == 'loggedin' ) {
-          echo "<p><h3>Welcome to SafeTec Learning Management System.<h3></p>";
+          include("view/pages/loggedInPage.php");
         }
         if ( $action == 'ajax' ) {
           include("view/pages/ajaxPage.html");
