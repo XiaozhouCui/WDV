@@ -7,7 +7,10 @@ function showHeader() {
     <meta charset="utf-8">
     <title>Home</title>
     <link href="view/css/style.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
     <script src="view/js/script.js"></script>
   </head>
   <body>
@@ -25,13 +28,16 @@ function showHeader() {
 }
 
 function showMenu() {  ?>
-  <div class="controlPanel"> <?php
-    if (isset( $_SESSION['level'] ) ) {
-      if ($_SESSION['level'] == "Admin") { ?>
+  <div class="controlPanel"> 
+    <?php
+    if (isset( $_SESSION['level'] ) ) { ?>
+    <div class="panel">
+      <p>Control Panel</p><?php
+      if ($_SESSION['level'] == "Admin") { ?>      
         <ul>
+          <li><a href="?pageid=ajax">AJAX Tricks</a></li>
           <li><a href="?pageid=adduser">Create a User</a></li>
-          <li><a href="?pageid=showuser">Manage Admins</a></li>
-          <li><a href="?pageid=ajax">AJAX Admins</a></li>
+          <li><a href="?pageid=showuser">Manage Admins</a></li>          
           <li><a href="?pageid=showtrainer">Manage Trainers</a></li>
           <li><a href="?pageid=showstudent">Manage Students</a></li>
           <li><a href="?pageid=showcustomer">Manage Customers</a></li>
@@ -39,6 +45,7 @@ function showMenu() {  ?>
           <li><a href="?pageid=showcourse">Manage Courses</a></li>
           <li><a href="?pageid=addclass">Create a Class</a></li>
           <li><a href="?pageid=showclass">Manage Classes</a></li>
+          <li><a href="?pageid=showallfile">Manage Files</a></li>
           <li><a href="?pageid=logout">Logout</a></li>
         </ul><?php
       }
@@ -63,10 +70,12 @@ function showMenu() {  ?>
           <li><a href="?pageid=enrolForm">Course Application</a></li>
           <li><a href="?pageid=logout">Logout</a></li>
         </ul><?php
-      }
+      }?>
+    </div><?php
     } else {
       echo "Login to see the menu";
     }?>
+    
   </div><?php
 }
 

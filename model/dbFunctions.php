@@ -299,6 +299,20 @@ function uploadFile($class_id, $file_name, $full_path, $date) {
     }
 }
 
+function deleteFile($fileid) {
+    global $conn;
+    try {
+      $sql = "DELETE FROM learning_material WHERE content_id = :fileid";
+      $stmt = $conn->prepare($sql);
+      $stmt->bindParam(':fileid', $fileid, PDO::PARAM_INT, 5);
+      $res = $stmt->execute();
+    }
+    catch(PDOException $e) { 
+      echo "Failed to delete a class from database. ".$e -> getMessage();
+      die();
+    }
+}
+
 function sanitise($data) {
     $data = trim($data);
     $data = stripslashes($data);

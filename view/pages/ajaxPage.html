@@ -1,31 +1,34 @@
 <div class="bigholder">
   <button onclick="addUserForm()">Add a User</button>
   <button onclick="getUsers()">Show Users</button>
+  <button onclick="getFiles()">Show Files</button>
   <button onclick="showModal()">Open Modal</button>
 
 </div>
 <div id="userlist" class="bigholder"></div>
+<div id="filelist" class="bigholder"></div>
 <div class="bigholder">
   <form action="#"  method="post" id="adduserform" class="ajaxform" novalidate onsubmit="return false">
   <h1>Add User</h1>
     <fieldset>
       <legend>Login details</legend>
-      <input type="hidden" name="rowid" id="useraddid"><br>
+      <input type="hidden" name="rowid" id="useraddid" required><br>
       <label>Username:</label>
-      <input type="text" name="username" id="useraddum"><br><br>
+      <input type="text" name="username" id="useraddum" required><br><br>
       <label>Password:</label>
       <input type="password" name="password" id="useraddpw" required><br><br>
+      <input type="checkbox" onclick="showPassword2()">Show Password<br><br>
       <label>Role:</label>
       <input type="radio" name="role" value="Admin" checked>Admin  
     </fieldset>
     <fieldset>
       <legend>Personal details</legend>
       <label>Given Name:</label>
-      <input type="text" name="name" id="useraddname"><br><br>
+      <input type="text" name="name" id="useraddname" required><br><br>
       <label>Surname:</label>
-      <input type="text" name="surname" id="useraddsurname"><br><br>
+      <input type="text" name="surname" id="useraddsurname" required><br><br>
       <label>Email:</label>
-      <input type="text" name="email" id="useraddemail"><br><br>	
+      <input type="text" name="email" id="useraddemail" required><br><br>	
       <input type="hidden" name="action_type" value="add"/>
       <button name="adduser_button" id="adduser_button_form" onclick="AJAXaddUser()">
         Add User

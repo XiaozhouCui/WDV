@@ -327,11 +327,58 @@ function showClassFiles() {
           <?php echo '<p>'. $row['file_name'].'</p>'; ?>
           <?php echo '<p><a href="'. $row['content_link'].'">Link</a></p>'; ?>
           <?php echo '<p>Added: '. $row['time_added'].'</p>'; ?>
-          <a href="?pageid=deletefile&rowid=<?php echo $row['content_id']; ?>" class="button">Delete</a><br><br>
+          <a href="?pageid=deletefile&rowid=<?php echo $row['content_id']; ?>" class="button">Delete</a>
         </div>
       </div>  
       <?php
     }
+  }
+}
+
+function showAllFiles() {
+  global $conn;
+  $sql = "SELECT * FROM learning_material"; 
+  $stmt = $conn->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  if($stmt->rowCount()< 1 ) {
+    echo "There is no file uploaded to this class yet.";
+  } else {
+    foreach($result as $row) {?>
+      <div class="holder">
+        <div class="frame">  
+          <?php echo '<p>Class: '. $row['class_id'].'</p>'; ?>
+          <?php echo '<p>'. $row['file_name'].'</p>'; ?>
+          <?php echo '<p><a href="'. $row['content_link'].'">Link</a></p>'; ?>
+          <?php echo '<p>Added: '. $row['time_added'].'</p>'; ?>
+          <a href="?pageid=deletefile&rowid=<?php echo $row['content_id']; ?>" class="button">Delete</a>
+        </div>
+      </div>  
+      <?php
+    }
+  }
+}
+
+function delFileAction() {
+  global $conn;
+  $fileid = !empty($_POST['rowid'])? sanitise(($_POST['rowid'])): null;
+  $sql= "SELECT * FROM learning_material WHERE content_id = :fileid";
+  $stmt = $conn->prepare($sql);
+  $stmt->bindValue(':fileid', $fileid);
+  $stmt->execute();
+  $result = $stmt->fetch(PDO::FETCH_ASSOC);    
+  
+  $Path = $result['content_link'];
+  if (file_exists($Path)){
+    if (unlink($Path)) {   
+      deleteFile($fileid);
+      echo "File deleted successfully.";
+    } else {
+      echo "Failed to delete a file";    
+    }   
+  } else {     
+      deleteFile($fileid);
+      echo "File does not exist, file record removed from database.";
   }
 }
 
@@ -366,7 +413,7 @@ function showCustomers() {
             <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?><br>
             <?php echo '<p>Email: '. $row['email'].'</p>'; ?><br>
             <a href="?pageid=enrol&rowid=<?php echo $row['login_id']; ?>" class="button">Enrol</a>
-            <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br>
+            <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a>
           </div>
         </div>  
         <?php
@@ -575,6 +622,20 @@ function editClassAction() {
   } else {
     $_SESSION['message'] = 'Only administrator can edit classes.';
     header('location: index.php');
+  }
+}
+
+function delClassAction() {
+  global $conn;
+  if ($_SESSION['level'] == 'Admin') {
+    $sql = "DELETE FROM class WHERE class_id = :rowid";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':rowid', $_POST['rowid']);
+    $stmt->execute();
+    $_SESSION['message']="Class deleted successfully";
+    header('Location: index.php');
+  } else {
+    echo "Only administrator can delete a class.";
   }
 }
 

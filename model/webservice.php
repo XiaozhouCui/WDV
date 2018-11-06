@@ -11,6 +11,20 @@ function sanitise($data) {
   return $data;
 }
 
+function deleteFile($fileid) {
+  global $conn;
+  try {
+    $sql = "DELETE FROM learning_material WHERE content_id = :fileid";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':fileid', $fileid, PDO::PARAM_INT, 5);
+    $res = $stmt->execute();
+  }
+  catch(PDOException $e) { 
+    echo "Failed to delete a class from database. ".$e -> getMessage();
+    die();
+  }
+}
+
 if(isset($_GET['getData'])) {
   if($_GET['getData'] == 'oneuser') {
     $sql = "SELECT * FROM login INNER JOIN user ON login.login_id = user.login_id WHERE login.login_id = :loginid";   
@@ -131,6 +145,39 @@ if(isset($_GET['getData'])) {
     } else {
       echo json_encode(array(['error'=>'true']));
     }
+  }
+  if($_GET['getData'] == 'files') {
+    $sql = "SELECT * FROM learning_material";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if(is_array($result) && sizeof($result) > 0) {
+      echo json_encode($result);
+    } else {
+      echo array(['error'=>'true']);
+    }
+  }
+  if($_GET['getData'] == 'deletefile') {    
+    $fileid = !empty($_GET['fileid'])? sanitise(($_GET['fileid'])): null;
+    $sql= "SELECT * FROM learning_material WHERE content_id = :fileid";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':fileid', $fileid);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);        
+    $Path = '.'.$result['content_link'];
+    
+    if (file_exists($Path)){
+      if (unlink($Path)) {   
+        $response_array['status'] = 'success';
+        deleteFile($fileid);
+      } else {
+        $response_array['status'] = 'error';
+      }   
+    } else {
+      $response_array['status'] = 'notfound';
+      deleteFile($fileid);
+    }
+    echo json_encode($response_array);
   }
 }
 ?>

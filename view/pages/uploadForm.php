@@ -18,7 +18,7 @@ if ($_SESSION['level'] == 'Admin' || $_SESSION['level'] == 'Trainer' ) {
         <label>Status: <?php echo $result['status']?></label><br><br>
         <label>Select a file:</label>
         <input type="file" name="contentfile"><br><br>
-        <input type="submit" value="Upload"><br><br>
+        <input type="submit" value="Upload"> 
         <input type="button" onclick="location.href='?pageid=showclass';" value="Cancel" />
       </fieldset>
     </form>

@@ -63,7 +63,9 @@ article{
 .controlPanel {
   order: 3;
   flex: 1 25%;
-  background-color:rgba(228,233,206,1.00);
+	background-color:rgba(245, 248, 235, 0.75); 
+	box-sizing: border-box;
+	border-right: 6px double gray;
 }
 .contentRight{
   order: 5;
@@ -78,18 +80,53 @@ footer {
   order:6;
   justify-content:center;
   align-items:center;
-  background-color: antiquewhite;
+  background-color:rgba(186,232,235,1.00);
 }
 aside {
 	width:100%;
 	height:1em;
 }
 
-
-ul {
-	width:100%;
-	height:auto;
+.panel {
+	box-sizing: border-box;
+	border: 2px solid gray;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	width:90%;
+	margin:10px auto;
+	height: auto;
+	border-radius: 10px;
+	background-color: lightgrey;
 }
+
+.panel p {
+	width:100%;
+	text-align: center;
+	padding-top: 10px;
+	font-size: 25px;
+}
+ul {
+	box-sizing: border-box;
+	border: 0px solid gray;
+	width:100%;
+	min-height:auto;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-around;
+	padding: 0 15px;
+}
+
+li {
+	width: 150px;;
+	display: flex;
+	justify-content: center;	
+	line-height: 30px;
+	text-align: center;		
+	background-image: linear-gradient(darkgrey, white);
+	font-size: 0.9em;
+}
+
 
 fieldset {
 	box-sizing: border-box;
@@ -103,11 +140,13 @@ fieldset {
 
 
 .holder {
-	width:33%;	
+	width:32%;	
 	min-height:300px;
 	float:left;	
+	margin: 0.5%;
+	background-color: rgb(255, 241, 227);
 	box-sizing: border-box;
-	border: 2px solid white;
+	border: 2px solid orange;	
 	border-radius: 10px;
 }
 
@@ -137,14 +176,16 @@ fieldset {
 	height:100%;
 }
 
+
 .button {
-	/*box-sizing: border-box;
-	border: 1px solid blue;*/
+	box-sizing: border-box;
+	border: 2px solid gray;
 	border-radius: 5px;
-	width: 45%;
+	width: 120px;
 	display: flex;
 	justify-content: center;	
-	line-height: 40px;
+	line-height: 20px;
+	padding: 12px 0;
 	text-align: center;		
 	background-color: orange;
 	font-size: 0.8em;
@@ -248,8 +289,6 @@ a:link, a:active, a:visited{
 }
 
 
-
-
 @media only screen and (max-width: 1200px) {
 	.flex-container {
 		width:100%;
@@ -262,7 +301,7 @@ a:link, a:active, a:visited{
 	}
 
 	.holder{
-		width:50%;	
+		width:49%;	
 	}
 }
 
@@ -271,10 +310,13 @@ a:link, a:active, a:visited{
 		width:100%;
 	}
 	.holder{
-		width:100%;
+		width:99%;
 	}
 	.controlPanel {
 		flex: 1 100%;
+		display:flex;
+		flex-wrap:wrap;
+		border-right: 0px;
 	}
 
 	article {

@@ -61,6 +61,7 @@ function listUsers(usersArray) {
   }
   document.getElementById('userlist').innerHTML = outHTML;
   document.getElementById('userlist').style.display = 'block';
+  document.getElementById('filelist').style.display = 'none';
   document.getElementById('edituserform').style.display = 'none';
   document.getElementById('adduserform').style.display = 'none';
 }
@@ -127,11 +128,7 @@ function AJAXdeleteUser(userid) {
     method: 'get',
     datatype: 'json',
     success: function(res) {
-      resetModal();
-      showModal();
-      document.getElementById('modalheadertext').innerHTML = "Done";
-      document.getElementById('modalheader').style.backgroundColor = "green";
-      document.getElementById('modalfooter').style.backgroundColor = "green";
+      modalSuccess();
       document.getElementById('modaltext').innerHTML = "<p>User deleted successfully</p><button onclick='closeModal()'>OK</button>";
       getUsers();
     },
@@ -142,12 +139,93 @@ function AJAXdeleteUser(userid) {
 }
 
 
+function getFiles() {
+  var pubURL = "model/webservice.php?getData=files";
+  $.ajax({
+    url: pubURL,
+    method: 'get',
+    datatype: 'json',
+    success: function(res) {
+      listFiles(res);
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  });
+}
+
+function listFiles(filesArray) {
+  outHTML = '';
+  for(var loop=0;loop<filesArray.length;loop++) {
+    outHTML += '<div class="holder">';
+    outHTML += '<div class="frame">';
+    outHTML += '<p>File name: <a href="' + filesArray[loop].content_link + '">' + filesArray[loop].file_name + '</a></p>';
+    outHTML += '<p>Class No.: ' + filesArray[loop].class_id + '</p>';
+    outHTML += '<p>Added: ' + filesArray[loop].time_added + '</p>';
+    outHTML += '<a href="#" class="button" onClick="modalDelFile(' + filesArray[loop].content_id + ')">Delete</a>';
+    outHTML += '</div>';
+    outHTML += '</div>';
+  }
+  document.getElementById('filelist').innerHTML = outHTML;
+  document.getElementById('filelist').style.display = 'block';
+  document.getElementById('userlist').style.display = 'none';
+  document.getElementById('edituserform').style.display = 'none';
+  document.getElementById('adduserform').style.display = 'none';
+}
+
+function modalDelFile(fileid) {
+  resetModal();
+  document.getElementById('myModal').style.display = "block";
+  document.getElementById('modalheadertext').innerHTML = "DELETING A FILE";
+  document.getElementById('modaltext').innerHTML = "<p>Are you sure you want to delete this file (content id: " + fileid + ")?</p><button onclick='AJAXdeleteFile(" + fileid + ")'>Yes</button> <button onclick='closeModal()'>Cancel</button>";
+}
+
+
+function AJAXdeleteFile(fileid) {
+  var filesURL = "model/webservice.php?getData=deletefile&fileid=" + fileid;
+  $.ajax({
+    url: filesURL,
+    method: 'get',
+    datatype: 'json',
+    success: function(data) {
+      closeModal();
+      if(data.status == 'success'){
+        modalSuccess();
+        document.getElementById('modaltext').innerHTML = "<p>File deleted successfully</p><button onclick='closeModal()'>OK</button>";
+        getFiles();
+      } 
+      if(data.status == 'error'){
+        modalError();
+        document.getElementById('modaltext').innerHTML = "<p>Error on query</p><button onclick='closeModal()'>OK</button>";
+        getFiles();
+      }
+      if(data.status == 'notfound'){
+        modalError();
+        document.getElementById('modaltext').innerHTML = "<p>File does not exist, record removed from database</p><button onclick='closeModal()'>OK</button>";
+        getFiles();
+      }
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  });
+}
+
 function showPassword() {
   var p1 = document.getElementById("regpw");   
   if (p1.type == "password") {
     p1.type = "text";
   } else {
     p1.type = "password";
+  }
+}
+
+function showPassword2() {
+  var p2 = document.getElementById("useraddpw");   
+  if (p2.type == "password") {
+    p2.type = "text";
+  } else {
+    p2.type = "password";
   }
 }
 
@@ -180,6 +258,20 @@ function resetModal() {
   document.getElementById('modalfooter').style.backgroundColor = "orange";
 }
 
+function modalSuccess() {
+  document.getElementById('myModal').style.display = "block";
+  document.getElementById('modalheadertext').innerHTML = "DONE";
+  document.getElementById('modalheader').style.backgroundColor = "green";
+  document.getElementById('modalfooter').style.backgroundColor = "green";
+}
+
+function modalError() {
+  document.getElementById('myModal').style.display = "block";
+  document.getElementById('modalheadertext').innerHTML = "ERROR";
+  document.getElementById('modalheader').style.backgroundColor = "red";
+  document.getElementById('modalfooter').style.backgroundColor = "red";
+}
+
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   var modal = document.getElementById('myModal');
@@ -200,7 +292,6 @@ function loginFailed() {
   document.getElementById('modalfooter').style.backgroundColor= "red";
   document.getElementById('modalheadertext').innerHTML = "Login Failed";
   document.getElementById('modaltext').innerHTML = "<p>Sorry, either your username or your password is incorrect</p><button onclick='closeModal()'>OK</button>";
-
 }
 
 function modalLogout() {

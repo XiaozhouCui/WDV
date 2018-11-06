@@ -129,6 +129,12 @@ showMenu();
         if ( $action == 'editingclass' ) {
           editClassAction();
         }
+        if ( $action == 'deleteclass' ) {
+          include("view/pages/delClassForm.php");
+        }
+        if ( $action == 'deletingclass' ) {
+          delClassAction();
+        }
         if ( $action == 'showmates' ) {
           include ("controller/mymates.php");
         }
@@ -138,8 +144,17 @@ showMenu();
         if ( $action == 'uploading' ) {
           uploadFileAction();
         }
+        if ( $action == 'showallfile' ) {
+          showAllFiles();
+        }
         if ( $action == 'showfiles' ) {
           showClassFiles();
+        }
+        if ( $action == 'deletefile' ) {
+          include ("view/pages/delFileForm.php");
+        }
+        if ( $action == 'deletingfile' ) {
+          delFileAction();
         }
         if ( $action == 'showclassstudent' ) {
           showClassStudents();
