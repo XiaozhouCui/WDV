@@ -348,9 +348,9 @@ function showAllFiles() {
       <div class="holder">
         <div class="frame">  
           <?php echo '<p>Class: '. $row['class_id'].'</p>'; ?>
-          <?php echo '<p>'. $row['file_name'].'</p>'; ?>
-          <?php echo '<p><a href="'. $row['content_link'].'">Link</a></p>'; ?>
+          <?php echo '<p>File name: '. $row['file_name'].'</p>'; ?>
           <?php echo '<p>Added: '. $row['time_added'].'</p>'; ?>
+          <a href="<?php echo $row['content_link'] ?>" class="button">Download</a>
           <a href="?pageid=deletefile&rowid=<?php echo $row['content_id']; ?>" class="button">Delete</a>
         </div>
       </div>  

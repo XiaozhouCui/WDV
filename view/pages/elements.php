@@ -1,29 +1,30 @@
 <?php
 function showHeader() {
 ?>
-  <!doctype html>
-  <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Home</title>
-    <link href="view/css/style.css" rel="stylesheet">
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-    <script src="view/js/script.js"></script>
-  </head>
-  <body>
-    <div class="flex-container">
-      <header class="nav"><h1>SafeTec Pacific</h1><p>
-      </p></header>
-      <nav class="nav">
-        <div class="menuItem"><a href="index.php">HOME</a></div>
-        <div class="menuItem">ABOUT US</div>
-        <div class="menuItem">COURSES</div>
-        <div class="menuItem">SERVICES</div>
-        <div class="menuItem">CONTACT</div>
-      </nav>
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Home</title>
+  <link href="view/css/style.css" rel="stylesheet">
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script src="view/js/script.js"></script>
+</head>
+<body>
+  <div class="flex-container">
+    <header class="nav">
+      <p><h1>SafeTec Pacific</h1></p>
+    </header>
+    <nav class="nav">
+      <div class="menuItem"><a href="index.php">HOME</a></div>
+      <div class="menuItem">ABOUT US</div>
+      <div class="menuItem">COURSES</div>
+      <div class="menuItem">SERVICES</div>
+      <div class="menuItem">CONTACT</div>
+    </nav>
 <?php
 }
 
@@ -83,7 +84,9 @@ function showFooter() {?>
     <div class="contentRight"></div>
     <footer>
       <?php 
-        echo "<div>";
+        echo "<div> Your browser info: ";
+        echo $_SERVER['HTTP_USER_AGENT'];
+        echo "</div><div>";
         print_r($_SESSION);
         echo "</div><div>";
         print_r($_GET);

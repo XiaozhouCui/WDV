@@ -2,6 +2,7 @@
 function addUserForm() {
   document.getElementById('adduserform').style.display = 'block';
   document.getElementById('userlist').style.display = 'none';
+  document.getElementById('filelist').style.display = 'none';
   document.getElementById('edituserform').style.display = 'none';
 }
 
@@ -162,6 +163,7 @@ function listFiles(filesArray) {
     outHTML += '<p>File name: <a href="' + filesArray[loop].content_link + '">' + filesArray[loop].file_name + '</a></p>';
     outHTML += '<p>Class No.: ' + filesArray[loop].class_id + '</p>';
     outHTML += '<p>Added: ' + filesArray[loop].time_added + '</p>';
+    outHTML += '<a href="' + filesArray[loop].content_link + '" class="button" >Download</a>';
     outHTML += '<a href="#" class="button" onClick="modalDelFile(' + filesArray[loop].content_id + ')">Delete</a>';
     outHTML += '</div>';
     outHTML += '</div>';
@@ -246,6 +248,15 @@ function showModal() {
   document.getElementById('myModal').style.display = "block";
 }
 
+function modalBrowser() {
+  document.getElementById('myModal').style.display = "block";
+  document.getElementById('modaltext').innerHTML = navigator.userAgent;
+  document.getElementById('modalheadertext').innerHTML = "BROWSER INFO";
+  document.getElementById('modalheader').style.backgroundColor = "grey";
+  document.getElementById('modalfooter').style.backgroundColor = "grey";
+
+}
+
 function closeModal() {  
   resetModal();
   document.getElementById('myModal').style.display = "none";
@@ -282,7 +293,9 @@ window.onclick = function(event) {
 
 function modalLoggedin() {
   document.getElementById('myModal').style.display = "block";
-  document.getElementById('modaltext').innerHTML = "<p>You have logged in successfully</p><button onclick='closeModal()'>OK</button>";
+  document.getElementById('modalheader').style.backgroundColor = "green";
+  document.getElementById('modalfooter').style.backgroundColor = "green";
+  document.getElementById('modaltext').innerHTML = "<p>You have successfully logged in.</p><button onclick='closeModal()'>OK</button>";
   document.getElementById('modalheadertext').innerHTML = "WELCOME";
 }
 
