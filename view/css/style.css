@@ -63,9 +63,9 @@ article{
 .controlPanel {
   order: 3;
   flex: 1 25%;
-	background-color:rgba(245, 248, 235, 0.75); 
+	background-color: rgb(255, 241, 227); 
 	box-sizing: border-box;
-	border-right: 6px double gray;
+	border-right: 3px solid orange;
 }
 .contentRight{
   order: 5;
@@ -141,6 +141,15 @@ fieldset {
 	margin: 2%;
 }
 
+fieldset p {
+	font-size: 0.8em;
+	color: grey;
+}
+
+.error {
+	font-size: 0.8em;
+	color: red;
+}
 
 .holder {
 	width:32%;	
@@ -211,6 +220,10 @@ button, input[type=button], input[type=submit]{
 	cursor: pointer;
 }
 
+.button:active, button:active, input[type=button]:active, input[type=submit]:active {
+	background-color: rgb(255, 218, 148);
+	cursor: pointer;
+}
 
 a:link, a:active, a:visited{
   color:blue;

@@ -1,12 +1,14 @@
 
 function addUserForm() {
+  document.getElementById("adduserform").reset();
   document.getElementById('adduserform').style.display = 'block';
   document.getElementById('userlist').style.display = 'none';
   document.getElementById('filelist').style.display = 'none';
   document.getElementById('edituserform').style.display = 'none';
 }
 
-function hideUserForm() {
+function closeUserForm() {
+  document.getElementById("adduserform").reset();
   document.getElementById('adduserform').style.display = 'none';
 }
 
@@ -83,13 +85,14 @@ function editUserForm(oneuser) {
   });
 }
 
-function populateForm(user) {
+function populateForm(user) {  
   document.getElementById('usereditid').value = user.login_id;
-  document.getElementById('usereditum').value = user.username;
+  document.getElementById('usereditun').value = user.username;
   document.getElementById('usereditpw').value = '';
   document.getElementById('usereditname').value = user.name;
   document.getElementById('usereditsurname').value = user.surname;
   document.getElementById('usereditemail').value = user.email;
+  validity2();
 }
 
 function AJAXupdateUser() {
@@ -231,6 +234,14 @@ function showPassword2() {
   }
 }
 
+function showPassword3() {
+  var p2 = document.getElementById("usereditpw");   
+  if (p2.type == "password") {
+    p2.type = "text";
+  } else {
+    p2.type = "password";
+  }
+}
 
 function doEmailCheck(emailAddr) {     
   var ajaxUrl = 'controller/checkemail.php?email=' + emailAddr;
@@ -324,4 +335,92 @@ function modalDelUser(userid) {
   if(returnVal == true) {
     AJAXdeleteUser(userid);
   }*/
+}
+
+function validity1() {      
+  var gocode = 1;
+  errora1.innerHTML = '';
+  errora2.innerHTML = '';
+  errora3.innerHTML = '';
+  errora4.innerHTML = '';
+  errora5.innerHTML = '';
+  if (!useraddun.checkValidity()) {
+      document.getElementById("errora1").innerHTML = useraddun.validationMessage;  
+      gocode = 0;
+  } else {
+      errora1.innerHTML = "Input OK";
+  }
+  if (!useraddpw.checkValidity()) {
+      document.getElementById("errora2").innerHTML = useraddpw.validationMessage;  
+      gocode = 0;  
+  } else {
+      errora2.innerHTML = "Input OK";
+  }
+  if (!useraddname.checkValidity()) {
+      document.getElementById("errora3").innerHTML = useraddname.validationMessage;   
+      gocode = 0;  
+  } else {
+      errora3.innerHTML = "Input OK";
+  }
+  if (!useraddsurname.checkValidity()) {
+      document.getElementById("errora4").innerHTML = useraddsurname.validationMessage;  
+      gocode = 0;   
+  } else {
+      errora4.innerHTML = "Input OK";
+  }
+  if (!useraddemail.checkValidity()) {
+      document.getElementById("errora5").innerHTML = useraddemail.validationMessage; 
+      gocode = 0;    
+  } else {
+      errora5.innerHTML = "Input OK";
+  }
+  if (gocode == 1) {
+    adduser_button_form.disabled = false;
+  } else {
+    adduser_button_form.disabled = true;
+  }
+}
+
+function validity2() {      
+  var gocode = 1;
+  errore1.innerHTML = '';
+  errore2.innerHTML = '';
+  errore3.innerHTML = '';
+  errore4.innerHTML = '';
+  errore5.innerHTML = '';
+  if (!usereditun.checkValidity()) {
+      document.getElementById("errore1").innerHTML = usereditun.validationMessage;    
+      gocode = 0;  
+  } else {
+      errore1.innerHTML = "Input OK";
+  }
+  if (!usereditpw.checkValidity()) {
+      document.getElementById("errore2").innerHTML = usereditpw.validationMessage;    
+      gocode = 0;  
+  } else {
+      errore2.innerHTML = "Input OK";
+  }
+  if (!usereditname.checkValidity()) {
+      document.getElementById("errore3").innerHTML = usereditname.validationMessage;    
+      gocode = 0;  
+  } else {
+      errore3.innerHTML = "Input OK";
+  }
+  if (!usereditsurname.checkValidity()) {
+      document.getElementById("errore4").innerHTML = usereditsurname.validationMessage;    
+      gocode = 0;  
+  } else {
+      errore4.innerHTML = "Input OK";
+  }
+  if (!usereditemail.checkValidity()) {
+      document.getElementById("errore5").innerHTML = usereditemail.validationMessage;    
+      gocode = 0;  
+  } else {
+      errore5.innerHTML = "Input OK";
+  }
+  if (gocode == 1) {
+    edituser_button_form.disabled = false;
+  } else {
+    edituser_button_form.disabled = true;
+  }
 }

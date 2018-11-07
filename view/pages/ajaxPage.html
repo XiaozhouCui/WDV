@@ -9,59 +9,82 @@
 <div id="filelist" class="bigholder"></div>
 <div class="bigholder">
   <form action="#"  method="post" id="adduserform" class="ajaxform" novalidate onsubmit="return false">
-  <h1>Add User</h1>
+    <h1>Add User</h1>
     <fieldset>
       <legend>Login details</legend>
       <input type="hidden" name="rowid" id="useraddid" required><br>
-      <label>Username:</label>
-      <input type="text" name="username" id="useraddum" required><br><br>
-      <label>Password:</label>
-      <input type="password" name="password" id="useraddpw" required><br><br>
-      <input type="checkbox" onclick="showPassword2()">Show Password<br><br>
+      <label>Username: </label>
+      <input type="text" name="username" id="useraddun" pattern="[A-Za-z0-9]{4,}" required><br>
+      <p>4 or more characters, no symbols</p>
+      <div class="error" id="errora1"></div><br>
+      <label>Password: </label>
+      <input type="password" name="password" id="useraddpw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required><br>
+      <p>8 or more characters that include at least one number, one uppercase and one lowercase letter</p>
+      <input type="checkbox" onclick="showPassword2()">Show Password<br>
+      <div class="error" id="errora2"></div><br>
       <label>Role:</label>
-      <input type="radio" name="role" value="Admin" checked>Admin  
+      <input type="radio" name="role" value="Admin" checked>Admin<br>
     </fieldset>
     <fieldset>
       <legend>Personal details</legend>
-      <label>Given Name:</label>
-      <input type="text" name="name" id="useraddname" required><br><br>
-      <label>Surname:</label>
-      <input type="text" name="surname" id="useraddsurname" required><br><br>
+      <label>Given Name: </label>
+      <input type="text" name="name" id="useraddname" pattern="[A-Za-z]{1,}" required><br>
+      <p>1 or more letters</p>
+      <div class="error" id="errora3"></div><br>
+      <label>Surname: </label>
+      <input type="text" name="surname" id="useraddsurname" pattern="[A-Za-z]{1,}" required><br>
+      <p>1 or more letters</p>
+      <div class="error" id="errora4"></div><br>
       <label>Email:</label>
-      <input type="text" name="email" id="useraddemail" required><br><br>	
+      <input type="email" name="email" id="useraddemail" required><br>
+      <p>Email format</p>
+      <div class="error" id="errora5"></div><br>	
       <input type="hidden" name="action_type" value="add"/>
-      <button name="adduser_button" id="adduser_button_form" onclick="AJAXaddUser()">
-        Add User
+      <button name="adduser_button" id="adduser_button_form" onclick="AJAXaddUser()" disabled>
+        Submit
       </button>
-      <input type="button" onclick="hideUserForm()" value="Cancel" />
+      <input type="button" onclick="validity1()" value="Validate">
+      <input type="button" onclick="closeUserForm()" value="Cancel">
     </fieldset>
   </form>
 </div>
 <div class="bigholder">
   <form action="#"  method="post" id="edituserform" class="ajaxform" novalidate onsubmit="return false">
-  <h1>Edit User</h1>
+    <h1>Edit User</h1>
     <fieldset>
       <legend>Login details</legend>
-      <input type="hidden" name="rowid" id="usereditid"><br>
-      <label>Username:</label>
-      <input type="text" name="username" id="usereditum"><br><br>
-      <label>Password:</label>
-      <input type="password" name="password" id="usereditpw" required><br><br>
+      <input type="hidden" name="rowid" id="usereditid" required><br>
+      <label>Username: </label>
+      <input type="text" name="username" id="usereditun" pattern="[A-Za-z0-9]{4,}" required><br>
+      <p>4 or more characters, no symbols</p>
+      <div class="error" id="errore1"></div><br>
+      <label>Password: </label>
+      <input type="password" name="password" id="usereditpw" pattern="[A-Za-z0-9]{4,}" required><br>
+      <p>4 or more characters, no symbols</p>
+      <input type="checkbox" onclick="showPassword3()">Show Password<br>
+      <div class="error" id="errore2"></div><br>
       <label>Role:</label>
-      <input type="radio" name="role" value="Admin" checked>Admin  
+      <input type="radio" name="role" value="Admin" checked>Admin<br>
     </fieldset>
     <fieldset>
       <legend>Personal details</legend>
-      <label>Given Name:</label>
-      <input type="text" name="name" id="usereditname"><br><br>
-      <label>Surname:</label>
-      <input type="text" name="surname" id="usereditsurname"><br><br>
+      <label>Given Name: </label>
+      <input type="text" name="name" id="usereditname" pattern="[A-Za-z]{1,}" required><br>
+      <p>1 or more letters</p>
+      <div class="error" id="errore3"></div><br>
+      <label>Surname: </label>
+      <input type="text" name="surname" id="usereditsurname" pattern="[A-Za-z]{1,}" required><br>
+      <p>1 or more letters</p>
+      <div class="error" id="errore4"></div><br>
       <label>Email:</label>
-      <input type="text" name="email" id="usereditemail"><br><br>	
+      <input type="email" name="email" id="usereditemail" required><br>
+      <p>Email format</p>
+      <div class="error" id="errore5"></div><br>	
       <input type="hidden" name="action_type" value="edit"/>
-      <button name="edituser_button" id="edituser_button_form" onclick="AJAXupdateUser()">
-        Edit User
+      <button name="edituser_button" id="edituser_button_form" onclick="AJAXupdateUser()" disabled>
+        Submit
       </button>
+      <input type="button" onclick="validity2()" value="Validate">
       <input type="button" onclick="getUsers()" value="Cancel" />
     </fieldset>
   </form>
