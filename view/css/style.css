@@ -181,6 +181,8 @@ fieldset p {
 	width:100%;	
 	height:auto;
 	float:left;
+	box-sizing: border-box;
+	padding: 2%;
 }
 
 .holder img {
@@ -223,6 +225,11 @@ button, input[type=button], input[type=submit]{
 .button:active, button:active, input[type=button]:active, input[type=submit]:active {
 	background-color: rgb(255, 218, 148);
 	cursor: pointer;
+}
+
+.button:disabled, button:disabled, input[type=button]:disabled, input[type=submit]:disabled {
+	background-color: lightgray;
+	cursor: default;
 }
 
 a:link, a:active, a:visited{

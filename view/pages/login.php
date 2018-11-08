@@ -3,9 +3,9 @@
 	<fieldset>
 		<legend>Login</legend>
 			<label>Username:</label>
-			<input type="text" name="username" required><br><br>
+			<input type="text" name="username" id="login_username" onchange="rememberValue(this.value)" required><br><br>
 			<label>Password:</label>
-			<input type="text" name="password" required><br><br>
+			<input type="password" name="password" required><br><br>
 			<input type="submit" value=" Login ">
 			<input type="button" onclick="location.href='index.php';" value="Cancel" />
 	</fieldset>

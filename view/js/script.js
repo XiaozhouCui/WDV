@@ -1,3 +1,15 @@
+// get last login name from local storage
+window.onload = function() {
+  if(document.getElementById('login_username') != null) {
+    if(localStorage.getItem("username") != null) {
+      document.getElementById('login_username').value = localStorage.getItem('username')
+    }
+  }
+}
+
+function rememberValue(value) {  
+  localStorage.setItem("username", value);  
+}
 
 function addUserForm() {
   document.getElementById("adduserform").reset();
@@ -20,10 +32,7 @@ function AJAXaddUser() {
     data: $('#adduserform').serialize(),
     datatype: 'json',
     success: function() {
-      showModal();
-      document.getElementById('modalheadertext').innerHTML = "Done";
-      document.getElementById('modalheader').style.backgroundColor = "green";
-      document.getElementById('modalfooter').style.backgroundColor = "green";
+      modalSuccess()
       document.getElementById('modaltext').innerHTML = "<p>User added successfully</p><button onclick='closeModal()'>OK</button>";
       getUsers();    
     },
@@ -36,12 +45,16 @@ function AJAXaddUser() {
 
 function getUsers() {
   var pubURL = "model/webservice.php?getData=users";
+  //show SVG loading animation effect
+  document.getElementById('userlist').style.display = 'block';
+  $('#userlist').html('<img src="view/images/flaskloader.svg"/>');  
   $.ajax({
     url: pubURL,
     method: 'get',
     datatype: 'json',
     success: function(res) {
-      listUsers(res);
+      document.getElementById("edituserform").reset();
+      listUsers(res); //render json code into html
     },
     error: function(err) {
       console.log(err);
@@ -63,7 +76,6 @@ function listUsers(usersArray) {
     outHTML += '</div>';
   }
   document.getElementById('userlist').innerHTML = outHTML;
-  document.getElementById('userlist').style.display = 'block';
   document.getElementById('filelist').style.display = 'none';
   document.getElementById('edituserform').style.display = 'none';
   document.getElementById('adduserform').style.display = 'none';
@@ -77,6 +89,7 @@ function editUserForm(oneuser) {
     datatype: 'json',
     success: function(res) {
       edituserform.style.display = 'block';
+      userlist.style.display = 'none';
       populateForm(res);
     },
     error: function(err) {
@@ -131,7 +144,7 @@ function AJAXdeleteUser(userid) {
     url: userURL,
     method: 'get',
     datatype: 'json',
-    success: function(res) {
+    success: function() {
       modalSuccess();
       document.getElementById('modaltext').innerHTML = "<p>User deleted successfully</p><button onclick='closeModal()'>OK</button>";
       getUsers();
@@ -145,6 +158,8 @@ function AJAXdeleteUser(userid) {
 
 function getFiles() {
   var pubURL = "model/webservice.php?getData=files";
+  document.getElementById('filelist').style.display = 'block';
+  $('#userlist').html('<img src="view/images/flaskloader.svg"/>');  
   $.ajax({
     url: pubURL,
     method: 'get',
@@ -172,7 +187,6 @@ function listFiles(filesArray) {
     outHTML += '</div>';
   }
   document.getElementById('filelist').innerHTML = outHTML;
-  document.getElementById('filelist').style.display = 'block';
   document.getElementById('userlist').style.display = 'none';
   document.getElementById('edituserform').style.display = 'none';
   document.getElementById('adduserform').style.display = 'none';
@@ -339,40 +353,35 @@ function modalDelUser(userid) {
 
 function validity1() {      
   var gocode = 1;
-  errora1.innerHTML = '';
-  errora2.innerHTML = '';
-  errora3.innerHTML = '';
-  errora4.innerHTML = '';
-  errora5.innerHTML = '';
   if (!useraddun.checkValidity()) {
       document.getElementById("errora1").innerHTML = useraddun.validationMessage;  
       gocode = 0;
   } else {
-      errora1.innerHTML = "Input OK";
+      errora1.innerHTML = "";
   }
   if (!useraddpw.checkValidity()) {
       document.getElementById("errora2").innerHTML = useraddpw.validationMessage;  
       gocode = 0;  
   } else {
-      errora2.innerHTML = "Input OK";
+      errora2.innerHTML = "";
   }
   if (!useraddname.checkValidity()) {
       document.getElementById("errora3").innerHTML = useraddname.validationMessage;   
       gocode = 0;  
   } else {
-      errora3.innerHTML = "Input OK";
+      errora3.innerHTML = "";
   }
   if (!useraddsurname.checkValidity()) {
       document.getElementById("errora4").innerHTML = useraddsurname.validationMessage;  
       gocode = 0;   
   } else {
-      errora4.innerHTML = "Input OK";
+      errora4.innerHTML = "";
   }
   if (!useraddemail.checkValidity()) {
       document.getElementById("errora5").innerHTML = useraddemail.validationMessage; 
       gocode = 0;    
   } else {
-      errora5.innerHTML = "Input OK";
+      errora5.innerHTML = "";
   }
   if (gocode == 1) {
     adduser_button_form.disabled = false;
@@ -383,40 +392,35 @@ function validity1() {
 
 function validity2() {      
   var gocode = 1;
-  errore1.innerHTML = '';
-  errore2.innerHTML = '';
-  errore3.innerHTML = '';
-  errore4.innerHTML = '';
-  errore5.innerHTML = '';
   if (!usereditun.checkValidity()) {
       document.getElementById("errore1").innerHTML = usereditun.validationMessage;    
       gocode = 0;  
   } else {
-      errore1.innerHTML = "Input OK";
+      errore1.innerHTML = "";
   }
   if (!usereditpw.checkValidity()) {
       document.getElementById("errore2").innerHTML = usereditpw.validationMessage;    
       gocode = 0;  
   } else {
-      errore2.innerHTML = "Input OK";
+      errore2.innerHTML = "";
   }
   if (!usereditname.checkValidity()) {
       document.getElementById("errore3").innerHTML = usereditname.validationMessage;    
       gocode = 0;  
   } else {
-      errore3.innerHTML = "Input OK";
+      errore3.innerHTML = "";
   }
   if (!usereditsurname.checkValidity()) {
       document.getElementById("errore4").innerHTML = usereditsurname.validationMessage;    
       gocode = 0;  
   } else {
-      errore4.innerHTML = "Input OK";
+      errore4.innerHTML = "";
   }
   if (!usereditemail.checkValidity()) {
       document.getElementById("errore5").innerHTML = usereditemail.validationMessage;    
       gocode = 0;  
   } else {
-      errore5.innerHTML = "Input OK";
+      errore5.innerHTML = "";
   }
   if (gocode == 1) {
     edituser_button_form.disabled = false;

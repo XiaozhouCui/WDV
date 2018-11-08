@@ -40,9 +40,7 @@
       <p>Email format</p>
       <div class="error" id="errora5"></div><br>	
       <input type="hidden" name="action_type" value="add"/>
-      <button name="adduser_button" id="adduser_button_form" onclick="AJAXaddUser()" disabled>
-        Submit
-      </button>
+      <input type="button" name="adduser_button" id="adduser_button_form" onclick="AJAXaddUser()" value="Submit" disabled>
       <input type="button" onclick="validity1()" value="Validate">
       <input type="button" onclick="closeUserForm()" value="Cancel">
     </fieldset>
@@ -81,9 +79,7 @@
       <p>Email format</p>
       <div class="error" id="errore5"></div><br>	
       <input type="hidden" name="action_type" value="edit"/>
-      <button name="edituser_button" id="edituser_button_form" onclick="AJAXupdateUser()" disabled>
-        Submit
-      </button>
+      <input type="button" name="edituser_button" id="edituser_button_form" onclick="AJAXupdateUser()" value="Submit" disabled>
       <input type="button" onclick="validity2()" value="Validate">
       <input type="button" onclick="getUsers()" value="Cancel" />
     </fieldset>
