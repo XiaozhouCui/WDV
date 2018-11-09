@@ -10,6 +10,7 @@ if ($_SESSION['level'] == 'Admin' || $_SESSION['level'] == 'Trainer' ) {
     echo "<a href='?pageid=showclass'>Go back</a>";
   } else {  ?> 	  
     <div class="bigholder">
+    <h2>Upload file to Class <?php echo $result['class_id'] ?></h2>
     <form action="?pageid=uploading" method="post" enctype="multipart/form-data">
       <fieldset>
         <legend>Upload Learning Materials</legend>
@@ -21,11 +22,6 @@ if ($_SESSION['level'] == 'Admin' || $_SESSION['level'] == 'Trainer' ) {
         <input type="submit" value="Upload"> 
         <input type="button" onclick="location.href='?pageid=showclass';" value="Cancel" />
       </fieldset>
-    </form>
-    <form action="?pageid=dropzone" class="dropzone" id="my-awesome-dropzone">
-      <input type="file" name="file" />
-      <input type="submit" value="Upload"> 
-      <input type="button" onclick="location.href='?pageid=showclass';" value="Cancel" />
     </form>
     </div><?php
   }
