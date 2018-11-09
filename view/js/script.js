@@ -17,6 +17,15 @@ function addUserForm() {
   document.getElementById('userlist').style.display = 'none';
   document.getElementById('filelist').style.display = 'none';
   document.getElementById('edituserform').style.display = 'none';
+  document.getElementById('dzone').style.display = 'none';
+}
+
+function showDropzone() {
+  document.getElementById('dzone').style.display = 'block';
+  document.getElementById('adduserform').style.display = 'none';
+  document.getElementById('userlist').style.display = 'none';
+  document.getElementById('filelist').style.display = 'none';
+  document.getElementById('edituserform').style.display = 'none';
 }
 
 function closeUserForm() {
@@ -45,9 +54,12 @@ function AJAXaddUser() {
 
 function getUsers() {
   var pubURL = "model/webservice.php?getData=users";
-  //show SVG loading animation effect
   document.getElementById('userlist').style.display = 'block';
-  $('#userlist').html('<img src="view/images/flaskloader.svg"/>');  
+  document.getElementById('filelist').style.display = 'none';
+  document.getElementById('edituserform').style.display = 'none';
+  document.getElementById('adduserform').style.display = 'none';
+  document.getElementById('dzone').style.display = 'none';
+  $('#userlist').html('<img src="view/images/flaskloader.svg"/>');  //show SVG loading animation effect
   $.ajax({
     url: pubURL,
     method: 'get',
@@ -76,9 +88,6 @@ function listUsers(usersArray) {
     outHTML += '</div>';
   }
   document.getElementById('userlist').innerHTML = outHTML;
-  document.getElementById('filelist').style.display = 'none';
-  document.getElementById('edituserform').style.display = 'none';
-  document.getElementById('adduserform').style.display = 'none';
 }
 
 function editUserForm(oneuser) {
@@ -159,7 +168,11 @@ function AJAXdeleteUser(userid) {
 function getFiles() {
   var pubURL = "model/webservice.php?getData=files";
   document.getElementById('filelist').style.display = 'block';
-  $('#userlist').html('<img src="view/images/flaskloader.svg"/>');  
+  document.getElementById('userlist').style.display = 'none';
+  document.getElementById('edituserform').style.display = 'none';
+  document.getElementById('adduserform').style.display = 'none';
+  document.getElementById('dzone').style.display = 'none';
+  $('#filelist').html('<img src="view/images/flaskloader.svg"/>');  //show SVG loading animation effect
   $.ajax({
     url: pubURL,
     method: 'get',
@@ -187,9 +200,6 @@ function listFiles(filesArray) {
     outHTML += '</div>';
   }
   document.getElementById('filelist').innerHTML = outHTML;
-  document.getElementById('userlist').style.display = 'none';
-  document.getElementById('edituserform').style.display = 'none';
-  document.getElementById('adduserform').style.display = 'none';
 }
 
 function modalDelFile(fileid) {

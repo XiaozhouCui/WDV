@@ -7,11 +7,13 @@ function showHeader() {
   <meta charset="utf-8">
   <title>Home</title>
   <link href="view/css/style.css" rel="stylesheet">
+  <link href="view/css/dropzone.css" rel="stylesheet">
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
   <script src="view/js/script.js"></script>
+  <script src="view/js/dropzone.js"></script>
 </head>
 <body>
   <div class="flex-container">

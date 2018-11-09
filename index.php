@@ -144,6 +144,9 @@ showMenu();
         if ( $action == 'uploading' ) {
           uploadFileAction();
         }
+        if ( $action == 'dropzone' ) {
+          dropzoneAction();
+        }
         if ( $action == 'showallfile' ) {
           showAllFiles();
         }

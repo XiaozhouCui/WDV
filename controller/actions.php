@@ -310,6 +310,18 @@ function uploadFileAction() {
   }
 }
 
+function dropzoneAction() {
+  $class_id = !empty($_POST['classid'])? sanitise(($_POST['classid'])): null; 
+  //$ds = DIRECTORY_SEPARATOR;  //1
+  if (!empty($_FILES)) {
+    $tempFile = $_FILES['file']['tmp_name'];          //3             
+    $targetPath = "./view/uploads/class-".$class_id."/";  //4
+    $targetFile =  $targetPath. $_FILES['file']['name'];  //5
+    move_uploaded_file($tempFile,$targetFile); //6
+  }
+}
+
+
 function showClassFiles() {
   global $conn;
   $sql = "SELECT * FROM learning_material WHERE class_id = :classid"; 

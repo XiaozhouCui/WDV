@@ -22,6 +22,11 @@ if ($_SESSION['level'] == 'Admin' || $_SESSION['level'] == 'Trainer' ) {
         <input type="button" onclick="location.href='?pageid=showclass';" value="Cancel" />
       </fieldset>
     </form>
+    <form action="?pageid=dropzone" class="dropzone" id="my-awesome-dropzone">
+      <input type="file" name="file" />
+      <input type="submit" value="Upload"> 
+      <input type="button" onclick="location.href='?pageid=showclass';" value="Cancel" />
+    </form>
     </div><?php
   }
 } else {
