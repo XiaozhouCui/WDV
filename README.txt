@@ -9,6 +9,9 @@ Default Admin account login
 username - admin
 password - admin
 
+New features:
+AJAX and other javascript demonstrations are saved in the page: view/pages/ajaxPage.html (can be accessed via the "AJAX Tricks" button in the admin control panel)
+
 Website overview:
 SafeTec Pacific website is built as an online Learning Management System, supporting our offline courses provided in company's office. 
 Anyone who are interested in the courses can register and apply  online. Once the prospective students are enrolled by admin, they can interact with the company and their trainers on the website through the Learning Management System.

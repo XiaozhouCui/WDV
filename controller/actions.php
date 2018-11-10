@@ -16,7 +16,9 @@ function loginAction() {
         $_SESSION['user'] = $rows['name']." ".$rows['surname'];
         $_SESSION['level'] = $rows['access_level'];
         $_SESSION['time_start_login'] = time();
-        header('Location: index.php?pageid=loggedin');
+        echo '<script type="text/javascript">',
+        'modalLoggedin();',
+        '</script>';
       }
       else {
         echo '<script type="text/javascript">',
@@ -41,7 +43,6 @@ function logoutAction() {
     echo '<script type="text/javascript">',
     'modalLogout();',
     '</script>';
-    //header("location: index.php");  
   }
 }
 
@@ -65,17 +66,26 @@ function addUserAction() {
           if ($role == "Admin") {
             addUser($username, $password, $role, $name, $surname, $email);
             $_SESSION['message'] = "Admin added successfully.";
-            header('Location: index.php');
+            echo '<script type="text/javascript">',
+            'modalSuccess();',
+            'modaltext.innerHTML = "<p>Admin added successfully.</p><a class=\'button\' href=\'?pageid=showuser\'>OK</a>";',
+            '</script>';
           }
           if ($role == "Trainer") {
             addTrainer($username, $password, $role, $name, $surname, $email);
             $_SESSION['message'] = "Trainer added successfully.";
-            header('Location: index.php');
+            echo '<script type="text/javascript">',
+            'modalSuccess();',
+            'modaltext.innerHTML = "<p>Trainer added successfully.</p><a class=\'button\' href=\'?pageid=showtrainer\'>OK</a>";',
+            '</script>';
           }
           if ($role == "Customer") {
             addCustomer($username, $password, $role, $name, $surname, $email);
             $_SESSION['message'] = "Customer added successfully.";
-            header('Location: index.php');
+            echo '<script type="text/javascript">',
+            'modalSuccess();',
+            'modaltext.innerHTML = "<p>Customer added successfully.</p><a class=\'button\' href=\'?pageid=showcustomer\'>OK</a>";',
+            '</script>';
           }
           else {
             echo "Registration failed! Please make sure the role of the new user is valid";
@@ -87,8 +97,11 @@ function addUserAction() {
         }        
       }
       else {
-        $_SESSION['message'] = "Username already exists, try another.";
-        header('Location: index.php');      
+        $_SESSION['message'] = "Username already exists, try another.";    
+        echo '<script type="text/javascript">',
+        'modalError();',
+        'modaltext.innerHTML = "<p>Username already exists, try another.</p><a class=\'button\' href=\'?pageid=adduser\'>OK</a>";',
+        '</script>';
       }
       exit;
     }
@@ -241,6 +254,7 @@ function showClassStudents() {
       foreach($result as $row) {?>
         <div class="holder">     
           <div class="frame">   
+            <?php echo '<p>Class: '. $row['class_id'].'</p>'; ?>
             <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?>
             <?php echo '<p>Student ID: '. $row['student_id'].'</p>'; ?>
             <a href="?pageid=editstudent&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a>
@@ -269,24 +283,22 @@ function uploadFileAction() {
   // Check if file already exists
   if (file_exists($full_path)) {
     echo "Sorry, file already exists.";
-    $go_code = 0; // 0 means not OK to upload
+    $go_code = 0;
   }
   // Check file size
   if ($_FILES["contentfile"]["size"] > 1000000) {
     echo "Sorry, file is too big, size limit is 1 MB.";
-    $go_code = 0; // 0 means not OK to upload
+    $go_code = 0;
   }
   // Allow certain file formats
   if($file_type != "pdf" && $file_type != "txt" && $file_type != "doc"
   && $file_type != "docx" && $file_type != "ppt") {
       echo "Sorry, only PDF, TXT, DOC, DOCX and PPT files are allowed.";
-      $go_code = 0; // 0 means not OK to upload
+      $go_code = 0;
   }
-  // Check if it passes all checks
-  if ($go_code == 0) {
-    echo "Sorry, your file was not uploaded.";
-  // if everything is ok, try to upload file
-  } else {
+  
+  // Check if it passes all checks, if everything is ok, try to upload file
+  if ($go_code == 1) {
     // step 1: create a target directory if it does not exist
     if (!file_exists($target_dir)) {
       mkdir($target_dir, 0777, true);
@@ -298,7 +310,10 @@ function uploadFileAction() {
       try {
         uploadFile($class_id, $file_name, $full_path, $date);
         $_SESSION['message'] = 'File uploaded successfully.';            
-        header('location:./index.php');
+        echo '<script type="text/javascript">',
+        'modalSuccess();',
+        'modaltext.innerHTML = "<p>File uploaded successfully.</p><a class=\'button\' href=\'?pageid=showfiles&classid='.$class_id.'\'>OK</a>";',
+        '</script>';
       }
       catch(PDOException $e) { 
         echo "Account update problems".$e -> getMessage();
@@ -307,6 +322,8 @@ function uploadFileAction() {
     } else {
       echo "Sorry, there was an error uploading your file.";
     }    
+  } else {
+    echo "Sorry, your file was not uploaded.";
   }
 }
 
@@ -402,7 +419,10 @@ function delUserAction() {
     $stmt->bindValue(':rowid', $_POST['rowid']);
     $stmt->execute();
     $_SESSION['message']="Admin user deleted successfully";
-    header('Location: index.php');
+    echo '<script type="text/javascript">',
+    'modalSuccess();',
+    'modaltext.innerHTML = "<p>Admin deleted successfully.</p><a class=\'button\' href=\'?pageid=showuser\'>OK</a>";',
+    '</script>';
   } else {
     echo "Only administrator can delete a user.";
   }
@@ -457,7 +477,10 @@ function enrolStudent() {
         try {
           enrol($loginid, $role, $name, $surname, $address, $email, $phone, $dob, $class);
           $_SESSION['message'] = "Student enrolled successfully.";
-          header('Location: index.php');
+          echo '<script type="text/javascript">',
+          'modalSuccess();',
+          'modaltext.innerHTML = "<p>Student enrolled into class '.$class.' successfully.</p><a class=\'button\' href=\'?pageid=showclassstudent&rowid='.$class.'\'>OK</a>";',
+          '</script>';
         }
         catch(PDOException $e) { 
           echo "Enrollment problems".$e -> getMessage();
@@ -466,7 +489,10 @@ function enrolStudent() {
       }
       else {
         $_SESSION['message'] = "Login ID does not exist.";
-        header('Location: index.php');
+        echo '<script type="text/javascript">',
+        'modalError();',
+        'modaltext.innerHTML = "<p>Login ID does not exist.</p><a class=\'button\' href=\'?pageid=showcustomer\'>OK</a>";',
+        '</script>';
       }
       exit;
     }
@@ -495,7 +521,10 @@ function editCurrentStudent() {
         try {
           editStudent($loginid, $username, $password, $role, $name, $surname, $address, $email, $phone, $dob, $class);
           $_SESSION['message'] = "Student updated successfully.";
-          header('Location: index.php');
+          echo '<script type="text/javascript">',
+          'modalSuccess();',
+          'modaltext.innerHTML = "<p>Student detail updated successfully.</p><a class=\'button\' href=\'?pageid=showclassstudent&rowid='.$class.'\'>OK</a>";',
+          '</script>';
         }
         catch(PDOException $e) { 
           echo "Student data update problems".$e -> getMessage();
@@ -504,7 +533,10 @@ function editCurrentStudent() {
       }
       else {
         $_SESSION['message'] = "Login ID does not exist.";
-        header('Location: index.php');
+        echo '<script type="text/javascript">',
+        'modalError();',
+        'modaltext.innerHTML = "<p>Login ID does not exist.</p><a class=\'button\' href=\'?pageid=showclassstudent&rowid='.$class.'\'>OK</a>";',
+        '</script>';
       }
       exit;
     }
@@ -527,7 +559,10 @@ function addCourseAction() {
         try {
           addCourse($coursename, $description, $level, $price);
           $_SESSION['message'] = "Course added successfully.";
-          header('Location: index.php?pageid=showcourse');
+          echo '<script type="text/javascript">',
+          'modalSuccess();',
+          'modaltext.innerHTML = "<p>Course added successfully.</p><a class=\'button\' href=\'?pageid=showcourse\'>OK</a>";',
+          '</script>';
         }
         catch(PDOException $e) { 
           echo "Course creation problems".$e -> getMessage();
@@ -536,7 +571,10 @@ function addCourseAction() {
       }
       else {
         $_SESSION['message'] = 'Course already exists, try another.';
-        header('Location: index.php');
+        echo '<script type="text/javascript">',
+        'modalError();',
+        'modaltext.innerHTML = "<p>Course already exists, try another.</p><a class=\'button\' href=\'?pageid=addcourse\'>OK</a>";',
+        '</script>';
       }
       exit;
     }
@@ -555,19 +593,28 @@ function editCourseAction() {
       try {
         editCourse($rowid, $coursename, $description, $level, $price);
         $_SESSION['message'] = 'Course updated successfully.';            
-        header('location: index.php');
+        echo '<script type="text/javascript">',
+        'modalSuccess();',
+        'modaltext.innerHTML = "<p>Course updated successfully.</p><a class=\'button\' href=\'?pageid=showcourse\'>OK</a>";',
+        '</script>';
       }
       catch(PDOException $e) { 
         echo "Course update problems".$e -> getMessage();
         die();
       } 
     } else {
-      $_SESSION['message'] = 'Failed to update course.';
-      header('location: index.php');
+      $_SESSION['message'] = 'Wrong table, failed to update course.';
+      echo '<script type="text/javascript">',
+      'modalError();',
+      'modaltext.innerHTML = "<p>Wrong table, failed to update course.</p><a class=\'button\' href=\'?pageid=showcourse\'>OK</a>";',
+      '</script>';
     }
   } else {
-    $_SESSION['message'] = 'Only administrator can edit courses.';
-    header('location: index.php');
+    $_SESSION['message'] = 'Only administrator can edit a courses.';
+    echo '<script type="text/javascript">',
+    'modalError();',
+    'modaltext.innerHTML = "<p>Only administrator can edit a courses.</p><a class=\'button\' href=\'index.php\'>OK</a>";',
+    '</script>';
   }
 }
 
@@ -579,9 +626,16 @@ function delCourseAction() {
     $stmt->bindValue(':rowid', $_POST['rowid']);
     $stmt->execute();
     $_SESSION['message']="Course deleted successfully";
-    header('Location: index.php');
+    echo '<script type="text/javascript">',
+    'modalSuccess();',
+    'modaltext.innerHTML = "<p>Course deleted successfully.</p><a class=\'button\' href=\'?pageid=showcourse\'>OK</a>";',
+    '</script>';
   } else {
-    echo "Only administrator can delete a course.";
+    $_SESSION['message']="Only administrator can delete a course.";
+    echo '<script type="text/javascript">',
+    'modalError();',
+    'modaltext.innerHTML = "<p>Only administrator can delete a course.</p><a class=\'button\' href=\'index.php\'>OK</a>";',
+    '</script>';
   }
 }
 
@@ -598,7 +652,10 @@ function addClassAction() {
       try {
         addClass($startdate, $enddate, $status, $courseid, $trainerid);
         $_SESSION['message'] = "Class added successfully.";
-        header('Location: index.php?pageid=showclass');
+        echo '<script type="text/javascript">',
+        'modalSuccess();',
+        'modaltext.innerHTML = "<p>Class added successfully.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
+        '</script>';
       }
       catch(PDOException $e) { 
         echo "Class creation problems".$e -> getMessage();
@@ -621,19 +678,29 @@ function editClassAction() {
       try {
         editClass($rowid, $startdate, $enddate, $status, $trainerid, $courseid);
         $_SESSION['message'] = 'Class updated successfully.';            
-        header('location: index.php');
+        echo '<script type="text/javascript">',
+        'modalSuccess();',
+        'modaltext.innerHTML = "<p>Class updated successfully.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
+        '</script>';
       }
       catch(PDOException $e) { 
         echo "Class update problems".$e -> getMessage();
         die();
       } 
     } else {
-      $_SESSION['message'] = 'Failed to update class.';
-      header('location: index.php');
+      $_SESSION['message'] = 'Wrong table, failed to update class.';
+      echo '<script type="text/javascript">',
+      'modalError();',
+      'modaltext.innerHTML = "<p>Wrong table, failed to update class.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
+      '</script>';
+
     }
   } else {
     $_SESSION['message'] = 'Only administrator can edit classes.';
-    header('location: index.php');
+    echo '<script type="text/javascript">',
+    'modalError();',
+    'modaltext.innerHTML = "<p>Only administrator can edit classes.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
+    '</script>';
   }
 }
 
@@ -645,9 +712,16 @@ function delClassAction() {
     $stmt->bindValue(':rowid', $_POST['rowid']);
     $stmt->execute();
     $_SESSION['message']="Class deleted successfully";
-    header('Location: index.php');
+    echo '<script type="text/javascript">',
+    'modalSuccess();',
+    'modaltext.innerHTML = "<p>Class deleted successfully.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
+    '</script>';
   } else {
-    echo "Only administrator can delete a class.";
+    $_SESSION['message'] = 'Only administrator can delete a class.';
+    echo '<script type="text/javascript">',
+    'modalError();',
+    'modaltext.innerHTML = "<p>Only administrator can delete a class.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
+    '</script>';
   }
 }
 

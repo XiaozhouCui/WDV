@@ -21,7 +21,7 @@ $result = array();
 
 $files = scandir('../view/images/');
 
-$output = '<div class="row">';
+$output = '<div class="bigholder">';
 
 if(false !== $files)
 {

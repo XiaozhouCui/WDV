@@ -330,7 +330,7 @@ function modalLoggedin() {
   document.getElementById('myModal').style.display = "block";
   document.getElementById('modalheader').style.backgroundColor = "green";
   document.getElementById('modalfooter').style.backgroundColor = "green";
-  document.getElementById('modaltext').innerHTML = "<p>You have successfully logged in.</p><button onclick='closeModal()'>OK</button>";
+  document.getElementById('modaltext').innerHTML = "<p>You have successfully logged in.</p><a class='button' href='?pageid=loggedin'>OK</a>";
   document.getElementById('modalheadertext').innerHTML = "WELCOME";
 }
 
