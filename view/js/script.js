@@ -20,14 +20,6 @@ function addUserForm() {
   document.getElementById('dzone').style.display = 'none';
 }
 
-function showDropzone() {
-  document.getElementById('dzone').style.display = 'block';
-  document.getElementById('adduserform').style.display = 'none';
-  document.getElementById('userlist').style.display = 'none';
-  document.getElementById('filelist').style.display = 'none';
-  document.getElementById('edituserform').style.display = 'none';
-}
-
 function closeUserForm() {
   document.getElementById("adduserform").reset();
   document.getElementById('adduserform').style.display = 'none';
@@ -437,4 +429,54 @@ function validity2() {
   } else {
     edituser_button_form.disabled = true;
   }
+}
+
+
+function showDropzone() {
+  document.getElementById('dzone').style.display = 'block';
+  document.getElementById('adduserform').style.display = 'none';
+  document.getElementById('userlist').style.display = 'none';
+  document.getElementById('filelist').style.display = 'none';
+  document.getElementById('edituserform').style.display = 'none';
+  Dropzone.options.dropzoneFrom = {
+    autoProcessQueue: false,
+    acceptedFiles:".png,.jpg,.gif,.bmp,.jpeg",
+    init: function(){
+      var submitButton = document.querySelector('#submit-all');
+      myDropzone = this;
+      submitButton.addEventListener("click", function(){
+        myDropzone.processQueue();
+      });
+      this.on("complete", function(){
+        if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
+          var _this = this;
+          _this.removeAllFiles();
+        }
+        list_image();
+      });
+    },
+  };
+
+  list_image();
+
+  function list_image() {
+    $.ajax({
+      url:"controller/listimage.php",
+      success:function(data){
+        $('#preview').html(data);
+      }
+    });
+  }
+
+  $(document).on('click', '.remove_image', function(){
+    var name = $(this).attr('id');
+    $.ajax({
+      url:"?pageid=dzone",
+      method:"POST",
+      data:{name:name},
+      success:function(data) {
+        list_image();
+      }
+    })
+  });
 }

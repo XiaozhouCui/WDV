@@ -144,6 +144,9 @@ showMenu();
         if ( $action == 'uploading' ) {
           uploadFileAction();
         }
+        if ( $action == 'dzone' ) {
+          doDropzone();
+        }
         if ( $action == 'grid' ) {
           include ("view/pages/grid.html");
         }
