@@ -18,15 +18,16 @@ function loginAction() {
         $_SESSION['time_start_login'] = time();
         echo
         '<script type="text/javascript">',
-        'modalLoggedin();',
-        'var seconds =10;',
-        'redirect();',
+          'modalLoggedin();',
+          'var seconds =10;', // 10 seconds count down to redirect
+          'redirect();',
         '</script>';
       }
       else {
-        echo '<script type="text/javascript">',
-            'loginFailed();',
-            '</script>';
+        echo 
+        '<script type="text/javascript">',
+          'loginFailed();',
+        '</script>';
       }
     }
     catch(PDOException $e) {
@@ -729,19 +730,14 @@ function delClassAction() {
 }
 
 function doDropzone() {
-  $folder_name = 'view/images/';
-  
-  if(!empty($_FILES))
-  {
-   $temp_file = $_FILES['file']['tmp_name'];
-   $location = $folder_name . $_FILES['file']['name'];
-   move_uploaded_file($temp_file, $location);
-  }
-  
-  if(isset($_POST["name"]))
-  {
-   $filename = $folder_name.$_POST["name"];
-   unlink($filename);
+  $ds = DIRECTORY_SEPARATOR;
+  $path = 'view'.$ds.'images'.$ds;
+  $abspath = dirname(__FILE__).$ds.$path;
+
+  if(!empty($_FILES)) {
+    $temp_file = $_FILES['file']['tmp_name'];
+    $location = $path . $_FILES['file']['name'];
+    move_uploaded_file($temp_file, $location);
   }
 }
 

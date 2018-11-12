@@ -275,18 +275,17 @@ function showModal() {
   document.getElementById('myModal').style.display = "block";
 }
 
+function closeModal() {  
+  resetModal();
+  document.getElementById('myModal').style.display = "none";
+}
+
 function modalBrowser() {
   document.getElementById('myModal').style.display = "block";
   document.getElementById('modaltext').innerHTML = navigator.userAgent;
   document.getElementById('modalheadertext').innerHTML = "BROWSER INFO";
   document.getElementById('modalheader').style.backgroundColor = "grey";
   document.getElementById('modalfooter').style.backgroundColor = "grey";
-
-}
-
-function closeModal() {  
-  resetModal();
-  document.getElementById('myModal').style.display = "none";
 }
 
 function resetModal() {
@@ -323,25 +322,22 @@ function modalLoggedin() {
   document.getElementById('modalheadertext').innerHTML = "WELCOME";
   document.getElementById('modalheader').style.backgroundColor = "green";
   document.getElementById('modalfooter').style.backgroundColor = "green";
-  document.getElementById('modaltext').innerHTML = "<p>You have successfully logged in.</p><p><div id='countdown'></div></p><br><a class='button' href='?pageid=loggedin'>OK</a>";
+  document.getElementById('modaltext').innerHTML = "<p>You have successfully logged in.</p><p><div id='countdown'></div></p><br><a class='button' href='?pageid=loggedin'>Skip</a>";
 }
 
 function redirect(){
- if (seconds <=0){
- // redirect to new url after counter  down.
-  window.location = "?pageid=loggedin";
- }else{
-  seconds--;
-  document.getElementById("countdown").innerHTML = "Redirect after <strong>"+seconds+"</strong> seconds."
-  setTimeout("redirect()", 1000)
- }
+  if (seconds <=0){
+  // redirect to new url after counter  down.
+    window.location = "?pageid=loggedin";
+  } else {
+    seconds--;
+    document.getElementById("countdown").innerHTML = "Redirect after <strong>"+seconds+"</strong> seconds."
+    setTimeout("redirect()", 1000)
+  }
 }
 
-
 function loginFailed() {
-  document.getElementById('myModal').style.display = "block";  
-  document.getElementById('modalheader').style.backgroundColor= "red";
-  document.getElementById('modalfooter').style.backgroundColor= "red";
+  modalError();
   document.getElementById('modalheadertext').innerHTML = "Login Failed";
   document.getElementById('modaltext').innerHTML = "<p>Sorry, either your username or your password is incorrect</p><button onclick='closeModal()'>OK</button>";
 }
@@ -359,10 +355,6 @@ function modalDelUser(userid) {
   document.getElementById('modalheader').style.backgroundColor= "red";
   document.getElementById('modalfooter').style.backgroundColor= "red";
   document.getElementById('modaltext').innerHTML = "<p>Are you sure you want to delete this user (login id: " + userid + ")?</p><button onclick='AJAXdeleteUser(" + userid + ")'>Yes</button> <button onclick='closeModal()'>Cancel</button>";
-    /*var returnVal = confirm('Are you sure?');
-  if(returnVal == true) {
-    AJAXdeleteUser(userid);
-  }*/
 }
 
 function validity1() {      
@@ -443,6 +435,14 @@ function validity2() {
   }
 }
 
+function list_image() {
+  $.ajax({
+    url:"controller/dzone.php",
+    success:function(data) {
+      $('#preview').html(data);
+    }
+  });
+}
 
 function showDropzone() {
   document.getElementById('dzone').style.display = 'block';
@@ -450,45 +450,38 @@ function showDropzone() {
   document.getElementById('userlist').style.display = 'none';
   document.getElementById('filelist').style.display = 'none';
   document.getElementById('edituserform').style.display = 'none';
-  Dropzone.options.dropzoneFrom = {
-    autoProcessQueue: false,
-    acceptedFiles:".png,.jpg,.gif,.bmp,.jpeg",
-    init: function(){
-      var submitButton = document.querySelector('#submit-all');
-      myDropzone = this;
-      submitButton.addEventListener("click", function(){
+  $(document).ready(function(){
+    Dropzone.options.dropzoneFrom = {
+      autoProcessQueue: false,
+      acceptedFiles:".png,.jpg,.gif,.bmp,.jpeg",
+      init: function(){
+        var submitButton = document.querySelector('#submit-all');
+        myDropzone = this;
+        submitButton.addEventListener("click", function(){
         myDropzone.processQueue();
-      });
-      this.on("complete", function(){
-        if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
-          var _this = this;
-          _this.removeAllFiles();
+        });
+        this.on("complete", function(){
+          if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
+            var _this = this;
+            _this.removeAllFiles();
+          }
+          list_image();
+        });
+      },
+    };
+   
+    list_image();
+   
+    $(document).on('click', '.remove_image', function(){
+      var name = $(this).attr('id');
+      $.ajax({
+        url:"controller/dzone.php",
+        method:"POST",
+        data:{name:name},
+        success:function(data) {
+          list_image();
         }
-        list_image();
-      });
-    },
-  };
-
-  list_image();
-
-  function list_image() {
-    $.ajax({
-      url:"controller/listimage.php",
-      success:function(data){
-        $('#preview').html(data);
-      }
+      })
     });
-  }
-
-  $(document).on('click', '.remove_image', function(){
-    var name = $(this).attr('id');
-    $.ajax({
-      url:"?pageid=dzone",
-      method:"POST",
-      data:{name:name},
-      success:function(data) {
-        list_image();
-      }
-    })
   });
 }
