@@ -320,11 +320,23 @@ window.onclick = function(event) {
 
 function modalLoggedin() {
   document.getElementById('myModal').style.display = "block";
+  document.getElementById('modalheadertext').innerHTML = "WELCOME";
   document.getElementById('modalheader').style.backgroundColor = "green";
   document.getElementById('modalfooter').style.backgroundColor = "green";
-  document.getElementById('modaltext').innerHTML = "<p>You have successfully logged in.</p><a class='button' href='?pageid=loggedin'>OK</a>";
-  document.getElementById('modalheadertext').innerHTML = "WELCOME";
+  document.getElementById('modaltext').innerHTML = "<p>You have successfully logged in.</p><p><div id='countdown'></div></p><br><a class='button' href='?pageid=loggedin'>OK</a>";
 }
+
+function redirect(){
+ if (seconds <=0){
+ // redirect to new url after counter  down.
+  window.location = "?pageid=loggedin";
+ }else{
+  seconds--;
+  document.getElementById("countdown").innerHTML = "Redirect after <strong>"+seconds+"</strong> seconds."
+  setTimeout("redirect()", 1000)
+ }
+}
+
 
 function loginFailed() {
   document.getElementById('myModal').style.display = "block";  

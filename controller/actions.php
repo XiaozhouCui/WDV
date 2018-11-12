@@ -16,8 +16,11 @@ function loginAction() {
         $_SESSION['user'] = $rows['name']." ".$rows['surname'];
         $_SESSION['level'] = $rows['access_level'];
         $_SESSION['time_start_login'] = time();
-        echo '<script type="text/javascript">',
+        echo
+        '<script type="text/javascript">',
         'modalLoggedin();',
+        'var seconds =10;',
+        'redirect();',
         '</script>';
       }
       else {
