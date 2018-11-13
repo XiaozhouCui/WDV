@@ -17,7 +17,7 @@
         Please provide a valid password.
       </div>
       <small id="passwordHelpBlock" class="form-text text-muted">
-      <input type="checkbox" onclick="showPassword1()">Show Password. 8-20 characters long, include at least 1 number, 1 upper case letter and 1 lower case letter.
+      <input type="checkbox" onclick="showPassword1()">Show Password. 8-20 characters long, include at least 1 number, 1 upper and 1 lower case letter.
       </small>
     </div>
     <input type="hidden" name="action_type" value="add"/>
@@ -65,7 +65,7 @@
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
       <label class="form-check-label" for="invalidCheck">
-        Agree to terms and conditions
+        By creating an account you agree to our <a href="#">Terms & Privacy</a>.
       </label>
       <div class="invalid-feedback">
         You must agree before submitting.
@@ -73,7 +73,7 @@
     </div>
   </div>
   <button class="btn btn-primary" type="submit" id="submitform01">Submit</button>
-  <button class="btn btn-primary" id="cancelform01" onclick="location.href='index.php';">Cancel</button>
+  <button class="btn btn-primary" type="button" id="cancelform01" onclick="location.href='index.php';">Cancel</button>
 </form>
 
 <?php 

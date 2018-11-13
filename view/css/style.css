@@ -108,6 +108,7 @@ aside {
 	padding-top: 10px;
 	font-size: 25px;
 }
+
 ul {
 	box-sizing: border-box;
 	border: 0px solid gray;
@@ -203,6 +204,7 @@ fieldset p {
 	justify-content: center;	
 	line-height: 20px;
 	padding: 12px 0;
+	margin: 10px;
 	text-align: center;		
 	background-color: orange;
 	font-size: 1em;

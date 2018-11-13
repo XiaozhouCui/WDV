@@ -17,6 +17,22 @@ function showHeader() {
   <script src="view/js/dropzone.js"></script>
 </head>
 <body>
+  <!-- The Modal (background) -->
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modalcontent">
+      <div class="modalheader" id="modalheader" >
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalheadertext">Default Modal Header</h2>
+      </div>
+      <div class="modalbody">
+        <div id="modaltext">Default content</div>
+      </div>
+      <div class="modalfooter" id="modalfooter">
+        <h3 id="modalfootertext"></h3>
+      </div>
+    </div>
+  </div>
   <div class="flex-container">
     <header class="nav">
       <p><h1>SafeTec Pacific</h1></p>
@@ -77,7 +93,7 @@ function showMenu() {  ?>
       }?>
     </div><?php
     } else {
-      echo "<div class='bigholder'><br>Login to see the menu</div>";
+      echo "<div class='bigholder'>Login to see the menu</div>";
     }?>
     
   </div><?php
@@ -86,10 +102,19 @@ function showMenu() {  ?>
 function showFooter() {?>
     <div class="contentRight"></div>
     <footer>
+      <!-- Show PHP session messages -->
+      <div class="bigholder"><?php  
+        if(isset($_SESSION['error'])) {
+        echo "<div>{$_SESSION['error']}</div>";
+        unset($_SESSION['error']);
+        }
+        if(isset($_SESSION['message'])) {
+        echo "<div>{$_SESSION['message']}</div>";
+        unset($_SESSION['message']);
+        }?>
+      </div> 
       <?php 
-        echo "<div> Your browser info: ";
-        echo $_SERVER['HTTP_USER_AGENT'];
-        echo "</div><div>";
+        echo "<div>";
         print_r($_SESSION);
         echo "</div><div>";
         print_r($_GET);
