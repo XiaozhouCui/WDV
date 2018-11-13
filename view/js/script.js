@@ -260,41 +260,49 @@ function showPassword3() {
 }
 
 function doUsernameCheck(userName) {     
-  var ajaxUrl = 'controller/checkusername.php?username=' + userName;
+  var ajaxUrl = 'model/webservice.php?getData=checkreg&username=' + userName;
   $.ajax({
     type: 'get',
     url: ajaxUrl,
-    dataType: 'html',
-    success: function(msg) {
-      if (msg == 'taken' ) {
+    dataType: 'json',
+    success: function(data) {
+      if (data.status == 'taken' ) {
         var thisName = userName;
         $('#errmsg01').css('color', 'red');
         $('#errmsg01').html("Username <strong>"+ thisName +"</strong> already taken");
         submitform01.disabled = true;
       }
-      if (msg == 'ok' ) {
+      if (data.status == 'ok' ) {
+        $('#errmsg01').html("");
         submitform01.disabled = false;
       }
+    },
+    error: function(err) {
+      console.log(err);
     }
   });
 }
 
 function doEmailCheck(emailAddr) {     
-  var ajaxUrl = 'controller/checkemail.php?email=' + emailAddr;
+  var ajaxUrl = 'model/webservice.php?getData=checkreg&email=' + emailAddr;
   $.ajax({
     type: 'get',
     url: ajaxUrl,
-    dataType: 'html',
-    success: function(msg) {
-      if (msg == 'taken' ) {
+    dataType: 'json',
+    success: function(data) {
+      if(data.status == 'taken') {
         var thisEmail = emailAddr;
         $('#errmsg02').css('color', 'red');
         $('#errmsg02').html("<strong>"+ thisEmail +"</strong> already taken");
         submitform01.disabled = true;
-      }
-      if (msg == 'ok' ) {
+      } 
+      if (data.status == 'ok') {
+        $('#errmsg02').html("");
         submitform01.disabled = false;
       }
+    },
+    error: function(err) {
+      console.log(err);
     }
   });
 }

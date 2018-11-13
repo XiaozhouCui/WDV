@@ -1,26 +1,4 @@
 <h2>Create a new course</h2>
-<!--
-<form action="?pageid=addingcourse"  method="post">
-	<fieldset>
-		<legend>Course details</legend>
-		<label>Course name:</label>
-		<input type="text" name=coursename required><br><br>
-		<label>Description:</label>
-		<input type="text" name=description required><br><br>
-		<label>Course Level:</label>		
-		<select name="level">
-			<option value="Low">Entry Level</option>
-			<option value="Medium">Medium Level</option>
-			<option value="High">High Level</option>
-		</select><br><br>
-		<label>Price:</label>
-		<input type="text" name=price required><br><br>
-		<input type="hidden" name="actiontype" value="newcourse"/>
-		<input type="submit">
-		<input type="button" onclick="location.href='?pageid=showcourse';" value="Cancel" />
-	</fieldset>
-</form>
--->
 
 <form class="needs-validation" action="?pageid=addingcourse" method="post" novalidate>
   <div class="form-group">
@@ -31,9 +9,9 @@
     <div class="col-md-6 mb-3">
       <label for="inputRole">Course Level</label>
       <select name="level" id="inputRole" class="form-control" required>
-        <option id="levelop1" value="Low">Entry Level</option>
-        <option id="levelop2" value="Medium">Medium Level</option>
-        <option id="levelop3" value="High">High Level</option>
+        <option value="Low">Entry Level</option>
+        <option value="Medium">Medium Level</option>
+        <option value="High">High Level</option>
       </select>
     </div>
     <div class="col-md-6 mb-3">
@@ -44,13 +22,13 @@
 				</div>
         <input type="number" name="price" class="form-control" step="0.01" min="0" required>
         <div class="invalid-feedback">
-          Please provide a valid number
+          Please provide a valid amount
         </div>
       </div>
     </div>
   </div>
   <div class="form-group">
-    <label>Example textarea</label>
+    <label>Course Description</label>
     <textarea name="description" class="form-control" rows="5" required></textarea>
 	</div>
 	<input type="hidden" name="actiontype" value="newcourse"/>

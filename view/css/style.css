@@ -23,10 +23,11 @@ html{
 
 
 }
+
 header {
 	display:flex;
 	width:100%;
-	height:5em;
+	height:10em;
 	order: 1;
 	justify-content:center;
   align-items:center;
@@ -56,7 +57,7 @@ article{
   flex-wrap:wrap;
   order: 4;
 	flex: 1 75%;
-	min-height: 600px;
+	min-height: 900px;
   background-color:rgba(245, 248, 235, 0.75); 
 }
 

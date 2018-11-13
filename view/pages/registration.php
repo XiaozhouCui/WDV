@@ -17,7 +17,7 @@
         Please provide a valid password.
       </div>
       <small id="passwordHelpBlock" class="form-text text-muted">
-      <input type="checkbox" onclick="showPassword1()">Show Password. 8-20 characters long, include at least 1 number, 1 upper and 1 lower case letter.
+      <input type="checkbox" onclick="showPassword1()">Show Password. (8-20 characters long, include at least 1 number, 1 upper and 1 lower case letter.)
       </small>
     </div>
     <input type="hidden" name="action_type" value="add"/>

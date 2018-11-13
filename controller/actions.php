@@ -186,7 +186,7 @@ function showCoursesAction() {
           <?php echo '<p>Course Level: '. $row['course_level'].'</p>'; ?>
           <?php echo '<p>Price: $'. $row['price'].'</p>'; ?>
           <a href="?pageid=editcourse&rowid=<?php echo $row['course_id']; ?>" class="button">Edit</a>
-          <a href="?pageid=deletecourse&rowid=<?php echo $row['course_id']; ?>" class="button">Delete</a><br><br>
+          <a href="?pageid=deletecourse&rowid=<?php echo $row['course_id']; ?>" class="button">Delete</a>
         </div>
       </div>  
       <?php
