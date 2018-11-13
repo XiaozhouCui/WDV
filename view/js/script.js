@@ -232,8 +232,8 @@ function AJAXdeleteFile(fileid) {
   });
 }
 
-function showPassword() {
-  var p1 = document.getElementById("regpw");   
+function showPassword1() {
+  var p1 = document.getElementById("password01");   
   if (p1.type == "password") {
     p1.type = "text";
   } else {
@@ -259,6 +259,26 @@ function showPassword3() {
   }
 }
 
+function doUsernameCheck(userName) {     
+  var ajaxUrl = 'controller/checkusername.php?username=' + userName;
+  $.ajax({
+    type: 'get',
+    url: ajaxUrl,
+    dataType: 'html',
+    success: function(msg) {
+      if (msg == 'taken' ) {
+        var thisName = userName;
+        $('#errmsg01').css('color', 'red');
+        $('#errmsg01').html("Username <strong>"+ thisName +"</strong> already taken");
+        submitform01.disabled = true;
+      }
+      if (msg == 'ok' ) {
+        submitform01.disabled = false;
+      }
+    }
+  });
+}
+
 function doEmailCheck(emailAddr) {     
   var ajaxUrl = 'controller/checkemail.php?email=' + emailAddr;
   $.ajax({
@@ -266,7 +286,15 @@ function doEmailCheck(emailAddr) {
     url: ajaxUrl,
     dataType: 'html',
     success: function(msg) {
-        $("#errmsg").html(msg);
+      if (msg == 'taken' ) {
+        var thisEmail = emailAddr;
+        $('#errmsg02').css('color', 'red');
+        $('#errmsg02').html("<strong>"+ thisEmail +"</strong> already taken");
+        submitform01.disabled = true;
+      }
+      if (msg == 'ok' ) {
+        submitform01.disabled = false;
+      }
     }
   });
 }

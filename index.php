@@ -11,28 +11,28 @@ showMenu();
 ?>
 <article>
   <!-- Show PHP session messages -->
-  <div><?php  
-  if(isset($_SESSION['error'])) {
-  echo "<div>{$_SESSION['error']}</div>";
-  unset($_SESSION['error']);
-  }
-  if(isset($_SESSION['message'])) {
-  echo "<div>{$_SESSION['message']}</div>";
-  unset($_SESSION['message']);
-  }?>
+  <div class="bigholder"><?php  
+    if(isset($_SESSION['error'])) {
+    echo "<div>{$_SESSION['error']}</div>";
+    unset($_SESSION['error']);
+    }
+    if(isset($_SESSION['message'])) {
+    echo "<div>{$_SESSION['message']}</div>";
+    unset($_SESSION['message']);
+    }?>
   </div>  
   <!-- The Modal (background) -->
   <div id="myModal" class="modal">
     <!-- Modal content -->
-    <div class="modal-content">
-      <div class="modal-header" id="modalheader" >
+    <div class="modalcontent">
+      <div class="modalheader" id="modalheader" >
         <span class="close" onclick="closeModal()">&times;</span>
         <h2 id="modalheadertext">Default Modal Header</h2>
       </div>
-      <div class="modal-body">
+      <div class="modalbody">
         <div id="modaltext">Default content</div>
       </div>
-      <div class="modal-footer" id="modalfooter">
+      <div class="modalfooter" id="modalfooter">
         <h3 id="modalfootertext"></h3>
       </div>
     </div>
@@ -40,7 +40,8 @@ showMenu();
   <!-- All calling functions start here -->
   <div class="bigholder">
     <?php
-    if (isset($_GET['pageid'])) {
+    
+    if (isset($_GET['pageid'])) { //options for visitors who do not login
       if ($_GET['pageid'] == 'login') {
         include("view/pages/login.php");
       }
@@ -50,8 +51,11 @@ showMenu();
       if ($_GET['pageid'] == 'reg') {
         include("view/pages/registration.php");
       }
-    } 
-    if (isset($_SESSION['login'])) {
+      if ($_GET['pageid'] == 'addinguser' ) {
+        addUserAction();
+      }
+    }
+    if (isset($_SESSION['login'])) { //options for logged in users
       if (isset($_GET['pageid'])) {
         $action = $_GET['pageid'];
         if ( $action == 'loggedin' ) {

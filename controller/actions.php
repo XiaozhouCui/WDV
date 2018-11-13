@@ -85,13 +85,22 @@ function addUserAction() {
           }
           if ($role == "Customer") {
             addCustomer($username, $password, $role, $name, $surname, $email);
-            $_SESSION['message'] = "Customer added successfully.";
-            echo '<script type="text/javascript">',
-            'modalSuccess();',
-            'modaltext.innerHTML = "<p>Customer added successfully.</p><a class=\'button\' href=\'?pageid=showcustomer\'>OK</a>";',
-            '</script>';
+            if(isset($_SESSION['level'])) {
+              $_SESSION['message'] = "Customer added successfully.";
+              echo '<script type="text/javascript">',
+              'modalSuccess();',
+              'modaltext.innerHTML = "<p>Customer added successfully.</p><a class=\'button\' href=\'?pageid=showcustomer\'>OK</a>";',
+              '</script>';
+            } else { // for visitors who just registered
+              $_SESSION['message'] = "Thank you for your registration";
+              echo '<script type="text/javascript">',
+              'modalSuccess();',
+              'modaltext.innerHTML = "<p>Thank you for your registration, please log in with your username and password</p><a class=\'button\' href=\'index.php\'>OK</a>";',
+              '</script>';
+            }
           }
           else {
+            $_SESSION['message'] = "Please make sure the role of the new user is valid";
             echo "Registration failed! Please make sure the role of the new user is valid";
           }
         }
@@ -422,10 +431,10 @@ function delUserAction() {
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(':rowid', $_POST['rowid']);
     $stmt->execute();
-    $_SESSION['message']="Admin user deleted successfully";
+    $_SESSION['message']="User deleted successfully";
     echo '<script type="text/javascript">',
     'modalSuccess();',
-    'modaltext.innerHTML = "<p>Admin deleted successfully.</p><a class=\'button\' href=\'?pageid=showuser\'>OK</a>";',
+    'modaltext.innerHTML = "<p>User deleted successfully.</p><a class=\'button\' href=\'?pageid=showuser\'>OK</a>";',
     '</script>';
   } else {
     echo "Only administrator can delete a user.";

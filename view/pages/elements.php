@@ -8,6 +8,7 @@ function showHeader() {
   <title>Home</title>
   <link href="view/css/style.css" rel="stylesheet">
   <link href="view/css/dropzone.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <script src="view/js/script.js"></script>
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -76,7 +77,7 @@ function showMenu() {  ?>
       }?>
     </div><?php
     } else {
-      echo "Login to see the menu";
+      echo "<div class='bigholder'><br>Login to see the menu</div>";
     }?>
     
   </div><?php
