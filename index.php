@@ -48,6 +48,9 @@ showMenu();
         if ( $action == 'edituser' ) {
           include("view/pages/editUserForm.php");
         }
+        if ( $action == 'editinguser' ) {
+          editUserAction();
+        }
         if ( $action == 'deleteuser' ) {
           include("view/pages/delUserForm.php");
         }
@@ -59,6 +62,9 @@ showMenu();
         }
         if ( $action == 'edittrainer' ) {
           include("view/pages/editTrainerForm.php");
+        }
+        if ( $action == 'editingtrainer' ) {
+          editTrainerAction();
         }
         if ( $action == 'showstudent' ) {
           showCurrentStudents();

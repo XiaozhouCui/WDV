@@ -8,7 +8,7 @@ if ($_SESSION['level'] == 'Admin') {
 	?>  
 	<div class="bigholder">
 		<h1>Edit User</h1>
-		<form action="controller/updateUser.php"  method="post">
+		<form action="?pageid=editinguser"  method="post">
 			<fieldset>
 				<legend>Login details</legend>
 				<input type="hidden" name="rowid" value="<?php echo $_GET['rowid'] ?>"><br>

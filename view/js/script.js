@@ -308,15 +308,16 @@ function doEmailCheck(emailAddr) {
 }
 
 function showModal() {
+  resetModal();
   document.getElementById('myModal').style.display = "block";
 }
 
 function closeModal() {  
-  resetModal();
   document.getElementById('myModal').style.display = "none";
 }
 
 function modalBrowser() {
+  resetModal();
   document.getElementById('myModal').style.display = "block";
   document.getElementById('modaltext').innerHTML = navigator.userAgent;
   document.getElementById('modalheadertext').innerHTML = "BROWSER INFO";
@@ -332,6 +333,7 @@ function resetModal() {
 }
 
 function modalSuccess() {
+  resetModal();
   document.getElementById('myModal').style.display = "block";
   document.getElementById('modalheadertext').innerHTML = "DONE";
   document.getElementById('modalheader').style.backgroundColor = "green";
@@ -339,6 +341,7 @@ function modalSuccess() {
 }
 
 function modalError() {
+  resetModal();
   document.getElementById('myModal').style.display = "block";
   document.getElementById('modalheadertext').innerHTML = "ERROR";
   document.getElementById('modalheader').style.backgroundColor = "red";
@@ -354,10 +357,8 @@ window.onclick = function(event) {
 }
 
 function modalLoggedin() {
-  document.getElementById('myModal').style.display = "block";
+  modalSuccess() 
   document.getElementById('modalheadertext').innerHTML = "WELCOME";
-  document.getElementById('modalheader').style.backgroundColor = "green";
-  document.getElementById('modalfooter').style.backgroundColor = "green";
   document.getElementById('modaltext').innerHTML = "<p>You have successfully logged in.</p><p><div id='countdown'></div></p><br><a class='button' href='?pageid=loggedin'>Skip</a>";
 }
 
@@ -379,6 +380,7 @@ function loginFailed() {
 }
 
 function modalLogout() {
+  resetModal();
   document.getElementById('myModal').style.display = "block";
   document.getElementById('modaltext').innerHTML = "<p>You have successfully logged out</p><a class='button' href='index.php'>OK</a>";
   document.getElementById('modalheadertext').innerHTML = "GOOD BYE";
@@ -386,10 +388,8 @@ function modalLogout() {
 
 // modal button calling AJAX to delete user
 function modalDelUser(userid) {
-  document.getElementById('myModal').style.display = "block";
+  modalError();
   document.getElementById('modalheadertext').innerHTML = "WARNING! DELETING A USER"
-  document.getElementById('modalheader').style.backgroundColor= "red";
-  document.getElementById('modalfooter').style.backgroundColor= "red";
   document.getElementById('modaltext').innerHTML = "<p>Are you sure you want to delete this user (login id: " + userid + ")?</p><button onclick='AJAXdeleteUser(" + userid + ")'>Yes</button> <button onclick='closeModal()'>Cancel</button>";
 }
 

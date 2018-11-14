@@ -19,7 +19,7 @@ function loginAction() {
         echo
         '<script type="text/javascript">',
           'modalLoggedin();',
-          'var seconds =10;', // 10 seconds count down to redirect
+          'var seconds =5;', // 10 seconds count down to redirect
           'redirect();',
         '</script>';
       }
@@ -108,8 +108,7 @@ function addUserAction() {
           echo "Account creation problems".$e -> getMessage();
           die();
         }        
-      }
-      else {
+      } else {
         $_SESSION['message'] = "Username already exists, try another.";    
         echo '<script type="text/javascript">',
         'modalError();',
@@ -146,6 +145,46 @@ function showUsersAction() {
   }
 }
 
+function editUserAction() {
+  global $conn;
+  if ($_SESSION['level'] == 'Admin') {
+    if($_POST['action_type'] == 'edit') {
+      $username = !empty($_POST['username'])? sanitise(($_POST['username'])): null; 
+      $mypass = !empty($_POST['password'])? sanitise(($_POST['password'])): null;
+      $password = password_hash($mypass, PASSWORD_DEFAULT); //hash the password
+      $role = !empty($_POST['role']) ? sanitise(($_POST['role'])): null;
+      $name = !empty($_POST['name']) ? sanitise(($_POST['name'])): null;
+      $surname = !empty($_POST['surname'])? sanitise(($_POST['surname'])): null;
+      $email = !empty($_POST['email']) ? sanitise(($_POST['email'])): null;
+      $rowid = !empty($_POST['rowid']) ? sanitise(($_POST['rowid'])): null;
+      try {
+        editUser($rowid, $username, $password, $role, $name, $surname, $email);
+        $_SESSION['message'] = 'User account updated successfully.';            
+        echo '<script type="text/javascript">',
+        'modalSuccess();',
+        'modaltext.innerHTML = "<p>User updated successfully.</p><a class=\'button\' href=\'?pageid=showuser\'>OK</a>";',
+        '</script>';
+      }
+      catch(PDOException $e) { 
+        echo "Account update problems".$e -> getMessage();
+        die();
+      } 
+    } else {
+      $_SESSION['message'] = 'Failed to update user account.';
+      echo '<script type="text/javascript">',
+      'modalError();',
+      'modaltext.innerHTML = "<p>Failed to update user account.</p><a class=\'button\' href=\'?pageid=showuser\'>OK</a>";',
+      '</script>';
+    }
+  } else {
+    $_SESSION['message'] = '<aside>Only administrator can edit user accounts.</aside>';
+    echo '<script type="text/javascript">',
+    'modalError();',
+    'modaltext.innerHTML = "<p>Only administrator can edit user accounts.</p><a class=\'button\' href=\'?pageid=showuser\'>OK</a>";',
+    '</script>';
+  }
+}
+
 function showTrainersAction() {
   global $conn;
   $sql = "SELECT * FROM login INNER JOIN trainer ON login.login_id = trainer.login_id";    
@@ -167,6 +206,49 @@ function showTrainersAction() {
       </div>  
       <?php
     }
+  }
+}
+
+function editTrainerAction() {
+  global $conn;
+  if ($_SESSION['level'] == 'Admin') {
+    if($_POST['action_type'] == 'edit') {
+      $username = !empty($_POST['username'])? sanitise(($_POST['username'])): null; 
+      $mypass = !empty($_POST['password'])? sanitise(($_POST['password'])): null;
+      $password = password_hash($mypass, PASSWORD_DEFAULT); //hash the password
+      $role = !empty($_POST['role']) ? sanitise(($_POST['role'])): null;
+      $name = !empty($_POST['name']) ? sanitise(($_POST['name'])): null;
+      $surname = !empty($_POST['surname'])? sanitise(($_POST['surname'])): null;
+      $email = !empty($_POST['email']) ? sanitise(($_POST['email'])): null;
+      $rowid = !empty($_POST['rowid']) ? sanitise(($_POST['rowid'])): null;
+      try {
+          editTrainer($rowid, $username, $password, $role, $name, $surname, $email);
+          $_SESSION['message'] = 'Trainer account updated successfully.';            
+          echo 
+          '<script type="text/javascript">',
+            'modalSuccess();',
+            'modaltext.innerHTML = "<p>Trainer account updated successfully.</p><a class=\'button\' href=\'?pageid=showtrainer\'>OK</a>";',
+          '</script>';
+      }
+      catch(PDOException $e) { 
+        echo "Account update problems".$e -> getMessage();
+        die();
+      } 
+    } else {
+      $_SESSION['message'] = 'Failed to update trainer account.';
+      echo 
+      '<script type="text/javascript">',
+        'modalError();',
+        'modaltext.innerHTML = "<p>Failed to update trainer account.</p><a class=\'button\' href=\'?pageid=showtrainer\'>OK</a>";',
+      '</script>';
+    }
+  } else {
+    $_SESSION['message'] = 'Only administrator can edit trainer accounts.';
+    echo 
+    '<script type="text/javascript">',
+      'modalError();',
+      'modaltext.innerHTML = "<p>Failed to update trainer account.</p><a class=\'button\' href=\'?pageid=showtrainer\'>OK</a>";',
+    '</script>';
   }
 }
 
