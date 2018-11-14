@@ -14,9 +14,15 @@
 			<option value="Cancelled">Cancelled</option>
 		</select><br><br>
 		<label>Instructor ID:</label>
-		<input type="text" name="trainerid" required><br><br>
+		<input type="number" name="trainerid" id="trainerid" onfocus="listTrainers()" required>
+		<select id="trainer_list" onChange="setTrainer()">
+			<option>Please select a trainer</option>
+		</select><br><br>
 		<label>Course ID:</label>
-		<input type="text" name="courseid" required><br><br>
+		<input type="number" name="courseid" id="courseid" onfocus="listCourses()" required>
+		<select id="course_list" onChange="setCourse()">
+			<option>Please select a course</option>
+		</select><br><br>
 		<input type="hidden" name="actiontype" value="addclass"/>
 		<input type="submit">
 		<input type="button" onclick="location.href='?pageid=home';" value="Cancel" />

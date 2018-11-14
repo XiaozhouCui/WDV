@@ -156,12 +156,13 @@ showMenu();
         if ( $action == 'logout' ) {
           logoutAction();
         }
+      } else {
+        include("view/pages/loggedInPage.php");
       }
-    }
-    else {
+    } else {
       echo "<p>Please login to see the content</p>";
-      echo "<a href='?pageid=login'>Login</a> or ";
-      echo "<a href='?pageid=reg'>Register</a>";
+      echo "<a href='?pageid=login' type='button' class='btn btn-link'>Login</a> or ";
+      echo "<a href='?pageid=reg' type='button' class='btn btn-link'>Register</a>";
     }
     ?>
   </div> 

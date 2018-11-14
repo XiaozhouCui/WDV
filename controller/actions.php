@@ -201,7 +201,7 @@ function showTrainersAction() {
           <p>Full Name: <?php echo $row['name'].' '.$row['surname']; ?></p>
           <p>Email: <?php echo $row['email']; ?></p>
           <a href="?pageid=edittrainer&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a>
-          <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br><br>
+          <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a>
         </div>
       </div>  
       <?php

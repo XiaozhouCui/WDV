@@ -178,6 +178,35 @@ if(isset($_GET['getData'])) {
     }
     echo json_encode($response_array);
   }
+  
+  if($_GET['getData'] == 'listtrainer') {
+    $sql = "SELECT * FROM trainer ORDER BY trainer_id ASC LIMIT 20"; 
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    if(is_array($result)) {
+      //print_r($result);	
+      echo json_encode($result); // create json
+    } else {
+      echo json_encode(array("Error"=>"true"));
+    }
+  }
+
+  if($_GET['getData'] == 'listcourse') {
+    $sql = "SELECT course_id, course_name FROM course ORDER BY course_id ASC LIMIT 20"; 
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    if(is_array($result)) {
+      //print_r($result);	
+      echo json_encode($result); // create json
+    } else {
+      echo json_encode(array("Error"=>"true"));
+    }
+  }
+
   if($_GET['getData'] == 'checkreg') {    
     if(isset($_GET['email'])) {
       $checkemail="SELECT email FROM (SELECT email FROM user UNION SELECT email FROM trainer UNION SELECT email FROM current_student UNION SELECT email FROM prospective_student) AS U WHERE U.email = :email";

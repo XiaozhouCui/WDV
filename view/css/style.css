@@ -5,9 +5,8 @@ html, body, div, span, header, section, nav, article, aside, footer, p, h1, h2, 
 }
 
 /* or download a CSS reset e.g. normalize */
-html{
-	font-family: arial;
-	font-size:18px; /* equal to 100% or 1em */
+html {
+	font-size: 18px;
 }
 
 .flex-container{
@@ -20,8 +19,6 @@ html{
 	background-image:url(../images/refinery.jpg);
 	background-size: cover;
 	background-position: center;    
-
-
 }
 
 header {
@@ -110,7 +107,7 @@ aside {
 	font-size: 25px;
 }
 
-ul {
+.panel ul {
 	box-sizing: border-box;
 	border: 0px solid gray;
 	width:100%;
@@ -122,7 +119,7 @@ ul {
 	padding: 0 15px;
 }
 
-li {
+.panel li {
 	min-width: 150px;
 	margin: 10px 5px;
 	display: flex;
@@ -200,36 +197,38 @@ fieldset p {
 	box-sizing: border-box;
 	border: 2px solid gray;
 	border-radius: 5px;
-	width: 120px;
+	min-width: 120px;
 	display: flex;
 	justify-content: center;	
 	line-height: 20px;
 	padding: 12px 0;
 	margin: 10px;
 	text-align: center;		
-	background-color: orange;
+	background-image: linear-gradient(white,darkgrey);
+	background-color: rgb(226, 226, 226);
 	font-size: 1em;
 }
 
 button, input[type=button], input[type=submit]{
 	/*box-sizing: border-box;
 	border: 1px solid blue;*/
+	color: black;
 	border-radius: 5px;
 	min-width: 100px;
 	justify-content: center;	
 	line-height: 40px;
 	text-align: center;		
-	background-color: orange;
+	background-color: rgb(226, 226, 226);
 	font-size: 1em;
 }
 
 .button:hover, button:hover, input[type=button]:hover, input[type=submit]:hover {
-	background-color: rgb(250, 187, 71);
+	background-color: rgb(203, 215, 255);
 	cursor: pointer;
 }
 
 .button:active, button:active, input[type=button]:active, input[type=submit]:active {
-	background-color: rgb(255, 218, 148);
+	background-color: rgb(226, 233, 255);
 	cursor: pointer;
 }
 
@@ -239,8 +238,8 @@ button, input[type=button], input[type=submit]{
 }
 
 a:link, a:active, a:visited{
-  color:blue;
-  text-decoration: none;
+  color:black;
+  text-decoration: solid;
 }
 
 /* hide the divs in ajax page when loaded */
@@ -308,15 +307,15 @@ a:link, a:active, a:visited{
 
 .modalheader {
 	padding: 6px 16px;
-	background-color: orange;
+	background-color: rgb(77, 118, 255);
 	color: white;
 }
 
 .modalbody {padding: 32px 16px;}
 
 .modalfooter {
-	padding: 12px 16px;
-	background-color: orange;
+	padding: 18px 16px;
+	background-color: rgb(77, 118, 255);
 	color: white;
 }
 

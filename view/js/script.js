@@ -307,6 +307,48 @@ function doEmailCheck(emailAddr) {
   });
 }
 
+function listTrainers() {
+  var getUrl = 'model/webservice.php?getData=listtrainer';
+  var htmlCode = '';
+  $.ajax({
+    type: 'get',
+    url: getUrl,        
+    dataType: 'json',
+    success: function(msg) {
+      for(var loop = 0; loop<msg.length; loop++) {
+        htmlCode += '<option value="' + msg[loop].trainer_id + '">' +  msg[loop].trainer_id + ' - ' +
+        msg[loop].name + ' ' + msg[loop].surname + '</option>';
+      }
+      $("#trainer_list").html(htmlCode);
+    }
+  });
+}
+
+function setTrainer() {
+  document.getElementById('trainerid').value = document.getElementById('trainer_list').value;
+}
+
+function listCourses() {
+  var getUrl = 'model/webservice.php?getData=listcourse';
+  var htmlCode = '';
+  $.ajax({
+    type: 'get',
+    url: getUrl,        
+    dataType: 'json',
+    success: function(msg) {
+      for(var loop = 0; loop<msg.length; loop++) {
+        htmlCode += '<option value="' + msg[loop].course_id + '">' +  msg[loop].course_id + ' - ' +
+        msg[loop].course_name + '</option>';
+      }
+      $("#course_list").html(htmlCode);
+    }
+  });
+}
+
+function setCourse() {
+  document.getElementById('courseid').value = document.getElementById('course_list').value;
+}
+
 function showModal() {
   resetModal();
   document.getElementById('myModal').style.display = "block";
@@ -316,20 +358,18 @@ function closeModal() {
   document.getElementById('myModal').style.display = "none";
 }
 
+function resetModal() {
+  document.getElementById('modaltext').innerHTML = "Content";
+  document.getElementById('modalheadertext').innerHTML = "Modal Header";
+  document.getElementById('modalheader').style.backgroundColor = "rgb(77, 118, 255);";
+  document.getElementById('modalfooter').style.backgroundColor = "rgb(77, 118, 255);";
+}
+
 function modalBrowser() {
   resetModal();
   document.getElementById('myModal').style.display = "block";
   document.getElementById('modaltext').innerHTML = navigator.userAgent;
   document.getElementById('modalheadertext').innerHTML = "BROWSER INFO";
-  document.getElementById('modalheader').style.backgroundColor = "grey";
-  document.getElementById('modalfooter').style.backgroundColor = "grey";
-}
-
-function resetModal() {
-  document.getElementById('modaltext').innerHTML = "Default content";
-  document.getElementById('modalheadertext').innerHTML = "Default Modal Header";
-  document.getElementById('modalheader').style.backgroundColor = "orange";
-  document.getElementById('modalfooter').style.backgroundColor = "orange";
 }
 
 function modalSuccess() {
@@ -479,6 +519,25 @@ function list_image() {
     }
   });
 }
+
+// disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
 
 function showDropzone() {
   document.getElementById('dzone').style.display = 'block';
