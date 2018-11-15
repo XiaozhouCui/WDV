@@ -16,7 +16,7 @@ function showHeader() {
   crossorigin="anonymous"></script>
   <script src="view/js/dropzone.js"></script>
 </head>
-<body>
+<body id="main">
   <!-- The Modal (background) -->
   <div id="myModal" class="modal">
     <!-- Modal content -->
@@ -33,26 +33,55 @@ function showHeader() {
       </div>
     </div>
   </div>
-  <div class="flex-container">
+  <div class="flex-container" >
     <header class="nav">
       <p><h1>SafeTec Pacific</h1></p>
     </header>
-    <nav class="nav">
-      <div class="menuItem"><a href="index.php">HOME</a></div>
-      <div class="menuItem">ABOUT US</div>
-      <div class="menuItem">COURSES</div>
-      <div class="menuItem">SERVICES</div>
-      <div class="menuItem">CONTACT</div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="openNav()">☰ Menu <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="?pageid=logout">Lougout</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
     </nav>
 <?php
 }
 
 function showMenu() {  ?>
-  <div class="controlPanel"> 
+
+  <div id="mySidebar" class="sidebar"> 
+    <div >
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      <a href="index.php">Home</a>
+    </div>
+
+
     <?php
-    if (isset( $_SESSION['level'] ) ) { ?>
+    if (isset( $_SESSION['level'] ) ) { 
+      echo '<a href="#">Profile</a>';
+      echo '<a href="#">Settings</a>';
+      echo '<a href="?pageid=logout">Logout</a>';
+      ?>
     <div class="panel">
-      <p>Control Panel</p><?php
+      <h4>Control Panel</h4><?php
       if ($_SESSION['level'] == "Admin") { ?>      
         <ul>
           <li><a href="?pageid=ajax">AJAX Tricks</a></li>
@@ -66,7 +95,6 @@ function showMenu() {  ?>
           <li><a href="?pageid=addclass">Create a Class</a></li>
           <li><a href="?pageid=showclass">Manage Classes</a></li>
           <li><a href="?pageid=showallfile">Manage Files</a></li>
-          <li><a href="?pageid=logout">Logout</a></li>
         </ul><?php
       }
       if ($_SESSION['level'] == "Trainer") { ?>
@@ -93,7 +121,7 @@ function showMenu() {  ?>
       }?>
     </div><?php
     } else {
-      echo "<div class='bigholder'>Login to see the menu</div>";
+      echo "<a href='?pageid=login'>Login</a>";
     }?>
     
   </div><?php

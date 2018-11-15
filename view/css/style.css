@@ -58,6 +58,69 @@ article{
   background-color:rgba(245, 248, 235, 0.75); 
 }
 
+/*Sidebar starts here*/
+.sidebar {
+	height: 100%;
+	width: 350px;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: cornflowerblue;
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding-top: 60px;
+}
+
+.sidebar a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 20px;
+	color: black;
+	display: block;
+	transition: 0.5s;
+}
+
+.sidebar a:hover {
+	color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+}
+
+.openbtn {
+	font-size: 20px;
+	cursor: pointer;
+	background-color: #111;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+}
+
+.openbtn:hover {
+	background-color: #444;
+}
+
+#main {
+	transition: margin-left .5s;
+	margin-left: 350px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+	.sidebar {padding-top: 15px;}
+	.sidebar a {font-size: 18px;}
+}
+
+
+
+/*Control Panel starts here*/
+
 .controlPanel {
   order: 3;
   flex: 1 25%;
@@ -100,16 +163,15 @@ aside {
 	background-color: lightgrey;
 }
 
-.panel p {
+.panel h4 {
 	width:100%;
 	text-align: center;
 	padding-top: 10px;
-	font-size: 25px;
 }
 
 .panel ul {
 	box-sizing: border-box;
-	border: 0px solid gray;
+	border: 0px solid blue;
 	width:100%;
 	min-height:auto;
 	display: flex;
@@ -120,16 +182,31 @@ aside {
 }
 
 .panel li {
-	min-width: 150px;
-	margin: 10px 5px;
+	min-width: 250px;
+	margin: 5px;
 	display: flex;
 	justify-content: center;	
-	line-height: 40px;
+	line-height: 30px;
 	text-align: center;		
 	background-image: linear-gradient(darkgrey, white);
 	font-size: 0.9em;
 	border-radius: 3px;
+	transition: 0.5s;
 }
+
+.panel li:hover {
+	background-color: silver;
+}
+
+.panel li a { 
+	position: relative; left: -10px; 
+	color: black;
+}
+
+.panel li a:hover { 
+	color: cornflowerblue;
+}
+
 
 /*
 fieldset {
@@ -154,7 +231,7 @@ fieldset p {
 
 .holder {
 	width:32%;	
-	min-height:310px;
+	min-height:420px;
 	float:left;	
 	margin: 0.5%;
 }
@@ -162,7 +239,7 @@ fieldset p {
 .frame {
 	width:100%;	
 	padding: 4%;
-	min-height:300px;
+	min-height:400px;
 	margin: auto;
 	display: flex;
 	flex-wrap: wrap;
@@ -186,6 +263,7 @@ fieldset p {
 	box-sizing: border-box;
 	padding: 2%;
 }
+
 
 .errmsg {
 	width: 100%;
@@ -236,7 +314,7 @@ button, input[type=button], input[type=submit]{
 	background-color: lightgray;
 	cursor: default;
 }
-
+/*
 a:link, a:active, a:visited{
   color:black;
   text-decoration: solid;
@@ -341,13 +419,12 @@ a:link, a:active, a:visited{
 	.holder{
 		width:99%;
 	}
-	.controlPanel {
-		flex: 1 100%;
-		display:flex;
-		flex-wrap:wrap;
-		border-right: 0px;
+	.sidebar {
+		width: 0;
 	}
-
+	#main {
+		margin-left: 0;
+	}
 	article {
 		flex: 1 100%;
 	}

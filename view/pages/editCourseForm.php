@@ -6,26 +6,52 @@ if ($_SESSION['level'] == 'Admin') {
 	$result = $stmt->fetch(PDO::FETCH_ASSOC);	 
 	?>  
   <h2>Create a new course</h2>
-  <form action="?pageid=editingcourse"  method="post">
-    <fieldset>
-      <legend>Course details</legend>
-      <input type="hidden" name="rowid" value="<?php echo $_GET['rowid'] ?>">
+  <form class="needs-validation" action="?pageid=editingcourse" method="post" novalidate>
+    <input type="hidden" name="rowid" value="<?php echo $_GET['rowid'] ?>">
+
+    <div class="form-group">
       <label>Course name:</label>
-      <input type="text" name=coursename value="<?php echo $result['course_name'] ?>"required><br><br>
+      <input type="text" name=coursename class="form-control" value="<?php echo $result['course_name'] ?>"required>
+      <div class="invalid-feedback">
+        Please provide a valid course name
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label>Course Level:</label>		
+        <select name="level" class="form-control" >
+          <option value="Low" <?php echo ($result['course_level'] == "Low" ? 'selected="selected"': ''); ?>>Entry Level</option>
+          <option value="Medium" <?php echo ($result['course_level'] == "Medium" ? 'selected="selected"': ''); ?>>Medium Level</option>
+          <option value="High" <?php echo ($result['course_level'] == "High" ? 'selected="selected"': ''); ?>>High Level</option>
+        </select>
+        <div class="invalid-feedback">
+          Please select course level
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label>Price:</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">$</div>
+          </div>
+          <input type="number" name="price" class="form-control" step="0.01" min="0" value="<?php echo $result['price'] ?>" required>
+          <div class="invalid-feedback">
+            Please provide a valid amount
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
       <label>Description:</label>
-      <input type="text" name=description value="<?php echo $result['description'] ?>" required><br><br>
-      <label>Course Level:</label>		
-      <select name="level">
-        <option value="Low" <?php echo ($result['course_level'] == "Low" ? 'selected="selected"': ''); ?>>Entry Level</option>
-        <option value="Medium" <?php echo ($result['course_level'] == "Medium" ? 'selected="selected"': ''); ?>>Medium Level</option>
-        <option value="High" <?php echo ($result['course_level'] == "High" ? 'selected="selected"': ''); ?>>High Level</option>
-      </select><br><br>
-      <label>Price:</label>
-      <input type="text" name=price value="<?php echo $result['price'] ?>" required><br><br>
-      <input type="hidden" name="actiontype" value="editcourse"/>
-      <input type="submit">
-      <input type="button" onclick="location.href='index.php';" value="Cancel" />
-    </fieldset>
+      <textarea name="description" class="form-control" rows="5" required><?php echo $result['description'] ?></textarea>
+    </div>
+
+    <input type="hidden" name="actiontype" value="editcourse"/>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='?pageid=showcourse';">Cancel</button>
+
   </form>
 	<?php
 } else {
