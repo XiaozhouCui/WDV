@@ -11,6 +11,17 @@ function rememberValue(value) {
   localStorage.setItem("username", value);  
 }
 
+// Toggle side bar
+function openNav() {
+  document.getElementById("mySidebar").style.width = "350px";
+  document.getElementById("main").style.marginLeft = "350px";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+
 function addUserForm() {
   document.getElementById("adduserform").reset();
   document.getElementById('adduserform').style.display = 'block';

@@ -180,13 +180,12 @@ if(isset($_GET['getData'])) {
   }
   
   if($_GET['getData'] == 'listtrainer') {
-    $sql = "SELECT * FROM trainer ORDER BY trainer_id ASC LIMIT 20"; 
+    $sql = "SELECT trainer_id, name, surname FROM trainer ORDER BY trainer_id ASC LIMIT 20"; 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     if(is_array($result)) {
-      //print_r($result);	
       echo json_encode($result); // create json
     } else {
       echo json_encode(array("Error"=>"true"));
