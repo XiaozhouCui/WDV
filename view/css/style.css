@@ -207,18 +207,23 @@ aside {
 	color: cornflowerblue;
 }
 
-
-/*
-fieldset {
-	box-sizing: border-box;
-	width: 96%;
-	border: 2px solid orange;
-	border-radius: 10px;
-	background-color: rgb(255, 241, 227);
-	padding: 20px;
-	margin: 2%;
+article h2 {
+	width:100%;
+	text-align: center;
+	padding: 10px;
 }
-*/
+
+article form {
+	box-sizing: border-box;
+	width: 60%;
+	border: 3px solid rgb(0, 89, 255);
+	border-radius: 10px;
+
+	padding: 20px;
+	margin: auto;
+	background-image: linear-gradient(cornflowerblue,white);
+}
+
 fieldset p {
 	font-size: 1em;
 	color: grey;
@@ -406,28 +411,38 @@ a:link, a:active, a:visited{
 	.header{
 		order:2;
 	}
-
-	.holder{
-		width:49%;	
-	}
-}
-
-@media only screen and (max-width: 640px) {
-	.flex-container {
-		width:100%;
-	}
-	.holder{
-		width:99%;
-	}
 	.sidebar {
 		width: 0;
 	}
 	#main {
 		margin-left: 0;
 	}
+	.holder{
+		width:49%;	
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.flex-container {
+		width:100%;
+	}
+	.holder{
+		width:99%;
+	}
+
+	.modalcontent {
+		width:90%;
+	}
+
 	article {
+		font-size: 25px;
 		flex: 1 100%;
 	}
+
+	article form {
+		width: 95%;
+	}
+	
 	.nav{
 		height:auto;
 	}

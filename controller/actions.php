@@ -6,16 +6,19 @@ function loginAction() {
     $username = !empty($_POST['username'])? sanitise(($_POST['username'])): null;
     $password = !empty($_POST['password'])? sanitise(($_POST['password'])): null;    
     try {
-      $stmt = $conn->prepare("SELECT * FROM login INNER JOIN user WHERE username=:user");
-      $stmt->bindParam(':user', $username);
+      $stmt = $conn->prepare("SELECT * FROM login LEFT OUTER JOIN current_student ON login.login_id = current_student.login_id WHERE username=:username");
+      $stmt->bindParam(':username', $username);
       $stmt->execute();
       $rows = $stmt -> fetch();        
       if (password_verify($password, $rows['password'])) {
         // assign session variables
         $_SESSION['login'] = $rows['username'];  
-        $_SESSION['user'] = $rows['name']." ".$rows['surname'];
         $_SESSION['level'] = $rows['access_level'];
         $_SESSION['time_start_login'] = time();
+        if ($rows['access_level'] == 'Student') {
+          $_SESSION['studentid'] = $rows['student_id'];
+          $_SESSION['classid'] = $rows['class_id'];
+        }
         echo
         '<script type="text/javascript">',
           'modalLoggedin();',
@@ -278,30 +281,34 @@ function showCoursesAction() {
 
 function showClassesAction() {
   global $conn;
-  $sql = "SELECT class.class_id, class.start_date, class.end_date, class.status, course.course_name, trainer.name FROM class INNER JOIN trainer ON class.trainer_id=trainer.trainer_id INNER JOIN course ON class.course_id=course.course_id";    
-  $stmt = $conn->prepare($sql);
-  $stmt->execute();
-  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  if($stmt->rowCount()< 1 ) {
-    echo "The course database is empty.";
-  } else {
-    foreach($result as $row) {?>
-      <div class="holder"> 
-        <div class="frame">     
-          <?php echo '<p>Start date: '. $row['start_date'].'</p>'; ?>
-          <?php echo '<p>Start date: '. $row['end_date'].'</p>'; ?>
-          <?php echo '<p>Status: '. $row['status'].'</p>'; ?>
-          <?php echo '<p>Trainer: '. $row['name'].'</p>'; ?>
-          <?php echo '<p>Topic: '. $row['course_name'].'</p>'; ?><br>
-          <a href="?pageid=showclassstudent&rowid=<?php echo $row['class_id']; ?>" class="button">Students</a>
-          <a href="?pageid=upload&classid=<?php echo $row['class_id']; ?>" class="button">Upload Files</a>
-          <a href="?pageid=showfiles&classid=<?php echo $row['class_id']; ?>" class="button">Manage Files</a>
-          <a href="?pageid=editclass&rowid=<?php echo $row['class_id']; ?>" class="button">Edit Class</a>
-          <a href="?pageid=deleteclass&rowid=<?php echo $row['class_id']; ?>" class="button">Delete</a>
+  if ($_SESSION['level'] == 'Admin' OR $_SESSION['level'] == 'Trainer') { 
+    $sql = "SELECT class.class_id, class.start_date, class.end_date, class.status, course.course_name, trainer.name FROM class INNER JOIN trainer ON class.trainer_id=trainer.trainer_id INNER JOIN course ON class.course_id=course.course_id";    
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if($stmt->rowCount()< 1 ) {
+      echo "The course database is empty.";
+    } else {
+      foreach($result as $row) {?>
+        <div class="holder"> 
+          <div class="frame">     
+            <?php echo '<p>Start date: '. $row['start_date'].'</p>'; ?>
+            <?php echo '<p>Start date: '. $row['end_date'].'</p>'; ?>
+            <?php echo '<p>Status: '. $row['status'].'</p>'; ?>
+            <?php echo '<p>Trainer: '. $row['name'].'</p>'; ?>
+            <?php echo '<p>Topic: '. $row['course_name'].'</p>'; ?><br>
+            <a href="?pageid=showclassstudent&rowid=<?php echo $row['class_id']; ?>" class="button">Students</a>
+            <a href="?pageid=upload&classid=<?php echo $row['class_id']; ?>" class="button">Upload Files</a>
+            <a href="?pageid=showfiles&classid=<?php echo $row['class_id']; ?>" class="button">Manage Files</a>
+            <a href="?pageid=editclass&rowid=<?php echo $row['class_id']; ?>" class="button">Edit Class</a>
+            <a href="?pageid=deleteclass&rowid=<?php echo $row['class_id']; ?>" class="button">Delete</a>
+          </div>  
         </div>  
-      </div>  
-      <?php
+        <?php
+      }
     }
+  } else {
+    echo 'Sorry, only admin or trainer can view this page. <a href="index.php">Go back</a>';
   }
 }
 
@@ -337,32 +344,27 @@ function showCurrentStudents() {
 
 function showClassStudents() {
   global $conn;
-  if ($_SESSION['level'] == 'Admin' OR $_SESSION['level'] == 'Trainer') { 
-    $sql = "SELECT * FROM current_student WHERE class_id = '{$_GET['rowid']}'";    
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);	 
-  
-    if($stmt->rowCount()< 1 ) {
-      echo "This class has no student.";
-    } else {
-      foreach($result as $row) {?>
-        <div class="holder">     
-          <div class="frame">   
-            <?php echo '<p>Class: '. $row['class_id'].'</p>'; ?>
-            <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?>
-            <?php echo '<p>Student ID: '. $row['student_id'].'</p>'; ?>
-            <a href="?pageid=editstudent&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a>
-            <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a><br>
-          </div>
-        </div>  
-        <?php
-      }
-    }  
+  $sql = "SELECT * FROM current_student WHERE class_id = '{$_GET['rowid']}'";    
+  $stmt = $conn->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);	 
+
+  if($stmt->rowCount()< 1 ) {
+    echo "This class has no student.";
   } else {
-    echo '<aside>Only administrator can edit student accounts.</aside>';
-    echo "<aside><a href='index.php'>Go back</a></aside>";
-  }
+    foreach($result as $row) {?>
+      <div class="holder">     
+        <div class="frame">   
+          <?php echo '<p>Class: '. $row['class_id'].'</p>'; ?>
+          <?php echo '<p>Name: '. $row['name'].' '.$row['surname']; ?>
+          <?php echo '<p>Student ID: '. $row['student_id'].'</p>'; ?>
+          <a href="?pageid=editstudent&rowid=<?php echo $row['login_id']; ?>" class="button">Edit</a>
+          <a href="?pageid=deleteuser&rowid=<?php echo $row['login_id']; ?>" class="button">Delete</a>
+        </div>
+      </div>  
+      <?php
+    }
+  }  
 }
 
 function uploadFileAction() {
@@ -447,10 +449,10 @@ function showClassFiles() {
     foreach($result as $row) {?>
       <div class="holder">
         <div class="frame">  
-          <?php echo '<p>Class: '. $row['class_id'].'</p>'; ?>
-          <?php echo '<p>'. $row['file_name'].'</p>'; ?>
-          <?php echo '<p><a href="'. $row['content_link'].'">Link</a></p>'; ?>
+          <?php echo '<p>Class ID: '. $row['class_id'].'</p>'; ?>
+          <?php echo '<p>Filename: '. $row['file_name'].'</p>'; ?>
           <?php echo '<p>Added: '. $row['time_added'].'</p>'; ?>
+          <a href="<?php echo $row['content_link']; ?>" class="button">Download</a>
           <a href="?pageid=deletefile&rowid=<?php echo $row['content_id']; ?>" class="button">Delete</a>
         </div>
       </div>  
@@ -485,24 +487,28 @@ function showAllFiles() {
 
 function delFileAction() {
   global $conn;
-  $fileid = !empty($_POST['rowid'])? sanitise(($_POST['rowid'])): null;
-  $sql= "SELECT * FROM learning_material WHERE content_id = :fileid";
-  $stmt = $conn->prepare($sql);
-  $stmt->bindValue(':fileid', $fileid);
-  $stmt->execute();
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);    
-  
-  $Path = $result['content_link'];
-  if (file_exists($Path)){
-    if (unlink($Path)) {   
-      deleteFile($fileid);
-      echo "File deleted successfully.";
-    } else {
-      echo "Failed to delete a file";    
-    }   
-  } else {     
-      deleteFile($fileid);
-      echo "File does not exist, file record removed from database.";
+  if ($_SESSION['level'] == 'Admin' || $_SESSION['level'] == 'Trainer') {
+    $fileid = !empty($_POST['rowid'])? sanitise(($_POST['rowid'])): null;
+    $sql= "SELECT * FROM learning_material WHERE content_id = :fileid";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':fileid', $fileid);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);    
+    
+    $Path = $result['content_link'];
+    if (file_exists($Path)){
+      if (unlink($Path)) {   
+        deleteFile($fileid);
+        echo "File deleted successfully.";
+      } else {
+        echo "Failed to delete a file";    
+      }   
+    } else {     
+        deleteFile($fileid);
+        echo "File does not exist, file record removed from database.";
+    }
+  } else {
+    echo "Only trainer or admin can delete a file. <a href='?pageid=showclass'>Go back</a>";
   }
 }
 
@@ -599,7 +605,8 @@ function editCurrentStudent() {
   if (!empty([$_POST])) {
     $loginid = !empty($_POST['loginid'])? sanitise(($_POST['loginid'])): null; 
     $username = !empty($_POST['username'])? sanitise(($_POST['username'])): null; 
-    $password = !empty($_POST['password'])? sanitise(($_POST['password'])): null; 
+    $mypass = !empty($_POST['password'])? sanitise(($_POST['password'])): null;
+    $password = password_hash($mypass, PASSWORD_DEFAULT); 
     $role = !empty($_POST['role']) ? sanitise(($_POST['role'])): null;
     $name = !empty($_POST['name']) ? sanitise(($_POST['name'])): null;
     $surname = !empty($_POST['surname'])? sanitise(($_POST['surname'])): null;
@@ -762,7 +769,7 @@ function addClassAction() {
 
 function editClassAction() {
   global $conn;
-  if ($_SESSION['level'] == 'Admin') { 
+  if ($_SESSION['level'] == 'Admin' || $_SESSION['level'] == 'Trainer') { 
     if($_POST['actiontype'] == 'editclass') {
       $startdate = !empty($_POST['startdate'])? sanitise(($_POST['startdate'])): null; 
       $enddate = !empty($_POST['enddate'])? sanitise(($_POST['enddate'])): null; 
@@ -791,7 +798,7 @@ function editClassAction() {
 
     }
   } else {
-    $_SESSION['message'] = 'Only administrator can edit classes.';
+    $_SESSION['message'] = 'Only admin and trainer can edit classes.';
     echo '<script type="text/javascript">',
     'modalError();',
     'modaltext.innerHTML = "<p>Only administrator can edit classes.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
@@ -817,6 +824,55 @@ function delClassAction() {
     'modalError();',
     'modaltext.innerHTML = "<p>Only administrator can delete a class.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
     '</script>';
+  }
+}
+
+function showMyClass() {
+  global $conn;
+  $sql = "SELECT class.class_id, class.start_date, class.end_date, class.status, course.course_name, trainer.name FROM class INNER JOIN trainer ON class.trainer_id=trainer.trainer_id INNER JOIN course ON class.course_id=course.course_id WHERE class_id = :classid";    
+  $stmt = $conn->prepare($sql);
+  $stmt->bindValue(':classid', $_SESSION['classid']);
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  if($stmt->rowCount()< 1 ) {
+    echo "Class information is not available, please contact technical support.";
+  } else {?>
+    <div class="holder"> 
+      <div class="frame">     
+        <?php echo '<p>Start date: '. $row['start_date'].'</p>'; ?>
+        <?php echo '<p>Start date: '. $row['end_date'].'</p>'; ?>
+        <?php echo '<p>Status: '. $row['status'].'</p>'; ?>
+        <?php echo '<p>Trainer: '. $row['name'].'</p>'; ?>
+        <?php echo '<p>Topic: '. $row['course_name'].'</p>'; ?><br>
+        <a href="?pageid=showclassstudent&rowid=<?php echo $row['class_id']; ?>" class="button">Students</a>
+        <a href="?pageid=showfiles&classid=<?php echo $row['class_id']; ?>" class="button">Show Files</a>
+      </div>  
+    </div>  
+    <?php
+  }
+}
+
+function showMyFiles() {
+  global $conn;
+  $sql = "SELECT * FROM learning_material WHERE class_id = :classid"; 
+  $stmt = $conn->prepare($sql);
+  $stmt->bindValue(':classid', $_SESSION['classid']);
+  $stmt->execute();
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  if($stmt->rowCount()< 1 ) {
+    echo "There is no file uploaded to this class yet.";
+  } else {
+    foreach($result as $row) {?>
+      <div class="holder">
+        <div class="frame">  
+          <?php echo '<p>Class ID: '. $row['class_id'].'</p>'; ?>
+          <?php echo '<p>Filename: '. $row['file_name'].'</p>'; ?>
+          <?php echo '<p>Added: '. $row['time_added'].'</p>'; ?>
+          <a href="<?php echo $row['content_link']; ?>" class="button">Download</a>
+        </div>
+      </div>  
+      <?php
+    }
   }
 }
 

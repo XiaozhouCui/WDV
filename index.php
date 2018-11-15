@@ -117,8 +117,11 @@ showMenu();
         if ( $action == 'deletingclass' ) {
           delClassAction();
         }
-        if ( $action == 'showmates' ) {
-          include ("controller/mymates.php");
+        if ( $action == 'myclass' ) {
+          showMyClass();
+        }
+        if ( $action == 'classfiles' ) {
+          showMyFiles();
         }
         if ( $action == 'upload' ) {
           include ("view/pages/uploadForm.php");

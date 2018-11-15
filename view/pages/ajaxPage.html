@@ -1,54 +1,71 @@
 
 <div class="bigholder">
-  <button class="btn btn-info" onclick="addUserForm()">Add a User</button>
-  <button class="btn btn-info" onclick="getUsers()">Show Users</button>
-  <button class="btn btn-info" onclick="getFiles()">Show Files</button>
-  <button class="btn btn-info" onclick="modalBrowser()">Browser</button>
-  <button class="btn btn-info" onclick="showDropzone()">Dropzone</button>
+  <button class="btn btn-primary" onclick="addUserForm()">Add a User</button>
+  <button class="btn btn-primary" onclick="getUsers()">Show Users</button>
+  <button class="btn btn-primary" onclick="getFiles()">Show Files</button>
+  <button class="btn btn-primary" onclick="modalBrowser()">Browser</button>
+  <button class="btn btn-primary" onclick="showDropzone()">Dropzone</button>
 
 </div>
 <div id="userlist" class="bigholder"></div>
 <div id="filelist" class="bigholder"></div>
 
 <div class="bigholder">
+  
   <form action="#"  method="post" id="adduserform" class="ajaxform" novalidate onsubmit="return false">
-    <h1>Add User</h1>
-    <fieldset>
-      <legend>Login details</legend>
-      <input type="hidden" name="rowid" id="useraddid" required><br>
-      <label>Username: </label>
-      <input type="text" name="username" id="useraddun" pattern="[A-Za-z0-9]{4,}" required><br>
-      <p>4 or more characters, no symbols</p>
-      <div class="error" id="errora1"></div><br>
-      <label>Password: </label>
-      <input type="password" name="password" id="useraddpw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required><br>
-      <p>8 or more characters that include at least one number, one uppercase and one lowercase letter</p>
-      <input type="checkbox" onclick="showPassword2()">Show Password<br>
-      <div class="error" id="errora2"></div><br>
-      <label>Role:</label>
-      <input type="radio" name="role" value="Admin" checked>Admin<br>
-    </fieldset>
-    <fieldset>
-      <legend>Personal details</legend>
-      <label>Given Name: </label>
-      <input type="text" name="name" id="useraddname" pattern="[A-Za-z]{1,}" required><br>
-      <p>1 or more letters</p>
-      <div class="error" id="errora3"></div><br>
-      <label>Surname: </label>
-      <input type="text" name="surname" id="useraddsurname" pattern="[A-Za-z]{1,}" required><br>
-      <p>1 or more letters</p>
-      <div class="error" id="errora4"></div><br>
-      <label>Email:</label>
-      <input type="email" name="email" id="useraddemail" required><br>
-      <p>Email format</p>
-      <div class="error" id="errora5"></div><br>	
-      <input type="hidden" name="action_type" value="add"/>
-      <input type="button" name="adduser_button" id="adduser_button_form" onclick="AJAXaddUser()" value="Submit" disabled>
-      <input type="button" onclick="validity1()" value="Validate">
-      <input type="button" onclick="closeUserForm()" value="Cancel">
-    </fieldset>
+    <h2>Add admin user</h2>
+    <input type="hidden" name="rowid" id="useraddid" required>
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
+        <label>Username: </label>
+        <input type="text" name="username" class="form-control" id="useraddun" pattern="[A-Za-z0-9]{4,}" required>
+        <small class="form-text text-muted">4 or more characters, no symbols</small>
+        <div class="error" id="errora1"></div>
+      </div>
+      <div class="col-md-8 mb-3">
+        <label>Password: </label>
+        <input type="password" name="password" class="form-control" id="useraddpw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+        <small class="form-text text-muted">8 or more characters that include at least one number, one uppercase and one lowercase letter</small>
+        <input type="checkbox" onclick="showPassword2()">Show Password
+        <div class="error" id="errora2"></div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
+        <label>Role:</label>
+        <select name="role"  class="form-control">
+          <option name="role" value="Admin" selected>Admin</option>
+        </select>
+      </div>
+      <div class="col-md-8 mb-3">
+        <label>Email:</label>
+        <input type="email" name="email" class="form-control" id="useraddemail" required>
+        <small class="form-text text-muted">Email format</small>
+        <div class="error" id="errora5"></div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label>Given Name: </label>
+        <input type="text" name="name" class="form-control" id="useraddname" pattern="[A-Za-z]{1,}" required>
+        <small class="form-text text-muted">1 or more letters</small>
+        <div class="error" id="errora3"></div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label>Surname: </label>
+        <input type="text" name="surname" class="form-control" id="useraddsurname" pattern="[A-Za-z]{1,}" required>
+        <small class="form-text text-muted">1 or more letters</small>
+        <div class="error" id="errora4"></div>
+      </div>
+    </div>
+    <input type="hidden" name="action_type" value="add"/>
+    <button class="btn btn-primary" name="adduser_button" id="adduser_button_form" onclick="AJAXaddUser()" disabled>Submit</button>
+    <button class="btn btn-primary" onclick="validity1()" >Validate</button>
+    <button class="btn btn-primary" onclick="closeUserForm()" >Cancel</button>
   </form>
 </div>
+
+
 <div class="bigholder">
   <form action="#"  method="post" id="edituserform" class="ajaxform" novalidate onsubmit="return false">
     <h1>Edit User</h1>
@@ -93,6 +110,7 @@
   <div class="container">
     <form action="controller/dzone.php" class="dropzone" id="dropzoneFrom">
     </form>
+    <br>
     <div align="center">
       <button type="button" class="btn btn-info" id="submit-all">Upload</button>
     </div>

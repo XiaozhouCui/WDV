@@ -53,7 +53,11 @@ function showHeader() {
             <a class="nav-link" href="#">Link</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="?pageid=logout">Lougout</a>
+            <?php if(isset($_SESSION['level'])) {
+              echo '<a class="nav-link" href="?pageid=logout">Lougout</a>';
+            } else {
+              echo '<a class="nav-link" href="?pageid=login">Lougin</a>';
+            }  ?> 
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -106,8 +110,9 @@ function showMenu() {  ?>
       }
       if ($_SESSION['level'] == "Student") { ?>
         <ul>      
-          <li><a href="?pageid=showclass">Class Information</a></li>
-          <li><a href="?pageid=showmates">Classmates</a></li>
+          <li><a href="?pageid=myclass">Class Information</a></li>
+          <li><a href="?pageid=classfiles">Learning Materials</a></li>
+          <li><a href="?pageid=showmessage">Message Board</a></li>
           <li><a href="?pageid=logout">Logout</a></li>
         </ul><?php
       }
@@ -122,6 +127,7 @@ function showMenu() {  ?>
     </div><?php
     } else {
       echo "<a href='?pageid=login'>Login</a>";
+      echo "<a href='?pageid=reg'>Register</a>";
     }?>
     
   </div><?php

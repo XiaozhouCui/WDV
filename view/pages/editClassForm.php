@@ -1,5 +1,5 @@
 <?php
-if ($_SESSION['level'] == 'Admin') { 
+if ($_SESSION['level'] == 'Admin' || $_SESSION['level'] == 'Trainer') { 
   $sql = "SELECT * FROM class  WHERE class_id = :rowid";   
   $stmt = $conn->prepare($sql);
   $stmt->bindValue(':rowid', $_GET['rowid']);

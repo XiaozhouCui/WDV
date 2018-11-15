@@ -1,3 +1,3 @@
 
-<p>Hi <strong><?php echo $_SESSION['user']?>! </strong> Welcome to the SafeTec Learning Management System.</p>
+<h4>Hi <strong><?php echo $_SESSION['login']?>! </strong> Welcome to the SafeTec Learning Management System.</h4>
 

@@ -26,7 +26,7 @@
   <div class="form-row">
     <div class="col-md-4 mb-3">
       <label for="inputRole">Role</label>
-      <select name="role" id="inputRole" class="form-control">
+      <select name="role" id="inputRole" class="form-control" required>
         <option id="roleop1" value="Admin" disabled>Admin</option>
         <option id="roleop2" value="Trainer" disabled>Trainer</option>
         <option id="roleop3" value="Customer" selected>Prospective Student</option>

@@ -262,11 +262,11 @@ function showPassword2() {
 }
 
 function showPassword3() {
-  var p2 = document.getElementById("usereditpw");   
-  if (p2.type == "password") {
-    p2.type = "text";
+  var p3 = document.getElementById("trainerpw");   
+  if (p3.type == "password") {
+    p3.type = "text";
   } else {
-    p2.type = "password";
+    p3.type = "password";
   }
 }
 
