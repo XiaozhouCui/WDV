@@ -13,8 +13,8 @@ function rememberValue(value) {
 
 // Toggle side bar
 function openNav() {
-  document.getElementById("mySidebar").style.width = "350px";
-  document.getElementById("main").style.marginLeft = "350px";
+  document.getElementById("mySidebar").style.width = "20%";
+  document.getElementById("main").style.marginLeft = "20%";
 }
 
 function closeNav() {

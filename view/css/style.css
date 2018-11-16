@@ -60,8 +60,10 @@ article{
 
 /*Sidebar starts here*/
 .sidebar {
+	order: 3;
+	flex: 1 20%;
 	height: 100%;
-	width: 350px;
+	width: 20%;
 	position: fixed;
 	z-index: 1;
 	top: 0;
@@ -108,7 +110,7 @@ article{
 
 #main {
 	transition: margin-left .5s;
-	margin-left: 350px;
+	margin-left: 20%;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -119,8 +121,8 @@ article{
 
 
 
-/*Control Panel starts here*/
-
+/*place holder only, not used in this project*/
+/*
 .controlPanel {
   order: 3;
   flex: 1 25%;
@@ -134,6 +136,8 @@ article{
 	background-color:rgba(207,174,102,1.00);
 	display: none;
 }
+*/
+
 footer {
 	display:flex;
 	flex-wrap: wrap;
@@ -182,7 +186,7 @@ aside {
 }
 
 .panel li {
-	min-width: 250px;
+	width: 90%;
 	margin: 5px;
 	display: flex;
 	justify-content: center;	
@@ -403,7 +407,7 @@ a:link, a:active, a:visited{
 }
 
 
-@media only screen and (max-width: 1440px) {
+@media only screen and (max-width: 1400px) {
 
 	.nav{
 		order:1;
@@ -416,6 +420,9 @@ a:link, a:active, a:visited{
 	}
 	#main {
 		margin-left: 0;
+	}
+	article form {
+		width: 85%;
 	}
 	.holder{
 		width:49%;	
@@ -433,7 +440,12 @@ a:link, a:active, a:visited{
 	.modalcontent {
 		width:90%;
 	}
-
+	.sidebar {
+		width: 0;
+	}
+	#main {
+		margin-left: 0;
+	}
 	article {
 		font-size: 25px;
 		flex: 1 100%;
