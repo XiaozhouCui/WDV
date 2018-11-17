@@ -1,5 +1,5 @@
 Domain: 
-https://www.joesdemosite.comm
+https://www.joesdemosite.com
 
 GitHub repo address:
 https://github.com/XiaozhouCui/WDV
@@ -10,6 +10,8 @@ username - admin
 password - admin
 
 New features:
+Control panel moved into a toggled side bar
+Bootstrap grid layout applied to forms, navbar and footer.
 AJAX and other javascript demonstrations are saved in the page: view/pages/ajaxPage.html (can be accessed via the "AJAX Tricks" button in the admin control panel)
 
 Website overview:
@@ -28,15 +30,16 @@ Prospective student (customer)
 Functionalities achieved so far:
 Registration and login
 Any visitor can register as a prospective student.
-For testing purposes, anyone can also register as an admin or a trainer at the moment.
 After login, different roles will see different control panels.
 Admin user can create/read/update/delete any account of any role.
 Admin user can create/read/update/delete any course.
 Admin user can create/read/update/delete any class.
-Admin user can enrol a new student (convert a prospective student into a current student).
+Admin user can enrol a new student into a class(convert a prospective student into a current student).
 Admin user can browse all the enrolled students of a particular class, and edit the student details from there.
-Trainer user can Browse all courses and classes.
-Current Student user can Browse all courses and classes.
+Trainer user can create, browse and edit classes.
+Trainer user can upload files to any class and can delete them.
+Current Students can Browse their own classes information.
+Current Students can download files from their own classes.
 Admin and trainer can upload files to the class folders.
 Once a file is uploaded, a record will be inserted into the database.
 Admin and trainer can browse and delete all uploaded files.
@@ -45,7 +48,11 @@ Admin and trainer can browse and delete all uploaded files.
 
 Other progress so far:
 Website is put online at https://www.joesdemosite.comm
-Ajax is applied in registration form to check if the email address exists
+Custom modals are applied to indicate success and error.
+header('location:') caused error on the domain, they are replaced by modals with redirection button.
+Modals are applied to indicate success and error.
+Ajax is applied in registration form to check if the username and email address exists. If exists, submit button will be disabled.
+Ajax is used to render the information from database into the 'Add Class Form' dropdown selections.
 AJAX is used to create/read/update/delete admin accounts.
 AJAX is used to display all uploaded files.
 SVG loading animation is added while AJAX is being loaded.
@@ -58,10 +65,10 @@ MCV architecture, everything is called from index.php
 GIT repository is setup, all changes will be committed and pushed to GitHub
 Custom modals are added to show operation feedbacks.
 jQuery CDN is added
+Bootstrap CDN is added
 
 
 To do list:
-Trying to apply 3rd party javascript grid layout, but not working yet
 Complete the missing HTML pages
 Update the CSS file
 Apply more jQuery and AJAX
@@ -72,8 +79,6 @@ Course order (new content type)
 Discussion message (new content type)
 Trainer can publish on class notice board (new functionality)
 Trainer can leave a message (new functionality)
-Student can browse own class (new functionality)
-Student can browse and download training materials (new functionality)
 Student can leave a message (new functionality)
 Record history of change (new functionality)
 Prospective student can add a course to a shopping cart (new functionality)

@@ -3,7 +3,7 @@
 <form action="?pageid=loggingin" method="post">
   <div class="form-group">
     <label for="login_username">Username</label>
-    <input type="text" name="username" class="form-control" id="login_username" onchange="rememberValue(this.value)" required placeholder="Enter username">
+    <input type="text" name="username" class="form-control" id="login_username" required placeholder="Enter username">
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Password</label>
@@ -11,7 +11,7 @@
 	</div>
 	<div class="form-group">
 		<div class="form-check">
-			<input type="checkbox" class="form-check-input">
+			<input type="checkbox" class="form-check-input" onclick="rememberValue()">
 			<label class="form-check-label">Remember my username</label>
 		</div>
 	</div>

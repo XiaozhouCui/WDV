@@ -67,7 +67,7 @@ function showHeader() {
           </li>
           <li class="nav-item">
             <?php if(isset($_SESSION['level'])) {
-              echo '<a class="nav-link" href="?pageid=logout">Lougout</a>';
+              echo '<a class="nav-link" href="?pageid=logout">Logout</a>';
             } else {
               echo '<a class="nav-link" href="?pageid=login">Lougin</a>';
             }  ?> 
@@ -196,8 +196,7 @@ function showFooter() {?>
       </div>
       <!-- Footer Links -->
       <!-- Copyright -->
-      <div class="footer-copyright text-center py-3 text-dark bg-light">© 2018 Copyright:
-        <a href="https://www.joesdemosite.com"> joesdemosite.com</a>
+      <div class="footer-copyright text-center py-3 text-light bg-secondary">© 2018 Copyright: SafeTec Pacific
       </div>
     </footer>
 

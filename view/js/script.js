@@ -7,8 +7,13 @@ window.onload = function() {
   }
 }
 
-function rememberValue(value) {  
-  localStorage.setItem("username", value);  
+function rememberValue() {  
+  var lu = document.getElementById('login_username').value;
+  if (lu == "") {
+    document.getElementById("login_username").innerHTML = localStorage.getItem("username");
+  } else {
+    localStorage.setItem("username", lu);
+  }   
 }
 
 // Toggle side bar
