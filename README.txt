@@ -47,7 +47,7 @@ Admin and trainer can browse and delete all uploaded files.
 
 
 Other progress so far:
-Website is put online at https://www.joesdemosite.comm
+Website is put online at https://www.joesdemosite.com
 Custom modals are applied to indicate success and error.
 header('location:') caused error on the domain, they are replaced by modals with redirection button.
 Modals are applied to indicate success and error.

@@ -22,7 +22,7 @@ function loginAction() {
         echo
         '<script type="text/javascript">',
           'modalLoggedin();',
-          'var seconds =5;', // 10 seconds count down to redirect
+          'var seconds =5;', // 5 seconds count down to redirect
           'redirect();',
         '</script>';
       }
@@ -75,7 +75,7 @@ function addUserAction() {
             $_SESSION['message'] = "Admin added successfully.";
             echo '<script type="text/javascript">',
             'modalSuccess();',
-            'modaltext.innerHTML = "<p>Admin added successfully.</p><a class=\'button\' href=\'?pageid=showuser\'>OK</a>";',
+            'modaltext.innerHTML = "<p>Admin added successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showuser\'>OK</a>";',
             '</script>';
           }
           if ($role == "Trainer") {
@@ -83,7 +83,7 @@ function addUserAction() {
             $_SESSION['message'] = "Trainer added successfully.";
             echo '<script type="text/javascript">',
             'modalSuccess();',
-            'modaltext.innerHTML = "<p>Trainer added successfully.</p><a class=\'button\' href=\'?pageid=showtrainer\'>OK</a>";',
+            'modaltext.innerHTML = "<p>Trainer added successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showtrainer\'>OK</a>";',
             '</script>';
           }
           if ($role == "Customer") {
@@ -92,13 +92,13 @@ function addUserAction() {
               $_SESSION['message'] = "Customer added successfully.";
               echo '<script type="text/javascript">',
               'modalSuccess();',
-              'modaltext.innerHTML = "<p>Customer added successfully.</p><a class=\'button\' href=\'?pageid=showcustomer\'>OK</a>";',
+              'modaltext.innerHTML = "<p>Customer added successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showcustomer\'>OK</a>";',
               '</script>';
             } else { // for visitors who just registered
               $_SESSION['message'] = "Thank you for your registration";
               echo '<script type="text/javascript">',
               'modalSuccess();',
-              'modaltext.innerHTML = "<p>Thank you for your registration, please log in with your username and password</p><a class=\'button\' href=\'index.php\'>OK</a>";',
+              'modaltext.innerHTML = "<p>Thank you for your registration, please log in with your username and password</p><a class=\'btn btn-secondary btn-block\' href=\'index.php\'>OK</a>";',
               '</script>';
             }
           }
@@ -115,7 +115,7 @@ function addUserAction() {
         $_SESSION['message'] = "Username already exists, try another.";    
         echo '<script type="text/javascript">',
         'modalError();',
-        'modaltext.innerHTML = "<p>Username already exists, try another.</p><a class=\'button\' href=\'?pageid=adduser\'>OK</a>";',
+        'modaltext.innerHTML = "<p>Username already exists, try another.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=adduser\'>OK</a>";',
         '</script>';
       }
       exit;
@@ -165,7 +165,7 @@ function editUserAction() {
         $_SESSION['message'] = 'User account updated successfully.';            
         echo '<script type="text/javascript">',
         'modalSuccess();',
-        'modaltext.innerHTML = "<p>User updated successfully.</p><a class=\'button\' href=\'?pageid=showuser\'>OK</a>";',
+        'modaltext.innerHTML = "<p>User updated successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showuser\'>OK</a>";',
         '</script>';
       }
       catch(PDOException $e) { 
@@ -176,14 +176,14 @@ function editUserAction() {
       $_SESSION['message'] = 'Failed to update user account.';
       echo '<script type="text/javascript">',
       'modalError();',
-      'modaltext.innerHTML = "<p>Failed to update user account.</p><a class=\'button\' href=\'?pageid=showuser\'>OK</a>";',
+      'modaltext.innerHTML = "<p>Failed to update user account.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showuser\'>OK</a>";',
       '</script>';
     }
   } else {
     $_SESSION['message'] = '<aside>Only administrator can edit user accounts.</aside>';
     echo '<script type="text/javascript">',
     'modalError();',
-    'modaltext.innerHTML = "<p>Only administrator can edit user accounts.</p><a class=\'button\' href=\'?pageid=showuser\'>OK</a>";',
+    'modaltext.innerHTML = "<p>Only administrator can edit user accounts.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showuser\'>OK</a>";',
     '</script>';
   }
 }
@@ -230,7 +230,7 @@ function editTrainerAction() {
           echo 
           '<script type="text/javascript">',
             'modalSuccess();',
-            'modaltext.innerHTML = "<p>Trainer account updated successfully.</p><a class=\'button\' href=\'?pageid=showtrainer\'>OK</a>";',
+            'modaltext.innerHTML = "<p>Trainer account updated successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showtrainer\'>OK</a>";',
           '</script>';
       }
       catch(PDOException $e) { 
@@ -242,7 +242,7 @@ function editTrainerAction() {
       echo 
       '<script type="text/javascript">',
         'modalError();',
-        'modaltext.innerHTML = "<p>Failed to update trainer account.</p><a class=\'button\' href=\'?pageid=showtrainer\'>OK</a>";',
+        'modaltext.innerHTML = "<p>Failed to update trainer account.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showtrainer\'>OK</a>";',
       '</script>';
     }
   } else {
@@ -250,7 +250,7 @@ function editTrainerAction() {
     echo 
     '<script type="text/javascript">',
       'modalError();',
-      'modaltext.innerHTML = "<p>Failed to update trainer account.</p><a class=\'button\' href=\'?pageid=showtrainer\'>OK</a>";',
+      'modaltext.innerHTML = "<p>Failed to update trainer account.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showtrainer\'>OK</a>";',
     '</script>';
   }
 }
@@ -409,7 +409,7 @@ function uploadFileAction() {
         $_SESSION['message'] = 'File uploaded successfully.';            
         echo '<script type="text/javascript">',
         'modalSuccess();',
-        'modaltext.innerHTML = "<p>File uploaded successfully.</p><a class=\'button\' href=\'?pageid=showfiles&classid='.$class_id.'\'>OK</a>";',
+        'modaltext.innerHTML = "<p>File uploaded successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showfiles&classid='.$class_id.'\'>OK</a>";',
         '</script>';
       }
       catch(PDOException $e) { 
@@ -522,7 +522,7 @@ function delUserAction() {
     $_SESSION['message']="User deleted successfully";
     echo '<script type="text/javascript">',
     'modalSuccess();',
-    'modaltext.innerHTML = "<p>User deleted successfully.</p><a class=\'button\' href=\'?pageid=showuser\'>OK</a>";',
+    'modaltext.innerHTML = "<p>User deleted successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showuser\'>OK</a>";',
     '</script>';
   } else {
     echo "Only administrator can delete a user.";
@@ -580,7 +580,7 @@ function enrolStudent() {
           $_SESSION['message'] = "Student enrolled successfully.";
           echo '<script type="text/javascript">',
           'modalSuccess();',
-          'modaltext.innerHTML = "<p>Student enrolled into class '.$class.' successfully.</p><a class=\'button\' href=\'?pageid=showclassstudent&rowid='.$class.'\'>OK</a>";',
+          'modaltext.innerHTML = "<p>Student enrolled into class '.$class.' successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showclassstudent&rowid='.$class.'\'>OK</a>";',
           '</script>';
         }
         catch(PDOException $e) { 
@@ -592,7 +592,7 @@ function enrolStudent() {
         $_SESSION['message'] = "Login ID does not exist.";
         echo '<script type="text/javascript">',
         'modalError();',
-        'modaltext.innerHTML = "<p>Login ID does not exist.</p><a class=\'button\' href=\'?pageid=showcustomer\'>OK</a>";',
+        'modaltext.innerHTML = "<p>Login ID does not exist.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showcustomer\'>OK</a>";',
         '</script>';
       }
       exit;
@@ -625,7 +625,7 @@ function editCurrentStudent() {
           $_SESSION['message'] = "Student updated successfully.";
           echo '<script type="text/javascript">',
           'modalSuccess();',
-          'modaltext.innerHTML = "<p>Student detail updated successfully.</p><a class=\'button\' href=\'?pageid=showclassstudent&rowid='.$class.'\'>OK</a>";',
+          'modaltext.innerHTML = "<p>Student detail updated successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showclassstudent&rowid='.$class.'\'>OK</a>";',
           '</script>';
         }
         catch(PDOException $e) { 
@@ -637,7 +637,7 @@ function editCurrentStudent() {
         $_SESSION['message'] = "Login ID does not exist.";
         echo '<script type="text/javascript">',
         'modalError();',
-        'modaltext.innerHTML = "<p>Login ID does not exist.</p><a class=\'button\' href=\'?pageid=showclassstudent&rowid='.$class.'\'>OK</a>";',
+        'modaltext.innerHTML = "<p>Login ID does not exist.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showclassstudent&rowid='.$class.'\'>OK</a>";',
         '</script>';
       }
       exit;
@@ -663,7 +663,7 @@ function addCourseAction() {
           $_SESSION['message'] = "Course added successfully.";
           echo '<script type="text/javascript">',
           'modalSuccess();',
-          'modaltext.innerHTML = "<p>Course added successfully.</p><a class=\'button\' href=\'?pageid=showcourse\'>OK</a>";',
+          'modaltext.innerHTML = "<p>Course added successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showcourse\'>OK</a>";',
           '</script>';
         }
         catch(PDOException $e) { 
@@ -675,7 +675,7 @@ function addCourseAction() {
         $_SESSION['message'] = 'Course already exists, try another.';
         echo '<script type="text/javascript">',
         'modalError();',
-        'modaltext.innerHTML = "<p>Course already exists, try another.</p><a class=\'button\' href=\'?pageid=addcourse\'>OK</a>";',
+        'modaltext.innerHTML = "<p>Course already exists, try another.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=addcourse\'>OK</a>";',
         '</script>';
       }
       exit;
@@ -697,7 +697,7 @@ function editCourseAction() {
         $_SESSION['message'] = 'Course updated successfully.';            
         echo '<script type="text/javascript">',
         'modalSuccess();',
-        'modaltext.innerHTML = "<p>Course updated successfully.</p><a class=\'button\' href=\'?pageid=showcourse\'>OK</a>";',
+        'modaltext.innerHTML = "<p>Course updated successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showcourse\'>OK</a>";',
         '</script>';
       }
       catch(PDOException $e) { 
@@ -708,14 +708,14 @@ function editCourseAction() {
       $_SESSION['message'] = 'Wrong table, failed to update course.';
       echo '<script type="text/javascript">',
       'modalError();',
-      'modaltext.innerHTML = "<p>Wrong table, failed to update course.</p><a class=\'button\' href=\'?pageid=showcourse\'>OK</a>";',
+      'modaltext.innerHTML = "<p>Wrong table, failed to update course.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showcourse\'>OK</a>";',
       '</script>';
     }
   } else {
     $_SESSION['message'] = 'Only administrator can edit a courses.';
     echo '<script type="text/javascript">',
     'modalError();',
-    'modaltext.innerHTML = "<p>Only administrator can edit a courses.</p><a class=\'button\' href=\'index.php\'>OK</a>";',
+    'modaltext.innerHTML = "<p>Only administrator can edit a courses.</p><a class=\'btn btn-secondary btn-block\' href=\'index.php\'>OK</a>";',
     '</script>';
   }
 }
@@ -730,13 +730,13 @@ function delCourseAction() {
     $_SESSION['message']="Course deleted successfully";
     echo '<script type="text/javascript">',
     'modalSuccess();',
-    'modaltext.innerHTML = "<p>Course deleted successfully.</p><a class=\'button\' href=\'?pageid=showcourse\'>OK</a>";',
+    'modaltext.innerHTML = "<p>Course deleted successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showcourse\'>OK</a>";',
     '</script>';
   } else {
     $_SESSION['message']="Only administrator can delete a course.";
     echo '<script type="text/javascript">',
     'modalError();',
-    'modaltext.innerHTML = "<p>Only administrator can delete a course.</p><a class=\'button\' href=\'index.php\'>OK</a>";',
+    'modaltext.innerHTML = "<p>Only administrator can delete a course.</p><a class=\'btn btn-secondary btn-block\' href=\'index.php\'>OK</a>";',
     '</script>';
   }
 }
@@ -756,7 +756,7 @@ function addClassAction() {
         $_SESSION['message'] = "Class added successfully.";
         echo '<script type="text/javascript">',
         'modalSuccess();',
-        'modaltext.innerHTML = "<p>Class added successfully.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
+        'modaltext.innerHTML = "<p>Class added successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showclass\'>OK</a>";',
         '</script>';
       }
       catch(PDOException $e) { 
@@ -782,7 +782,7 @@ function editClassAction() {
         $_SESSION['message'] = 'Class updated successfully.';            
         echo '<script type="text/javascript">',
         'modalSuccess();',
-        'modaltext.innerHTML = "<p>Class updated successfully.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
+        'modaltext.innerHTML = "<p>Class updated successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showclass\'>OK</a>";',
         '</script>';
       }
       catch(PDOException $e) { 
@@ -793,7 +793,7 @@ function editClassAction() {
       $_SESSION['message'] = 'Wrong table, failed to update class.';
       echo '<script type="text/javascript">',
       'modalError();',
-      'modaltext.innerHTML = "<p>Wrong table, failed to update class.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
+      'modaltext.innerHTML = "<p>Wrong table, failed to update class.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showclass\'>OK</a>";',
       '</script>';
 
     }
@@ -801,7 +801,7 @@ function editClassAction() {
     $_SESSION['message'] = 'Only admin and trainer can edit classes.';
     echo '<script type="text/javascript">',
     'modalError();',
-    'modaltext.innerHTML = "<p>Only administrator can edit classes.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
+    'modaltext.innerHTML = "<p>Only administrator can edit classes.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showclass\'>OK</a>";',
     '</script>';
   }
 }
@@ -816,13 +816,13 @@ function delClassAction() {
     $_SESSION['message']="Class deleted successfully";
     echo '<script type="text/javascript">',
     'modalSuccess();',
-    'modaltext.innerHTML = "<p>Class deleted successfully.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
+    'modaltext.innerHTML = "<p>Class deleted successfully.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showclass\'>OK</a>";',
     '</script>';
   } else {
     $_SESSION['message'] = 'Only administrator can delete a class.';
     echo '<script type="text/javascript">',
     'modalError();',
-    'modaltext.innerHTML = "<p>Only administrator can delete a class.</p><a class=\'button\' href=\'?pageid=showclass\'>OK</a>";',
+    'modaltext.innerHTML = "<p>Only administrator can delete a class.</p><a class=\'btn btn-secondary btn-block\' href=\'?pageid=showclass\'>OK</a>";',
     '</script>';
   }
 }

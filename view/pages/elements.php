@@ -39,7 +39,7 @@ function showHeader() {
         <h2 id="modalheadertext">Default Modal Header</h2>
       </div>
       <div class="modalbody">
-        <div id="modaltext">Default content</div>
+        <div id="modaltext" class="modaltext">Default content</div>
       </div>
       <div class="modalfooter" id="modalfooter">
         <h3 id="modalfootertext"></h3>

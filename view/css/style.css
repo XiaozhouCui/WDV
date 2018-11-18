@@ -358,7 +358,7 @@ a:link, a:active, a:visited{
 	margin: auto;
 	padding: 0;
 	border: 1px solid #888;
-	width: 50%;
+	width: 40%;
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 	-webkit-animation-name: animatetop;
 	-webkit-animation-duration: 1s;
@@ -398,7 +398,22 @@ a:link, a:active, a:visited{
 	color: white;
 }
 
-.modalbody {padding: 32px 16px;}
+.modalbody {
+	padding: 32px 16px;
+}
+
+.modaltext {
+	font-size: 1.3em;
+	min-height: 200px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: space-around;
+}
+
+.btn {
+	min-width: 120px;
+}
 
 .modalfooter {
 	padding: 18px 16px;
@@ -426,6 +441,9 @@ a:link, a:active, a:visited{
 	}
 	.holder{
 		width:49%;	
+	}
+	.modalcontent {
+		width:60%;
 	}
 }
 

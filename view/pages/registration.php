@@ -30,6 +30,7 @@
         <option id="roleop1" value="Admin" disabled>Admin</option>
         <option id="roleop2" value="Trainer" disabled>Trainer</option>
         <option id="roleop3" value="Customer" selected>Prospective Student</option>
+        <option disabled>Current Student (use other form)</option>
       </select>
     </div>
     <div class="col-md-8 mb-3">

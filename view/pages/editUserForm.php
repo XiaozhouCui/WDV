@@ -56,7 +56,7 @@ if ($_SESSION['level'] == 'Admin') {
 				<label>Last Name:</label>
 				<input type="text" name="surname" class="form-control" pattern="[A-Za-z ]+" value="<?php echo $result['surname'] ?>" required>
 				<div class="invalid-feedback">
-					Please spell first name in english letters
+					Please spell last name in english letters
 				</div>
 			</div>
 		</div>

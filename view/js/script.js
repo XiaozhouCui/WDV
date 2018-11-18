@@ -133,11 +133,8 @@ function AJAXupdateUser() {
     data: $('#edituserform').serialize(),
     datatype: 'json',
     success: function() {
-      showModal();
-      document.getElementById('modalheadertext').innerHTML = "Done";
-      document.getElementById('modalheader').style.backgroundColor = "green";
-      document.getElementById('modalfooter').style.backgroundColor = "green";
-      document.getElementById('modaltext').innerHTML = "<p>User updated successfully</p><button onclick='closeModal()'>OK</button>";
+      modalSuccess();
+      document.getElementById('modaltext').innerHTML = "<p>User updated successfully</p><button class='btn btn-secondary btn-block btn-lg' onclick='closeModal()'>OK</button>";
       getUsers();
     },
     error: function(err) {
@@ -152,7 +149,7 @@ function deleteUserForm(loginid) {
   document.getElementById('modalheadertext').innerHTML = "WARNING! DELETING A USER"
   document.getElementById('modalheader').style.backgroundColor= "red";
   document.getElementById('modalfooter').style.backgroundColor= "red";
-  document.getElementById('modaltext').innerHTML = '<form action="?pageid=deletinguser" method="post">	<fieldset> <p>Are you sure you wan to delete this account (login id: ' + loginid + ')?</p> <input type="hidden" name="rowid" value="' + loginid + '"><br> <input type="submit" value="Yes"> <input type="button" onclick="closeModal()" value="Cancel" />	</fieldset> </form>';
+  document.getElementById('modaltext').innerHTML = '<form action="?pageid=deletinguser" method="post">	<p>Are you sure you wan to delete this account (login id: ' + loginid + ')?</p> <input type="hidden" name="rowid" value="' + loginid + '"><br> <input type="submit" value="Yes"> <input type="button" onclick="closeModal()" value="Cancel" /> </form>';
 }
 
 function AJAXdeleteUser(userid) {
@@ -163,7 +160,7 @@ function AJAXdeleteUser(userid) {
     datatype: 'json',
     success: function() {
       modalSuccess();
-      document.getElementById('modaltext').innerHTML = "<p>User deleted successfully</p><button onclick='closeModal()'>OK</button>";
+      document.getElementById('modaltext').innerHTML = "<p>User deleted successfully</p><button class='btn btn-secondary btn-block btn-lg' onclick='closeModal()'>OK</button>";
       getUsers();
     },
     error: function(err) {
@@ -214,7 +211,7 @@ function modalDelFile(fileid) {
   resetModal();
   document.getElementById('myModal').style.display = "block";
   document.getElementById('modalheadertext').innerHTML = "DELETING A FILE";
-  document.getElementById('modaltext').innerHTML = "<p>Are you sure you want to delete this file (content id: " + fileid + ")?</p><button onclick='AJAXdeleteFile(" + fileid + ")'>Yes</button> <button onclick='closeModal()'>Cancel</button>";
+  document.getElementById('modaltext').innerHTML = "<p>Are you sure you want to delete this file (content id: " + fileid + ")?</p><button onclick='AJAXdeleteFile(" + fileid + ")'>Yes</button> <button class='btn btn-secondary btn-block btn-lg' onclick='closeModal()'>Cancel</button>";
 }
 
 
@@ -228,17 +225,17 @@ function AJAXdeleteFile(fileid) {
       closeModal();
       if(data.status == 'success'){
         modalSuccess();
-        document.getElementById('modaltext').innerHTML = "<p>File deleted successfully</p><button onclick='closeModal()'>OK</button>";
+        document.getElementById('modaltext').innerHTML = "<p>File deleted successfully</p><button class='btn btn-secondary btn-block btn-lg' onclick='closeModal()'>OK</button>";
         getFiles();
       } 
       if(data.status == 'error'){
         modalError();
-        document.getElementById('modaltext').innerHTML = "<p>Error on query</p><button onclick='closeModal()'>OK</button>";
+        document.getElementById('modaltext').innerHTML = "<p>Error on query</p><button class='btn btn-secondary btn-block btn-lg' onclick='closeModal()'>OK</button>";
         getFiles();
       }
       if(data.status == 'notfound'){
         modalError();
-        document.getElementById('modaltext').innerHTML = "<p>File does not exist, record removed from database</p><button onclick='closeModal()'>OK</button>";
+        document.getElementById('modaltext').innerHTML = "<p>File does not exist, record removed from database</p><button class='btn btn-secondary btn-block btn-lg' onclick='closeModal()'>OK</button>";
         getFiles();
       }
     },
@@ -384,7 +381,7 @@ function resetModal() {
 function modalBrowser() {
   resetModal();
   document.getElementById('myModal').style.display = "block";
-  document.getElementById('modaltext').innerHTML = navigator.userAgent;
+  document.getElementById('modaltext').innerHTML = navigator.userAgent + "<p><button class='btn btn-secondary btn-lg' onclick='closeModal()'>OK</button></p>";
   document.getElementById('modalheadertext').innerHTML = "BROWSER INFO";
 }
 
@@ -415,7 +412,7 @@ window.onclick = function(event) {
 function modalLoggedin() {
   modalSuccess() 
   document.getElementById('modalheadertext').innerHTML = "WELCOME";
-  document.getElementById('modaltext').innerHTML = "<p>You have successfully logged in.</p><p><div id='countdown'></div></p><br><a class='button' href='?pageid=loggedin'>Skip</a>";
+  document.getElementById('modaltext').innerHTML = "<p>You have successfully logged in.</p><p><div id='countdown'></div></p><a class='btn btn-secondary btn-block btn-lg' href='?pageid=loggedin'>Skip</a>";
 }
 
 function redirect(){
@@ -424,7 +421,7 @@ function redirect(){
     window.location = "?pageid=loggedin";
   } else {
     seconds--;
-    document.getElementById("countdown").innerHTML = "Redirect after <strong>"+seconds+"</strong> seconds."
+    document.getElementById("countdown").innerHTML = " Redirect after <strong>"+seconds+"</strong> seconds."
     setTimeout("redirect()", 1000)
   }
 }
@@ -432,13 +429,13 @@ function redirect(){
 function loginFailed() {
   modalError();
   document.getElementById('modalheadertext').innerHTML = "Login Failed";
-  document.getElementById('modaltext').innerHTML = "<p>Sorry, either your username or your password is incorrect</p><button onclick='closeModal()'>OK</button>";
+  document.getElementById('modaltext').innerHTML = "<p>Sorry, either your username or your password is incorrect</p><button class='btn btn-secondary btn-block btn-lg' onclick='closeModal()'>OK</button>";
 }
 
 function modalLogout() {
   resetModal();
   document.getElementById('myModal').style.display = "block";
-  document.getElementById('modaltext').innerHTML = "<p>You have successfully logged out</p><a class='button' href='index.php'>OK</a>";
+  document.getElementById('modaltext').innerHTML = "<p>You have successfully logged out</p><a class='btn btn-secondary btn-block btn-lg' href='index.php'>OK</a>";
   document.getElementById('modalheadertext').innerHTML = "GOOD BYE";
 }
 
@@ -446,7 +443,7 @@ function modalLogout() {
 function modalDelUser(userid) {
   modalError();
   document.getElementById('modalheadertext').innerHTML = "WARNING! DELETING A USER"
-  document.getElementById('modaltext').innerHTML = "<p>Are you sure you want to delete this user (login id: " + userid + ")?</p><button onclick='AJAXdeleteUser(" + userid + ")'>Yes</button> <button onclick='closeModal()'>Cancel</button>";
+  document.getElementById('modaltext').innerHTML = "<p>Are you sure you want to delete this user (login id: " + userid + ")?</p><p><button class='btn btn-secondary btn-lg' onclick='AJAXdeleteUser(" + userid + ")'>Yes</button>  <button class='btn btn-secondary btn-lg' onclick='closeModal()'>Cancel</button></p>";
 }
 
 function validity1() {      
