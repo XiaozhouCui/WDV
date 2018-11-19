@@ -5,8 +5,9 @@ if ($_SESSION['level'] == 'Admin') {
 	$stmt->execute();
 	$result = $stmt->fetch(PDO::FETCH_ASSOC);	 
 	?>  
-  <h2>Create a new course</h2>
+  
   <form class="needs-validation" action="?pageid=editingcourse" method="post" novalidate>
+  <h2>Edit Course Form</h2>
     <input type="hidden" name="rowid" value="<?php echo $_GET['rowid'] ?>">
 
     <div class="form-group">

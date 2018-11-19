@@ -1,6 +1,6 @@
-<h2>Create a new course</h2>
 
 <form class="needs-validation" action="?pageid=addingcourse" method="post" novalidate>
+  <h2>Create a New Course</h2>
   <div class="form-group">
     <label>Course Name</label>
     <input type="text" name="coursename" class="form-control" required>

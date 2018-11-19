@@ -8,8 +8,9 @@ if ($_SESSION['level'] == 'Admin') {
 	?>  
 
 	<div class="bigholder">
-		<h1>Edit Trainer</h1>
+		
 		<form action="?pageid=editingtrainer" class="needs-validation" method="post" novalidate>
+			<h2>Edit Trainer</h2>
 			<input type="hidden" name="rowid" value="<?php echo $_GET['rowid'] ?>"><br>
 				
 			<div class="form-row">

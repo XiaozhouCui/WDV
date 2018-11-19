@@ -17,8 +17,9 @@ if ($_SESSION['level'] == 'Admin' || $_SESSION['level'] == 'Trainer') {
   $result3 = $stmt3->fetchAll(PDO::FETCH_ASSOC);	 
 
   ?>  
-  <h2>Update a class</h2>
+  
   <form class="needs-validation" action="?pageid=editingclass"  method="post" novalidate>
+    <h2>Edit Class Form</h2>
     <input type="hidden" name="rowid" value="<?php echo $_GET['rowid'] ?>">
 
     <div class="form-row">

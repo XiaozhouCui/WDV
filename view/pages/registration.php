@@ -1,6 +1,7 @@
-<h2>User Registration Form</h2>
+
 
 <form class="needs-validation" action="?pageid=addinguser"  method="post" novalidate>
+  <h2>User Registration Form</h2>
   <div class="form-row">
     <div class="col-md-4 mb-3">
       <label for="username01">Username</label>

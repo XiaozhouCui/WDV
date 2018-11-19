@@ -6,9 +6,9 @@ if ($_SESSION['level'] == 'Admin') {
 	$stmt->execute();
 	$result = $stmt->fetch(PDO::FETCH_ASSOC);	 
 	?>  
-	<h1>Edit User</h1>
+	
 	<form action="?pageid=editinguser" class="needs-validation" method="post" novalidate>
-
+		<h2>Edit Admin</h2>
 		<div class="form-row">
 			<div class="col-md-4 mb-3">
 				<input type="hidden" name="rowid" value="<?php echo $_GET['rowid'] ?>">

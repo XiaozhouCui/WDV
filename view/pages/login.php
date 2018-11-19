@@ -1,6 +1,5 @@
-<h2>Login</h2>
-
 <form action="?pageid=loggingin" method="post">
+<h2>Login</h2>
   <div class="form-group">
     <label for="login_username">Username</label>
     <input type="text" name="username" class="form-control" id="login_username" required placeholder="Enter username">

@@ -23,19 +23,22 @@ html {
 
 header {
 	display:flex;
+	padding-top:50px;
 	width:100%;
 	height:10em;
-	order: 1;
+	order: 2;
 	justify-content:center;
   align-items:center;
 	background-color:rgba(186,232,235,1.00);
 }
 
-nav {
+
+.navbar {
 	width:100%;
-	height:3em;
-  order: 2;
+	height:50px;
+	font-size: 1.2em;
 }
+
 .menuItem{
 	display:flex;
 	align-items:center;
@@ -89,7 +92,7 @@ article{
 
 .sidebar .closebtn {
 	position: absolute;
-	top: 0;
+	top: 40px;
 	right: 25px;
 	font-size: 36px;
 	margin-left: 50px;
@@ -190,10 +193,9 @@ aside {
 	margin: 5px;
 	display: flex;
 	justify-content: center;	
-	line-height: 30px;
+	line-height: 20px;
 	text-align: center;		
 	background-image: linear-gradient(darkgrey, white);
-	font-size: 0.9em;
 	border-radius: 3px;
 	transition: 0.5s;
 }
@@ -205,6 +207,7 @@ aside {
 .panel li a { 
 	position: relative; left: -10px; 
 	color: black;
+	font-size:1em;
 }
 
 .panel li a:hover { 
@@ -424,11 +427,11 @@ a:link, a:active, a:visited{
 
 @media only screen and (max-width: 1400px) {
 
-	.nav{
-		order:1;
+	.panel li {
+		width:90%;
 	}
-	.header{
-		order:2;
+	.panel li a {
+		font-size:0.8em;
 	}
 	.sidebar {
 		width: 0;
