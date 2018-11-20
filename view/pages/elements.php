@@ -101,7 +101,6 @@ function showHeader() {
         <h4>Control Panel</h4><?php
         if ($_SESSION['level'] == "Admin") { ?>      
           <ul>
-            <li><a href="?pageid=ajax">AJAX Tricks</a></li>
             <li><a href="?pageid=adduser">Create a User</a></li>
             <li><a href="?pageid=showuser">Manage Admins</a></li>          
             <li><a href="?pageid=showtrainer">Manage Trainers</a></li>
@@ -112,6 +111,7 @@ function showHeader() {
             <li><a href="?pageid=addclass">Create a Class</a></li>
             <li><a href="?pageid=showclass">Manage Classes</a></li>
             <li><a href="?pageid=showallfile">Manage Files</a></li>
+            <li><a href="?pageid=ajax">AJAX Demos</a></li>
           </ul><?php
         }
         if ($_SESSION['level'] == "Trainer") { ?>

@@ -1,11 +1,11 @@
 <form action="?pageid=loggingin" method="post">
 <h2>Login</h2>
   <div class="form-group">
-    <label for="login_username">Username</label>
+    <label for="login_username">Username: admin</label>
     <input type="text" name="username" class="form-control" id="login_username" required placeholder="Enter username">
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
+    <label for="exampleInputPassword1">Password: admin</label>
     <input type="password" class="form-control" name="password" placeholder="Enter password" required>
 	</div>
 	<div class="form-group">

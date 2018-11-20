@@ -163,7 +163,7 @@ showMenu();
         include("view/pages/loggedInPage.php");
       }
     } else {
-      echo "<p>Please login to see the content</p>";
+      echo "<p>Please login to see the content (username: admin; password: admin)</p>";
       echo "<a href='?pageid=login' type='button' class='btn btn-link'>Login</a> or ";
       echo "<a href='?pageid=reg' type='button' class='btn btn-link'>Register</a>";
     }
