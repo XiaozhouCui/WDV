@@ -17,15 +17,6 @@ function showHeader() {
   crossorigin="anonymous"></script>
   <script src="view/js/dropzone.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129344631-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-129344631-1');
-  </script>
 
 </head>
 <body>
@@ -65,7 +56,7 @@ function showHeader() {
           <?php if(isset($_SESSION['level'])) {
             echo '<a class="nav-link" href="?pageid=logout">Logout</a>';
           } else {
-            echo '<a class="nav-link" href="?pageid=login">Lougin</a>';
+            echo '<a class="nav-link" href="?pageid=login">Login</a>';
           }  ?> 
         </li>
       </ul>
