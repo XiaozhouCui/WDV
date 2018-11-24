@@ -9,7 +9,13 @@ date_default_timezone_set('Australia/Brisbane');//set time zone to Brisbane
 showHeader();
 showMenu();
 ?>
-<article>
+<article id="main">
+  <!-- Toggle button for side bar -->
+  <div id="toggleside">
+    <a href="#" title="Side-bar" onclick="openNav()">
+      <i class="fas fa-caret-left"></i>
+    </a>
+  </div>
   <!-- All calling functions start here -->
   <div class="bigholder">
     <?php
@@ -163,9 +169,9 @@ showMenu();
         include("view/pages/loggedInPage.php");
       }
     } else {
-      echo "<p>Please login to see the content (username: admin; password: admin)</p>";
-      echo "<a href='?pageid=login' type='button' class='btn btn-link'>Login</a> or ";
-      echo "<a href='?pageid=reg' type='button' class='btn btn-link'>Register</a>";
+      echo "<div class='maintext'><p>Please login to see the content (username: admin; password: admin)</p>";
+      echo "<a href='?pageid=login'>Login</a> or ";
+      echo "<a href='?pageid=reg'>Register</a></div>";
     }
     ?>
   </div> 

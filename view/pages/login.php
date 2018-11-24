@@ -2,11 +2,11 @@
 <h2>Login</h2>
   <div class="form-group">
     <label for="login_username">Username: admin</label>
-    <input type="text" name="username" class="form-control" id="login_username" required placeholder="Enter username">
+    <input type="text" name="username" class="form-control" id="login_username" required placeholder="admin">
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Password: admin</label>
-    <input type="password" class="form-control" name="password" placeholder="Enter password" required>
+    <input type="password" class="form-control" name="password" placeholder="admin" required>
 	</div>
 	<div class="form-group">
 		<div class="form-check">

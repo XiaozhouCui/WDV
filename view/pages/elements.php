@@ -8,7 +8,10 @@ function showHeader() {
   <title>Home</title>
   <link href="view/css/style.css" rel="stylesheet">
   <link href="view/css/dropzone.css" rel="stylesheet">
+  <!-- Link to Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <!-- Link to Font Awesome icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
   <script src="view/js/script.js"></script>
   <script
@@ -20,7 +23,6 @@ function showHeader() {
 
 </head>
 <body>
-<div id="main">
   <!-- The Modal (background) -->
   <div id="myModal" class="modal">
     <!-- Modal content -->
@@ -37,105 +39,91 @@ function showHeader() {
       </div>
     </div>
   </div>
-  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navburger" aria-controls="navburger" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse bg-dark" id="navburger" >
-      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#" onclick="openNav()">☰ Sidebar <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <?php if(isset($_SESSION['level'])) {
-            echo '<a class="nav-link" href="?pageid=logout">Logout</a>';
-          } else {
-            echo '<a class="nav-link" href="?pageid=login">Login</a>';
-          }  ?> 
-        </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </div>
-  </nav>
+
   <div class="flex-container" >
-    <header class="nav">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navburger" aria-controls="navburger" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse bg-dark" id="navburger" >
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.php">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Settings</a>
+          </li>
+          <li class="nav-item">
+            <?php if(isset($_SESSION['level'])) {
+              echo '<a class="nav-link" href="?pageid=logout">Logout</a>';
+            } else {
+              echo '<a class="nav-link" href="?pageid=login">Login</a>';
+            }  ?> 
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+
+    <header class="header">
       <p><h1>SafeTec Pacific</h1></p>
     </header>
+    <?php  
+    }  //header and nav bar ends here
 
-    <?php
-    }
 
-    function showMenu() {  ?>
+    //side bar starts here
+    function showMenu() {   ?> 
     <div id="mySidebar" class="sidebar"> 
       <div >
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
         <a href="index.php">Home</a>
-      </div>
-
-
-    <?php
-    if (isset( $_SESSION['level'] ) ) {
-      echo '<a href="#">Profile</a>';
-      echo '<a href="#">Settings</a>';
-      echo '<a href="?pageid=logout">Logout</a>';
-      ?>
-      <div class="panel" div="panel1">
-        <h4>Control Panel</h4><?php
+      </div> <?php
+      if (isset( $_SESSION['level'] ) ) { ?>
+        <a href="?pageid=logout">Logout</a>
+        <?php
         if ($_SESSION['level'] == "Admin") { ?>      
-          <ul>
-            <li><a href="?pageid=adduser">Create a User</a></li>
-            <li><a href="?pageid=showuser">Manage Admins</a></li>          
-            <li><a href="?pageid=showtrainer">Manage Trainers</a></li>
-            <li><a href="?pageid=showstudent">Manage Students</a></li>
-            <li><a href="?pageid=showcustomer">Manage Customers</a></li>
-            <li><a href="?pageid=addcourse">Create a Course</a></li>
-            <li><a href="?pageid=showcourse">Manage Courses</a></li>
-            <li><a href="?pageid=addclass">Create a Class</a></li>
-            <li><a href="?pageid=showclass">Manage Classes</a></li>
-            <li><a href="?pageid=showallfile">Manage Files</a></li>
-            <li><a href="?pageid=ajax">AJAX Demos</a></li>
-          </ul><?php
+          <a href="?pageid=adduser">Create a User</a>
+          <a href="?pageid=showuser">Manage Admins</a>       
+          <a href="?pageid=showtrainer">Manage Trainers</a>
+          <a href="?pageid=showstudent">Manage Students</a>
+          <a href="?pageid=showcustomer">Manage Customers</a>
+          <a href="?pageid=addcourse">Create a Course</a>
+          <a href="?pageid=showcourse">Manage Courses</a>
+          <a href="?pageid=addclass">Create a Class</a>
+          <a href="?pageid=showclass">Manage Classes</a>
+          <a href="?pageid=showallfile">Manage Files</a>
+          <a href="?pageid=ajax">AJAX Demos</a> <?php
         }
         if ($_SESSION['level'] == "Trainer") { ?>
-          <ul>      
-            <li><a href="?pageid=addclass">Create Class</a></li>
-            <li><a href="?pageid=showclass">Manage Class</a></li>
-            <li><a href="?pageid=logout">Logout</a></li>
-          </ul><?php
+          <a href="?pageid=addclass">Create Class</a>
+          <a href="?pageid=showclass">Manage Class</a>
+          <a href="?pageid=logout">Logout</a> <?php
         }
-        if ($_SESSION['level'] == "Student") { ?>
-          <ul>      
-            <li><a href="?pageid=myclass">Class Information</a></li>
-            <li><a href="?pageid=classfiles">Learning Materials</a></li>
-            <li><a href="?pageid=showmessage">Message Board</a></li>
-            <li><a href="?pageid=logout">Logout</a></li>
-          </ul><?php
+        if ($_SESSION['level'] == "Student") { ?> 
+          <a href="?pageid=myclass">Class Information</a>
+          <a href="?pageid=classfiles">Learning Materials</a>
+          <a href="?pageid=showmessage">Message Board</a>
+          <a href="?pageid=logout">Logout</a ><?php
         }
-        if ($_SESSION['level'] == "Customer") { ?>
-          <ul>      
-            <li><a href="?pageid=showcourse">Show Courses</a></li>
-            <li><a href="?pageid=showclass">Class Timetable</a></li> 
-            <li><a href="?pageid=enrolForm">Course Application</a></li>
-            <li><a href="?pageid=logout">Logout</a></li>
-          </ul><?php
-        }?>
-      </div><?php
-      } else {
-        echo "<a href='?pageid=login'>Login</a>";
-        echo "<a href='?pageid=reg'>Register</a>";
-      }?>
-      
-    </div><?php
-}
+        if ($_SESSION['level'] == "Customer") { ?>    
+          <a href="?pageid=showcourse">Show Courses</a>
+          <a href="?pageid=showclass">Class Timetable</a>
+          <a href="?pageid=enrolForm">Course Application</a>
+          <a href="?pageid=logout">Logout</a> <?php
+        }
+      } else { ?>
+        <a href='?pageid=login'>Login</a>
+        <a href='?pageid=reg'>Register</a> <?php
+      } ?>
+    </div> <?php //end of side bar
+    }
 
 function showFooter() {?>
     <div class="contentRight"></div>
@@ -193,7 +181,6 @@ function showFooter() {?>
     </footer>
 
     
-  </div>
   </div>
   </body>
   </html> <?php

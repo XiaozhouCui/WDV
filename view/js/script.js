@@ -18,13 +18,11 @@ function rememberValue() {
 
 // Toggle side bar
 function openNav() {
-  document.getElementById("mySidebar").style.width = "20%";
-  document.getElementById("main").style.marginLeft = "20%";
+  document.getElementById("mySidebar").style.display = 'block';  
 }
 
 function closeNav() {
-  document.getElementById("mySidebar").style.width = "0";
-  document.getElementById("main").style.marginLeft= "0";
+  document.getElementById("mySidebar").style.display = 'none';  
 }
 
 function addUserForm() {
