@@ -51,9 +51,6 @@ function showHeader() {
             <a class="nav-link" href="index.php">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="#">Settings</a>
           </li>
           <li class="nav-item">
@@ -86,6 +83,7 @@ function showHeader() {
         <a href="index.php">Home</a>
       </div> <?php
       if (isset( $_SESSION['level'] ) ) { ?>
+        <a href="#">Profile</a>
         <a href="?pageid=logout">Logout</a>
         <?php
         if ($_SESSION['level'] == "Admin") { ?>      
@@ -155,9 +153,9 @@ function showFooter() {?>
             <!-- Links -->
             <h6 class="text-uppercase font-weight-bold">Useful links</h6>
             <hr class="accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 80px;">
+            <p><a href="https://kwiksurveys.com/s/6MVJYLNP">Survey</a></p>
             <p><a href="#">Privacy Policy</a></p>
             <p><a href="#">Payment & Refund</a></p>
-            <p><a href="#">Timetable</a></p>
             <p><a href="#">Help</a></p>
           </div>
           <!-- Grid column -->
