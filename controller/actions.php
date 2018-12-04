@@ -368,6 +368,43 @@ function showClassStudents() {
   }  
 }
 
+function showClassMessages() {
+  global $conn;
+  $sql = "SELECT * FROM message WHERE class_id = '{$_GET['rowid']}' ORDER BY time_added";    
+  $stmt = $conn->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);	 
+
+  if($stmt->rowCount()< 1 ) {
+    echo "This class has no message.";
+  } else { ?>
+    <table class="table table-striped table-light">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Message</th>
+          <th scope="col">By</th>
+          <th scope="col">Time</th>
+        </tr>
+      </thead>
+      <tbody>
+      <?php
+      foreach($result as $row) {?>
+        <tr>
+          <th scope="row"><?php echo $row['message_id'] ?></th>
+          <td><?php echo $row['content'] ?></td>
+          <td><?php echo $row['login_id'] ?></td>
+          <td><?php echo $row['time_added'] ?></td>
+        </tr>
+        <?php
+      }
+      ?>
+      </tbody>
+    </table>
+    <?php
+  } 
+}
+
 function uploadFileAction() {
   global $conn;  
   $class_id = !empty($_POST['classid'])? sanitise(($_POST['classid'])): null; 
