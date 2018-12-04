@@ -153,6 +153,9 @@ showMenu();
         if ( $action == 'showclassstudent' ) {
           showClassStudents();
         }
+        if ( $action == 'showclassmessage' ) {
+          showClassMessages();
+        }
         if ( $action == 'showcustomer' ) {
           showCustomers();
         }
